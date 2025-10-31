@@ -12,7 +12,7 @@
         <ul class="links">
             <li><a href="./consultation.php">Consultations</a></li>
             <li><a href="./doctor.php">Patients</a></li>
-            <li><a href="./patient.php">Doctors</a></li>
+            <li><a href="./patient.php">Staff</a></li>
             <li><a href="">Contact</a></li>
         </ul>
     </div>

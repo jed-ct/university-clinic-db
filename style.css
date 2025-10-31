@@ -1,3 +1,10 @@
+:root {
+    --color-base-bg: #F9FAF8;
+    --color-primary: #662222;
+    --color-primary-darker: #3f1515;
+
+}
+
 body {
     font-family: 'Roboto';
     display: flex;
@@ -7,7 +14,7 @@ body {
 
 .header {
     display: flex;
-    background-color: #662222;
+    background-color: var(--color-primary);
     justify-content: space-between;
     align-items: center;
     padding: 0px 20px;
@@ -15,7 +22,7 @@ body {
 
 .logo {
     font-size: 2rem;
-    color: #F9FAF8;
+    color: var(--color-base-bg);
     font-weight: bold;
     text-decoration: none;
 }
@@ -33,12 +40,12 @@ body {
 .links a {
     font-size: 18px;
     text-decoration: none;
-    color: #E5E7EB;
+    color: var(--color-base-bg);
     display: block;
     padding: 15px;
     margin: 0px;
 }
 
 .links a:hover {
-    background-color: #3f1515;
+    background-color: var(--color-primary-darker);
 }
