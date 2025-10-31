@@ -13,6 +13,7 @@
     <div class="header">
         <a class="logo" href="./index.php">UPB HSO</a>
         <ul class="links">
+            <li><a href="./index.php">Home</a></li>
             <li><a href="./consultation.php">Consultations</a></li>
             <li><a href="./patient.php">Patients</a></li>
             <li><a href="./staff.php">Staff</a></li>
