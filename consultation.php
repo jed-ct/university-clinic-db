@@ -16,7 +16,7 @@
             <li><a href="./consultation.php">Consultations</a></li>
             <li><a href="./doctor.php">Patients</a></li>
             <li><a href="./patient.php">Staff</a></li>
-            <li><a href="">Contact</a></li>
+            <li><a href="#footer">Contact</a></li>
         </ul>
     </div>
     <table border='1'>
@@ -44,5 +44,8 @@
             }
         ?>
     </table>
+    <div id="footer">
+        basta contact info
+    </div>
 </body>
 </html>
