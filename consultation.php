@@ -22,25 +22,26 @@
     </div>
     <table border='1'>
         <tr>
+            <th>Date</th>
+            <th>Time</th>
             <th>Patient</th>
-            <th>Diagnosis</th>
-            <th>Prescription</th>
-            <th>Consultation Date</th>
-            <th>Consultation Time</th>
             <th>Doctor</th>
         </tr>
         <?php
-            $sql = "SELECT * FROM CONSULTATION";
+            $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime, PATIENT.PatientFirstName, PATIENT.PatientMiddleInit, PATIENT.PatientLastName, DOCTOR.DocFirstName, DOCTOR.DocMiddleInit, DOCTOR.DocLastName
+                    FROM PATIENT INNER JOIN CONSULTATION
+                    ON PATIENT.PatientID = CONSULTATION.PatientID
+                    INNER JOIN DOCTOR
+                    ON DOCTOR.DoctorID = CONSULTATION.DoctorID
+                    ORDER BY CONSULTATION.ConsultDateTime DESC";
             $result = $conn->query($sql); 
             
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>
-                        <td>" . $row["PatientID"] . "</td>
-                        <td>" . $row["Diagnosis"] . "</td>
-                        <td>" . $row["Prescription"] . "</td>
-                        <td>" . $row["ConsultationDate"] . "</td>
-                        <td>" . $row["ConsultationTime"] . "</td>
-                        <td>" . $row["DoctorID"] . "</td>
+                        <td>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td> 
+                        <td>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td> 
+                        <td>" . $row["PatientFirstName"] . " " . $row["PatientMiddleInit"] . ". " . $row["PatientLastName"] . "</td>
+                        <td>" . $row["DocFirstName"] . " " . $row["DocMiddleInit"] . ". " . $row["DocLastName"] . "</td>
                         </tr>";
             }
         ?>
