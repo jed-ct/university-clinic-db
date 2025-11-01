@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Pixelify+Sans:wght@400..700&family=Roboto:ital,wght@0,100..900;1,100..900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&display=swap');
+
 :root {
     --color-base-bg: #F9FAF8;
     --color-primary: #662222;
@@ -8,7 +10,7 @@
 body {
     min-height: 100vh;
     background-color: var(--color-base-bg);
-    font-family: 'Roboto';
+    font-family: 'Montserrat', sans-serif;
     display: flex;
     flex-direction: column;
     margin: 0;
@@ -40,7 +42,8 @@ body {
 }
 
 .links a {
-    font-size: 18px;
+    font-size: 1.25rem;
+    font-weight: 400;
     text-decoration: none;
     color: var(--color-base-bg);
     display: block;
