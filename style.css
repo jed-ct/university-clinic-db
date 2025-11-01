@@ -55,6 +55,19 @@ body {
     background-color: var(--color-primary-darker);
 }
 
+.doctor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.doctor {
+    width: 200px;
+    height: 200px;
+    background-color: gray;
+}
+
+
 #footer {
     margin-top: auto;
     color: var(--color-base-bg);

@@ -17,6 +17,18 @@
             <li><a href="">Contact</a></li>
         </ul>
     </div>
+
+    <div class="doctor-container">
+        <div class="doctor">
+            <div class="doctor-name">Gregory House</div>
+            <div class="doctor-specialty">Internal Medicine</div>
+        </div>
+        <div class="doctor">
+            <div class="doctor-name">Dr. Quack Quack</div>
+            <div class="doctor-specialty">Family Medicine</div>
+        </div>
+    </div>
+
     <div id="footer">
         basta contact info
     </div>
