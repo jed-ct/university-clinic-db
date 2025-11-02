@@ -4,7 +4,6 @@
     --color-base-bg: #F9FAF8;
     --color-primary: #662222;
     --color-primary-darker: #3f1515;
-
 }
 
 body {
@@ -16,12 +15,13 @@ body {
     margin: 0;
 }
 
+/* HEADER */
 .header {
     display: flex;
     background-color: var(--color-primary);
     justify-content: space-between;
     align-items: center;
-    padding: 0px 20px;
+    padding: 0 20px;
 }
 
 .logo {
@@ -33,12 +33,11 @@ body {
 
 .links {
     display: flex;
-    list-style-type: none;
+    list-style: none;
     align-items: center;
     gap: 12px;
     margin: 0;
-    padding: 0px;
-    overflow: hidden;
+    padding: 0;
 }
 
 .links a {
@@ -48,13 +47,62 @@ body {
     color: var(--color-base-bg);
     display: block;
     padding: 15px;
-    margin: 0px;
 }
 
 .links a:hover {
     background-color: var(--color-primary-darker);
 }
 
+/* CONSULTATION TABLE */
+.consultations-table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.consultations-actions {
+    width: 90%;
+}
+
+.consultations-table {
+    width: 90%;
+    border-collapse: collapse;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 20px;
+    margin-top: 10px;
+    background-color: #fff;
+    font-size: 1rem;
+}
+
+.consultations-table thead {
+    background-color: var(--color-primary);
+    color: #fff;
+    font-weight: 600;
+}
+
+.consultations-table th,
+.consultations-table td {
+    padding: 12px 16px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.consultations-table tbody tr:nth-child(odd) {
+    background: #ffffff;
+}
+
+.consultations-table tbody tr:nth-child(even) {
+    background: #f6f8fa;
+}
+
+.consultations-table tbody tr:hover {
+    background: rgba(100, 120, 140, 0.06);
+}
+
+
+/* FOOTER */
 #footer {
     margin-top: auto;
     color: var(--color-base-bg);
@@ -63,5 +111,4 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
-    
 }
