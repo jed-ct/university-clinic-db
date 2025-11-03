@@ -10,6 +10,17 @@ include("database.php");
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
+
+<div id="consultation-modal" class="modal">
+    <div class="modal-content">
+        <div class="close-btn-div">
+            <button class="close-btn" id="close-modal"><img src="./img/close.svg"></button>
+        </div>
+        <p>jabol</p>
+        
+    </div>
+</div>
+
     <div class="header">
         <a class="logo" href="./index.php">UPB HSO</a>
         <ul class="links">
@@ -56,9 +67,7 @@ include("database.php");
                             <td>" . $row["PatientFirstName"] . " " . $row["PatientMiddleInit"] . ". " . $row["PatientLastName"] . "</td>
                             <td>" . $row["DocFirstName"] . " " . $row["DocMiddleInit"] . ". " . $row["DocLastName"] . "</td>
                             <td style='width:1%; white-space:nowrap;'>
-                                <a href='#' class='action view' data-id='" . $row["ConsultationID"] . "'>View</a>
-                                <a href='#' class='action edit'>Edit</a>
-                                <a href='#' class='action delete'>Delete</a>
+                                <button href='#' class='action view' data-id='" . $row["ConsultationID"] . "'>View</button>
                             </td>
                         </tr>";
                     }
@@ -66,15 +75,6 @@ include("database.php");
             </tbody>
         </table>
     </div>
-
-    <!-- 🧩 Dialog modal -->
-    <dialog id="consultationDialog">
-        <div class="dialog-content">
-            <h3>Consultation Details</h3>
-            <div class="dialog-body"></div>
-            <button id="closeDialog">Close</button>
-        </div>
-    </dialog>
 
     <div id="footer">
         basta contact info
