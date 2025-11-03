@@ -64,6 +64,20 @@ body {
     width: 90%;
 }
 
+.consultations.action {
+    background-color: rgb(50, 104, 252);
+    color: var(--color-base-bg);
+    font-weight: bold;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10px;
+}
+
+.consultations.action:hover {
+    background-color: rgb(28, 80, 224);;
+}
+
 .consultations-table {
     width: 90%;
     border-collapse: collapse;
@@ -101,6 +115,29 @@ body {
     background: rgba(100, 120, 140, 0.06);
 }
 
+.action {
+    background-color: rgb(50, 104, 252);
+    color: var(--color-base-bg);
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 5px 10px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 5px;
+}
+
+.action.view {
+    background-color: rgb(51, 151, 51);
+}
+
+.action.view:hover {
+    background-color: rgb(40, 121, 40);;
+    cursor: pointer;
+}
+
+.action.delete {
+    background-color: rgb(168, 53, 53);
+}
 
 /* FOOTER */
 #footer {
@@ -111,4 +148,43 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
+}
+
+.consultation-dialog {
+    border: none;
+    border-radius: 10px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    font-family: inherit;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.consultation-dialog::backdrop {
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(2px);
+}
+
+.consultation-dialog h3 {
+    margin-top: 0;
+    color: var(--color-primary);
+}
+
+.dialog-body p {
+    margin: 0.5em 0;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.2s ease;
+}
+.close-btn:hover {
+    color: var(--color-primary);
 }

@@ -21,16 +21,13 @@ include("database.php");
         </ul>
     </div>
 
-    <div class="pending-consultations-container">
-        <h3>Pending Consultations</h3>
-    </div>
-
     <h3>Consultation History</h3>
 
     <div class="consultations-table-container">
         <div class="consultations-actions">
-            <a>Add new consultation</a>
+            <a class="consultations action" href="#">Add new consultation</a>
         </div>
+
         <table class="consultations-table">
             <thead>
                 <tr>
@@ -58,10 +55,10 @@ include("database.php");
                             <td>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
                             <td>" . $row["PatientFirstName"] . " " . $row["PatientMiddleInit"] . ". " . $row["PatientLastName"] . "</td>
                             <td>" . $row["DocFirstName"] . " " . $row["DocMiddleInit"] . ". " . $row["DocLastName"] . "</td>
-                            <td>
-                                <a class='action view'>View</a>
-                                <a class='action edit'>Edit</a>
-                                <a class='action delete'>Delete</a>
+                            <td style='width:1%; white-space:nowrap;'>
+                                <a href='#' class='action view' data-id='" . $row["ConsultationID"] . "'>View</a>
+                                <a href='#' class='action edit'>Edit</a>
+                                <a href='#' class='action delete'>Delete</a>
                             </td>
                         </tr>";
                     }
@@ -69,9 +66,20 @@ include("database.php");
             </tbody>
         </table>
     </div>
-    
+
+    <!-- 🧩 Dialog modal -->
+    <dialog id="consultationDialog">
+        <div class="dialog-content">
+            <h3>Consultation Details</h3>
+            <div class="dialog-body"></div>
+            <button id="closeDialog">Close</button>
+        </div>
+    </dialog>
+
     <div id="footer">
         basta contact info
     </div>
+
+    <script src="./script.js"></script>
 </body>
 </html>
