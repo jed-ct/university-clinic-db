@@ -16,8 +16,22 @@ include("database.php");
         <div class="close-btn-div">
             <button class="close-btn" id="close-modal"><img src="./img/close.svg"></button>
         </div>
-        <p>jabol</p>
-        
+        <div class="consultation-details">
+            <h3>Consultation Details</h3>
+            <h4>Date: <span id="consultation-date"></span></h4>
+            <h4>Time: <span id="consultation-time"></span></h4>
+            <h4>Patient First Name: <span id="patient-first-name">weeeeeeeeeeeeeeeeee</span></h4>
+            <h4>Patient MI: <span id="patient-middle-initial"></span></h4>
+            <h4>Patient Last Name: <span id="patient-last-name"></span></h4>
+            <h4>Patient Age: <span id="patient-age"></span></h4>
+            <h4>Diagnosis: <span id="diagnosis"></span></h4>
+            <h4>Prescription: <span id="prescription"></span></h4>
+            <h4>Doctor: <span id="doctor-name"></span></h4>
+        </div>
+        <div class='consultation-modal-actions'>
+            <button class='action edit'>Edit</button>
+            <button class='action delete'>Delete</button>
+        </div>
     </div>
 </div>
 
