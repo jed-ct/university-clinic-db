@@ -29,7 +29,7 @@
         ?>
 
         <h3><?php echo $fetch['PatientFirstName']?> <?php echo $fetch['PatientLastName']?></h3>
-        <p><?php echo nl2br($fetch['PatientBirthday'])?></p>
+        <p>This page contains information about the patient hehehehehhehe</p>
 
         <?php
             }
