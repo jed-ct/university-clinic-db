@@ -12,8 +12,8 @@ viewButton.forEach((viewButton)=> {
 
         try {
             const response = await fetch(`get_consultation.php?id=${id}`);
-            const data = await response;
-            viewModalText.textContent = data;
+            const data = await response.json();
+            console.log(data.PatientLastName);
 
         } catch(error) {
             alert('not work')

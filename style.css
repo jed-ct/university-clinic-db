@@ -53,6 +53,7 @@ body {
     background-color: var(--color-primary-darker);
 }
 
+
 /* CONSULTATION TABLE */
 .consultations-table-container {
     display: flex;

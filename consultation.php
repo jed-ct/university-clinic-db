@@ -32,9 +32,9 @@ include("database.php");
         </ul>
     </div>
 
-    <h3>Consultation History</h3>
 
     <div class="consultations-table-container">
+        <div><h2 class='consultation-history'>Consultation History</h2></div>
         <div class="consultations-actions">
             <a class="consultations action" href="#">Add new consultation</a>
         </div>
