@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="header">
-        <a class="logo" href="./index.php">UPB HSO</a>
+        <a class="logo" href="./index.php">HSO</a>
         <ul class="links">
             <li><a href="./index.php">Home</a></li>
             <li><a href="./consultation.php">Consultations</a></li>
