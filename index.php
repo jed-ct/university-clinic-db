@@ -20,7 +20,11 @@
             <li><a href="#footer">Contact</a></li>
         </ul>
     </div>
-    hello
+    <div class='main-content-container'>
+        <div class='main-content'>
+            [Insert information about HSO]
+        </div>
+    </div>
     <div id="footer">
         basta contact info
     </div>

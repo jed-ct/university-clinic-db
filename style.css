@@ -53,6 +53,24 @@ body {
     background-color: var(--color-primary-darker);
 }
 
+.main-content-container {
+    height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 700px;
+    height: 300px;
+    border: 1px solid black;
+    background-color: white;
+}
+
+
 
 /* CONSULTATION TABLE */
 .consultations-table-container {
@@ -192,12 +210,12 @@ body {
   background-color: var(--color-primary-darker);
 }
 
-.consultation-details {
-    padding: 0 20px 0 20px;
+.modal-message {
+    padding: 20px;
     text-align: left;
 }
 
-.consultation-details span {
+.modal-message span {
     font-weight: 400;
 }
 
@@ -223,4 +241,12 @@ body {
 
 .action.delete:hover {
     background-color: rgb(209, 46, 46);
+}
+
+#delete-confirmation-modal {
+    display: none;
+}
+
+#delete-confirmation-modal .modal-message {
+    font-size: 1.2rem;
 }

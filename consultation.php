@@ -16,7 +16,7 @@ include("database.php");
         <div class="close-btn-div">
             <button class="close-btn" id="close-modal"><img src="./img/close.svg"></button>
         </div>
-        <div class="consultation-details">
+        <div class="modal-message">
             <h3>Consultation Details</h3>
             <h4>Date: <span id="consultation-date"></span></h4>
             <h4>Time: <span id="consultation-time"></span></h4>
@@ -29,8 +29,24 @@ include("database.php");
             <h4>Doctor: <span id="doctor-name"></span></h4>
         </div>
         <div class='consultation-modal-actions'>
-            <button class='action edit'>Edit</button>
-            <button class='action delete'>Delete</button>
+            <button class='action edit' data-id=''>Edit</button>
+            <button class='action delete' data-id=''>Delete</button>
+        </div>
+
+    </div>
+</div>
+
+<div id="delete-confirmation-modal" class='modal'>
+    <div class='modal-content'>
+        <div class="close-btn-div">
+            <button class="close-btn" id="close-modal"><img src="./img/close.svg"></button>
+        </div>
+        <div class='modal-message'>
+            Are you sure you want to delete this consultation? This cannot be undone.
+        </div>
+        <div class='consultation-modal-actions'>
+            <button class='action confirm-delete'>Yes</button>
+            <button class='action cancel-delete'>No</button>
         </div>
     </div>
 </div>
