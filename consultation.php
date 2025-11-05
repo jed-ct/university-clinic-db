@@ -25,6 +25,7 @@ include("database.php");
             <h4>Patient Last Name: <span id="patient-last-name"></span></h4>
             <h4>Patient Age: <span id="patient-age"></span></h4>
             <h4>Diagnosis: <span id="diagnosis"></span></h4>
+            <h4>Remarks: <span id="remarks"></span></h4>
             <h4>Prescription: <span id="prescription"></span></h4>
             <h4>Doctor: <span id="doctor-name"></span></h4>
         </div>

@@ -134,6 +134,53 @@ body {
     background: rgba(100, 120, 140, 0.06);
 }
 
+/* 📱 When screen is small, turn table rows into cards */
+@media (max-width: 768px) {
+    .consultations-table,
+    .consultations-table thead,
+    .consultations-table tbody,
+    .consultations-table th,
+    .consultations-table td,
+    .consultations-table tr {
+        display: block;
+        width: 100%;
+    }
+
+    .consultations-table thead {
+        display: none; /* hide table headers */
+    }
+
+    .consultations-table tr {
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background: #fff;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        padding: 10px;
+    }
+
+    .consultations-table td {
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 10px;
+        font-size: 0.95rem;
+    }
+
+    .consultations-table td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #555;
+    }
+
+    /* make the button full width for easier tap */
+    .consultations-table .action.view {
+        width: 100%;
+        margin-top: 8px;
+    }
+}
+
 .action {
     background-color: rgb(50, 104, 252);
     color: var(--color-base-bg);
@@ -187,6 +234,7 @@ body {
     text-align: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     min-width: 400px;
+    font-size: 0.8rem;
 }
 
 .close-btn-div {

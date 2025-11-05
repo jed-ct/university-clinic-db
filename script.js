@@ -24,6 +24,7 @@ viewButton.forEach((viewButton)=> {
             document.querySelector('#diagnosis').textContent = data.Diagnosis;
             document.querySelector('#prescription').textContent = data.Prescription;
             document.querySelector('#doctor-name').textContent = `${data.DocFirstName} ${data.DocMiddleInit}. ${data.DocLastName}`;
+            document.querySelector('#remarks').textContent = data.Remarks;
         } catch(error) {
             alert('not work')
         }

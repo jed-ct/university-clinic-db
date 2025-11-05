@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
                DATE_FORMAT(CONSULTATION.ConsultDateTime, '%l:%i %p') AS ConsultTime,
                PATIENT.PatientFirstName, PATIENT.PatientMiddleInit, PATIENT.PatientLastName,
                TIMESTAMPDIFF(YEAR, PATIENT.PatientBirthday, CONSULTATION.ConsultDateTime) AS PatientAge,
-               DIAGNOSIS.Diagnosis, PRESCRIPTION.Prescription,
+               DIAGNOSIS.Diagnosis, PRESCRIPTION.Prescription, CONSULTATION.Remarks,
                DOCTOR.DocFirstName, DOCTOR.DocMiddleInit, DOCTOR.DocLastName
         FROM CONSULTATION
         INNER JOIN PATIENT ON PATIENT.PatientID = CONSULTATION.PatientID
