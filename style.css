@@ -18,6 +18,8 @@ body {
 /* HEADER */
 .header {
     display: flex;
+    position: sticky;
+    top: 0;
     background-color: var(--color-primary);
     justify-content: space-between;
     align-items: center;
@@ -41,8 +43,7 @@ body {
 }
 
 .links a {
-    font-size: 1.25rem;
-    font-weight: 400;
+    font-weight: 600;
     text-decoration: none;
     color: var(--color-base-bg);
     display: block;
@@ -143,7 +144,6 @@ body {
     .consultations-table td,
     .consultations-table tr {
         display: block;
-        width: 100%;
     }
 
     .consultations-table thead {
@@ -174,11 +174,6 @@ body {
         color: #555;
     }
 
-    /* make the button full width for easier tap */
-    .consultations-table .action.view {
-        width: 100%;
-        margin-top: 8px;
-    }
 }
 
 .action {

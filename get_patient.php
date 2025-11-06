@@ -24,7 +24,7 @@
     <div>
         <?php
             if(ISSET($_REQUEST['id'])){
-                $query = mysqli_query($conn, "SELECT * FROM `Patient` WHERE `PatientID` = '$_REQUEST[id]'") or die(mysqli_error());
+                $query = mysqli_query($conn, "SELECT * FROM `Patient` WHERE `PatientID` = '$_REQUEST[id]'") or die(mysqli_error($conn));
                 $fetch = mysqli_fetch_array($query);
         ?>
 

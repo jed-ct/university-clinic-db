@@ -93,10 +93,10 @@ include("database.php");
                     
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>
-                            <td>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
-                            <td>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
-                            <td>" . $row["PatientFirstName"] . " " . $row["PatientMiddleInit"] . ". " . $row["PatientLastName"] . "</td>
-                            <td>" . $row["DocFirstName"] . " " . $row["DocMiddleInit"] . ". " . $row["DocLastName"] . "</td>
+                            <td data-label='Date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
+                            <td data-label='Time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
+                            <td data-label='Patient'>" . $row["PatientFirstName"] . " " . $row["PatientMiddleInit"] . ". " . $row["PatientLastName"] . "</td>
+                            <td data-label='Doctor'>" . $row["DocFirstName"] . " " . $row["DocMiddleInit"] . ". " . $row["DocLastName"] . "</td>
                             <td style='width:1%; white-space:nowrap;'>
                                 <button href='#' class='action view' data-id='" . $row["ConsultationID"] . "'>View</button>
                             </td>
