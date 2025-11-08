@@ -2,10 +2,16 @@ console.log('hello w');
 
 const viewButton = document.querySelectorAll('.action.view');
 const viewModal = document.querySelector('#consultation-modal');
+const addConsultationModal = document.querySelector('#add-consultation-modal');
 const deletionModal = document.querySelector('#delete-confirmation-modal');
-const viewModalCloseButton = document.querySelectorAll('.close-btn');
+const filterConsultationModal = document.querySelector('#filter-consultation-modal');
+const modalCloseButton = document.querySelectorAll('.close-btn');
 const deleteConsultationButton = document.querySelector('.action.delete');
+const filterConsultationButton = document.querySelector('#filter-consultation-btn')
 const confirmDeletionButton = document.querySelector('.action.confirm-delete');
+const addConsultationButton = document.querySelector('#add-consultation-btn');
+
+
 viewButton.forEach((viewButton)=> {
     viewButton.addEventListener("click", async ()=> {
         viewModal.style.display = 'flex';
@@ -38,15 +44,25 @@ confirmDeletionButton.addEventListener("click",async ()=> {
     deletionModal.style.display = 'none';
 })
 
+addConsultationButton.addEventListener("click", () => {
+    addConsultationModal.style.display = 'flex';
+})
+
+filterConsultationButton.addEventListener("click", () => {
+    filterConsultationModal.style.display = 'flex';
+})
+
 deleteConsultationButton.addEventListener("click", ()=> {
     deletionModal.style.display = 'flex';
     viewModal.style.display = 'none';
 });
 
-viewModalCloseButton.forEach((btn) => {
+modalCloseButton.forEach((btn) => {
     btn.addEventListener("click", ()=> {
         deletionModal.style.display = 'none';
         viewModal.style.display = 'none';
+        addConsultationModal.style.display = 'none';
+        filterConsultationModal.style.display = 'none';
     })
 })
 

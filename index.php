@@ -11,7 +11,12 @@
 </head>
 <body>
     <div class="header">
-        <a class="logo" href="./index.php">HSO</a>
+        <a id="hyperlink-logo" href="./index.php">
+            <div id='logo'>
+                <img id='logo-img' src='./img/logo.svg'>
+                HSO
+            </div>
+        </a>
         <ul class="links">
             <li><a href="./index.php">Home</a></li>
             <li><a href="./consultation.php">Consultations</a></li>
@@ -20,6 +25,7 @@
             <li><a href="#footer">Contact</a></li>
         </ul>
     </div>
+    
     <div class='main-content-container'>
         <div class='main-content'>
             [Insert information about HSO]

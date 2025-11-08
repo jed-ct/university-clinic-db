@@ -12,13 +12,18 @@
 </head>
 <body>
     <div class="header">
-        <a class="logo" href="./index.php">HSO</a>
+        <a id="hyperlink-logo" href="./index.php">
+            <div id='logo'>
+                <img id='logo-img' src='./img/logo.svg'>
+                HSO
+            </div>
+        </a>
         <ul class="links">
             <li><a href="./index.php">Home</a></li>
             <li><a href="./consultation.php">Consultations</a></li>
             <li><a href="./patient.php">Patients</a></li>
             <li><a href="./staff.php">Staff</a></li>
-            <li><a href="">Contact</a></li>
+            <li><a href="#footer">Contact</a></li>
         </ul>
     </div>
 

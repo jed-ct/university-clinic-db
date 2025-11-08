@@ -12,6 +12,36 @@ include("database.php");
 </head>
 <body>
 
+<div id="add-consultation-modal" class="modal">
+    <div class="modal-content">
+        <div class="close-btn-div">
+            <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
+        </div>
+        <div class="modal-message">
+
+        </div>
+        <div class='consultation-modal-actions'>
+            <button class='action add' data-id=''>Add</button>
+        </div>
+
+    </div>
+</div>
+
+<div id="filter-consultation-modal" class="modal">
+    <div class="modal-content">
+        <div class="close-btn-div">
+            <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
+        </div>
+        <div class="modal-message">
+
+        </div>
+        <div class='consultation-modal-actions'>
+            <button class='action' data-id=''>Filter</button>
+        </div>
+
+    </div>
+</div>
+
 <div id="consultation-modal" class="modal">
     <div class="modal-content">
         <div class="close-btn-div">
@@ -38,6 +68,21 @@ include("database.php");
     </div>
 </div>
 
+<div id="edit-consultation-modal" class="modal">
+    <div class="modal-content">
+        <div class="close-btn-div">
+            <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
+        </div>
+        <div class="modal-message">
+
+        </div>
+        <div class='consultation-modal-actions'>
+            <button class='action add' data-id=''>Add</button>
+        </div>
+
+    </div>
+</div>
+
 <div id="delete-confirmation-modal" class='modal'>
     <div class='modal-content'>
         <div class="close-btn-div">
@@ -54,7 +99,12 @@ include("database.php");
 </div>
 
     <div class="header">
-        <a class="logo" href="./index.php">HSO</a>
+        <a id="hyperlink-logo" href="./index.php">
+            <div id='logo'>
+                <img id='logo-img' src='./img/logo.svg'>
+                HSO
+            </div>
+        </a>
         <ul class="links">
             <li><a href="./index.php">Home</a></li>
             <li><a href="./consultation.php">Consultations</a></li>
@@ -68,8 +118,8 @@ include("database.php");
     <div class="consultations-table-container">
         <div><h2 class='consultation-history'>Consultation History</h2></div>
         <div class="consultations-actions">
-            <button class="consultations action" href="#"><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>
-            <button class='consultations action'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
+            <button class="consultations action" id='add-consultation-btn' href="#"><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>
+            <button class='consultations action' id='filter-consultation-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
         </div>
 
         <table class="consultations-table">
