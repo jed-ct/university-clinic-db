@@ -1,20 +1,22 @@
 console.log('hello w');
 
 const viewButton = document.querySelectorAll('.action.view');
-const viewModal = document.querySelector('#consultation-modal');
+const viewConsultationModal = document.querySelector('#consultation-modal');
 const addConsultationModal = document.querySelector('#add-consultation-modal');
 const deletionModal = document.querySelector('#delete-confirmation-modal');
 const filterConsultationModal = document.querySelector('#filter-consultation-modal');
+const editConsultationModal = document.querySelector('#edit-consultation-modal');
 const modalCloseButton = document.querySelectorAll('.close-btn');
 const deleteConsultationButton = document.querySelector('.action.delete');
-const filterConsultationButton = document.querySelector('#filter-consultation-btn')
+const filterConsultationButton = document.querySelector('#filter-consultation-btn');
+const editConsultationButton = document.querySelector('.action.edit');
 const confirmDeletionButton = document.querySelector('.action.confirm-delete');
 const addConsultationButton = document.querySelector('#add-consultation-btn');
 
 
 viewButton.forEach((viewButton)=> {
     viewButton.addEventListener("click", async ()=> {
-        viewModal.style.display = 'flex';
+        viewConsultationModal.style.display = 'flex';
         const id = viewButton.dataset.id;
         deleteConsultationButton.dataset.id = id;
         try {
@@ -52,16 +54,22 @@ filterConsultationButton.addEventListener("click", () => {
     filterConsultationModal.style.display = 'flex';
 })
 
+editConsultationButton.addEventListener("click", ()=> {
+    editConsultationModal.style.display = 'flex';
+    viewConsultationModal.style.display = 'none';
+})
+
 deleteConsultationButton.addEventListener("click", ()=> {
     deletionModal.style.display = 'flex';
-    viewModal.style.display = 'none';
+    viewConsultationModal.style.display = 'none';
 });
 
 modalCloseButton.forEach((btn) => {
     btn.addEventListener("click", ()=> {
         deletionModal.style.display = 'none';
-        viewModal.style.display = 'none';
+        viewConsultationModal.style.display = 'none';
         addConsultationModal.style.display = 'none';
+        editConsultationModal.style.display = 'none';
         filterConsultationModal.style.display = 'none';
     })
 })
