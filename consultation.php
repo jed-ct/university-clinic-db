@@ -100,9 +100,9 @@ include("database.php");
 
     <div class="header">
         <a id="hyperlink-logo" href="./index.php">
-            <div id='logo'>
+            <div class='header-img' id='logo'>
                 <img id='logo-img' src='./img/logo.svg'>
-                HSO
+                TBAClinic
             </div>
         </a>
         <ul class="links">
@@ -112,6 +112,7 @@ include("database.php");
             <li><a href="./staff.php">Staff</a></li>
             <li><a href="#footer">Contact</a></li>
         </ul>
+        <button id='mobile-menu-btn'><img class='header-img' src='./img/menu.svg'></button>
     </div>
 
 
