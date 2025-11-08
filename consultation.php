@@ -119,7 +119,7 @@ include("database.php");
     <div class="consultations-table-container">
         <div><h2 class='consultation-history'>Consultation History</h2></div>
         <div class="consultations-actions">
-            <button class="consultations action" id='add-consultation-btn' href="#"><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>
+            <button class="consultations action" id='add-consultation-btn'><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>
             <button class='consultations action' id='filter-consultation-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
         </div>
 
