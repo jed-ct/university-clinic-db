@@ -8,13 +8,14 @@ include("database.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultation History</title>
     <link rel="stylesheet" href="./style.css">
+    <script src="https://kit.fontawesome.com/ea8c838e77.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <div id="consultation-modal" class="modal">
     <div class="modal-content">
         <div class="close-btn-div">
-            <button class="close-btn" id="close-modal"><img src="./img/close.svg"></button>
+            <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
         </div>
         <div class="modal-message">
             <h3>Consultation Details</h3>
@@ -40,7 +41,7 @@ include("database.php");
 <div id="delete-confirmation-modal" class='modal'>
     <div class='modal-content'>
         <div class="close-btn-div">
-            <button class="close-btn" id="close-modal"><img src="./img/close.svg"></button>
+            <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
         </div>
         <div class='modal-message'>
             Are you sure you want to delete this consultation? This cannot be undone.
@@ -67,7 +68,8 @@ include("database.php");
     <div class="consultations-table-container">
         <div><h2 class='consultation-history'>Consultation History</h2></div>
         <div class="consultations-actions">
-            <a class="consultations action" href="#">Add new consultation</a>
+            <button class="consultations action" href="#"><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>
+            <button class='consultations action'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
         </div>
 
         <table class="consultations-table">

@@ -2,8 +2,9 @@
 
 :root {
     --color-base-bg: #F9FAF8;
-    --color-primary: #662222;
-    --color-primary-darker: #3f1515;
+    --color-primary:  	#006666;
+    --color-primary-darker: #004c4c;
+    --color-accent: #008080;
 }
 
 body {
@@ -37,7 +38,6 @@ body {
     display: flex;
     list-style: none;
     align-items: center;
-    gap: 12px;
     margin: 0;
     padding: 0;
 }
@@ -78,17 +78,18 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .consultations-actions {
     width: 90%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .consultations.action {
-    background-color: rgb(50, 104, 252);
-    color: var(--color-base-bg);
-    font-weight: bold;
-    padding: 10px 20px;
+    padding: 10px;
     text-decoration: none;
     display: inline-block;
     border-radius: 10px;
@@ -101,13 +102,13 @@ body {
 .consultations-table {
     width: 90%;
     border-collapse: collapse;
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border-radius: 8px;
     overflow: hidden;
     margin: 20px;
     margin-top: 10px;
     background-color: #fff;
-    font-size: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
 .consultations-table thead {
@@ -137,6 +138,14 @@ body {
 
 /* 📱 When screen is small, turn table rows into cards */
 @media (max-width: 768px) {
+    .links {
+        display: none;
+    }
+
+    .consultations.action span {
+        display: none;
+    }
+
     .consultations-table,
     .consultations-table thead,
     .consultations-table tbody,
@@ -144,6 +153,7 @@ body {
     .consultations-table td,
     .consultations-table tr {
         display: block;
+        box-shadow: none;
     }
 
     .consultations-table thead {
@@ -177,7 +187,7 @@ body {
 }
 
 .action {
-    background-color: rgb(50, 104, 252);
+    background-color: var(--color-accent);
     color: var(--color-base-bg);
     font-weight: bold;
     font-size: 1rem;
@@ -187,6 +197,7 @@ body {
     border-radius: 5px;
     border: none;
     cursor: pointer;
+    margin: 0;
 }
 
 .action.view {
@@ -228,7 +239,8 @@ body {
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    min-width: 400px;
+    min-width: 200px;
+    margin: 20px;
     font-size: 0.8rem;
 }
 
@@ -238,6 +250,10 @@ body {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     background-color: var(--color-primary);
+}
+
+.btn-img {
+    margin: 0;
 }
 
 .close-btn {
@@ -270,7 +286,6 @@ body {
 }
 
 .action.edit {
-    font-size: 1.2rem;
 }
 
 .action.edit:hover {
@@ -278,7 +293,6 @@ body {
 }
 
 .action.delete {
-    font-size: 1.2rem;
     background-color: rgb(245, 54, 54);
 }
 
@@ -293,3 +307,4 @@ body {
 #delete-confirmation-modal .modal-message {
     font-size: 1.2rem;
 }
+
