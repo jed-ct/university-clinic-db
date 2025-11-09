@@ -120,7 +120,7 @@ include("database.php");
     <div class="consultations-table-container">
         <div><h2 class='consultation-history'>Consultation History</h2></div>
             <div class="consultation-search">
-        <input type="text" id="consultation-search-textbox" placeholder="Search by patient or doctor"> 
+        <input type="text" id="consultation-searchbox" placeholder="Search by patient or doctor"> 
     </div>
         <div class="consultations-actions">
             <button class="consultations action" id='add-consultation-btn'><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>

@@ -102,7 +102,7 @@ body {
     justify-content: center;
     padding: 30px;
 }
-#consultation-search-textbox {
+#consultation-searchbox {
     width: min(800px, 70vw);
     padding: 6px 14px 6px 38px;
     font-size: 1.2rem;

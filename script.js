@@ -12,6 +12,7 @@ const filterConsultationButton = document.querySelector('#filter-consultation-bt
 const editConsultationButton = document.querySelector('.action.edit');
 const confirmDeletionButton = document.querySelector('.action.confirm-delete');
 const addConsultationButton = document.querySelector('#add-consultation-btn');
+const consultationSearchBox = document.querySelector('#consultation-searchbox');
 
 
 viewButton.forEach((viewButton)=> {
@@ -52,16 +53,20 @@ addConsultationButton.addEventListener("click", () => {
 
 filterConsultationButton.addEventListener("click", () => {
     filterConsultationModal.style.display = 'flex';
-})
+});
 
 editConsultationButton.addEventListener("click", ()=> {
     editConsultationModal.style.display = 'flex';
     viewConsultationModal.style.display = 'none';
-})
+});
 
 deleteConsultationButton.addEventListener("click", ()=> {
     deletionModal.style.display = 'flex';
     viewConsultationModal.style.display = 'none';
+});
+
+consultationSearchBox.addEventListener("input", ()=> {
+    console.log(consultationSearchBox.value);
 });
 
 modalCloseButton.forEach((btn) => {
