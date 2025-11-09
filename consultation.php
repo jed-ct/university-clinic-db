@@ -93,7 +93,7 @@ include("database.php");
         </div>
         <div class='consultation-modal-actions'>
             <button class='action confirm-delete'>Yes</button>
-            <button class='action cancel-delete'>No</button>
+            <button class='close-btn action'>No</button>
         </div>
     </div>
 </div>
@@ -127,7 +127,7 @@ include("database.php");
             <button class='consultations action' id='filter-consultation-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
         </div>
 
-        <table class="consultations-table">
+        <table id='consultations-table' class="consultations-table">
             <thead>
                 <tr>
                     <th>Date</th>
