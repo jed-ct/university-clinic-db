@@ -115,13 +115,13 @@ include("database.php");
         <button id='mobile-menu-btn'><img class='header-img' src='./img/menu.svg'></button>
     </div>
 
-    <div class="consultation-search">
-        <input type="text" id="consultation-search-textbox" placeholder="Search by patient or doctor"> 
-    </div>
 
 
     <div class="consultations-table-container">
         <div><h2 class='consultation-history'>Consultation History</h2></div>
+            <div class="consultation-search">
+        <input type="text" id="consultation-search-textbox" placeholder="Search by patient or doctor"> 
+    </div>
         <div class="consultations-actions">
             <button class="consultations action" id='add-consultation-btn'><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>
             <button class='consultations action' id='filter-consultation-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
@@ -140,20 +140,28 @@ include("database.php");
             <tbody>
                 <?php
                     $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime,
-                                   PATIENT.PatientFirstName, PATIENT.PatientMiddleInit, PATIENT.PatientLastName,
-                                   DOCTOR.DocFirstName, DOCTOR.DocMiddleInit, DOCTOR.DocLastName
-                            FROM PATIENT
-                            INNER JOIN CONSULTATION ON PATIENT.PatientID = CONSULTATION.PatientID
-                            INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
-                            ORDER BY CONSULTATION.ConsultDateTime DESC";
+                    CONCAT(
+                        PATIENT.PatientFirstName, ' ',
+                        IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
+                        PATIENT.PatientLastName
+                    ) AS PatientFullName,
+                    CONCAT(
+                        DOCTOR.DocFirstName, ' ',
+                        IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
+                        DOCTOR.DocLastName
+                    ) AS DoctorFullName
+                    FROM PATIENT
+                    INNER JOIN CONSULTATION ON PATIENT.PatientID = CONSULTATION.PatientID
+                    INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
+                    ORDER BY CONSULTATION.ConsultDateTime DESC;";
                     $result = $conn->query($sql); 
                     
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>
                             <td data-label='Date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
                             <td data-label='Time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
-                            <td data-label='Patient'>" . $row["PatientFirstName"] . " " . $row["PatientMiddleInit"] . ". " . $row["PatientLastName"] . "</td>
-                            <td data-label='Doctor'>" . $row["DocFirstName"] . " " . $row["DocMiddleInit"] . ". " . $row["DocLastName"] . "</td>
+                            <td data-label='Patient'>" . $row["PatientFullName"] . "</td>
+                            <td data-label='Doctor'>" . $row["DoctorFullName"] . "</td>
                             <td style='width:1%; white-space:nowrap;'>
                                 <button href='#' class='action view' data-id='" . $row["ConsultationID"] . "'>View</button>
                             </td>

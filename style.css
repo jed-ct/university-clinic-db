@@ -100,7 +100,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 2;
     padding: 30px;
 }
 #consultation-search-textbox {
@@ -331,7 +330,8 @@ body {
 }
 
 .modal-message {
-    padding: 20px;
+    margin: 0;
+    padding: 15px;
     text-align: left;
 }
 
@@ -340,7 +340,7 @@ body {
 }
 
 .consultation-modal-actions {
-    margin: 0 20px 10px 0;
+    margin: 0 10px 10px 0;
     display: flex;
     justify-content: flex-end;
     gap: 10px;
