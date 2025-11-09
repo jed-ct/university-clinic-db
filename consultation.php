@@ -115,6 +115,10 @@ include("database.php");
         <button id='mobile-menu-btn'><img class='header-img' src='./img/menu.svg'></button>
     </div>
 
+    <div class="consultation-search">
+        <input type="text" id="consultation-search-textbox" placeholder="Search by patient or doctor"> 
+    </div>
+
 
     <div class="consultations-table-container">
         <div><h2 class='consultation-history'>Consultation History</h2></div>
