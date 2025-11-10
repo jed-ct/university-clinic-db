@@ -12,13 +12,36 @@ include("database.php");
 </head>
 <body>
 
+<?php
+if (empty($_GET)) {
+    header("Location: ?page=1");
+    exit;
+}
+?>
+
 <div id="add-consultation-modal" class="modal">
     <div class="modal-content">
         <div class="close-btn-div">
             <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
         </div>
         <div class="modal-message">
-
+            <form method='POST'>
+                <fieldset id='patient-fieldset'>
+                    <legend>Patient</legend>
+                    <div class="forms-input">
+                        <label for="patient_first_name">First Name</label>
+                        <input type="text" name="patient_first_name" id="patient_first_name" pattern="^[A-Za-z]+$">
+                    </div>
+                    <div class="forms-input">
+                        <label for="patient_first_name">MI</label>
+                        <input type="text" name="patient_first_name" id="patient_first_name" pattern="^[A-Za-z]+$">
+                    </div>
+                    <div class="forms-input">
+                        <label for="patient_first_name">Last Name</label>
+                        <input type="text" name="patient_first_name" id="patient_first_name" pattern="^[A-Za-z]+$">
+                    </div>        
+                </fieldset>                
+            </form>
         </div>
         <div class='consultation-modal-actions'>
             <button class='action add' data-id=''>Add</button>
@@ -172,7 +195,7 @@ include("database.php");
         </table>
         <div class="pagination">
             <a href="#" class="prev">&laquo;</a>
-            <a href="#" class="active">1</a>
+            <a href="consultation.php?page=1" class="active">1</a>
             <a href="#">2</a>
             <a href="#">3</a>
             <a href="#" class="next">&raquo;</a>
