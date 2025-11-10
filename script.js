@@ -66,7 +66,7 @@ deleteConsultationButton.addEventListener("click", ()=> {
 });
 
 consultationSearchBox.addEventListener("input", ()=> {
-    
+
 });
 
 modalCloseButton.forEach((btn) => {
@@ -77,9 +77,12 @@ modalCloseButton.forEach((btn) => {
         editConsultationModal.style.display = 'none';
         filterConsultationModal.style.display = 'none';
     })
-})
+});
 
-
+function updateConsultationTable(tableData) {
+    const table = document.querySelector('#consultations-table tbody');
+    let row = table.insertRow();
+}
 
 function clearTableBody(tableId) {
     const table = document.querySelector(tableId);
