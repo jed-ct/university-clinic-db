@@ -286,6 +286,10 @@ body {
     .modal-content {
         font-size: 0.8rem;
     }
+    #add-consultation-form fieldset {
+        flex-direction: column;
+        font-size: 1rem;
+    }
 
 }
 
@@ -347,8 +351,11 @@ body {
 }
 
 .close-btn-div {
+    padding-left: 10px;
+    color: var(--color-base-bg);
     display: flex;
-    justify-content: flex-end;
+    align-items: center;
+    justify-content: space-between;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     background-color: var(--color-primary);
@@ -408,11 +415,16 @@ body {
     font-size: 1rem;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+}
 
 .forms-input {
     display: flex;
     flex-direction: column;
     color: rgb(70, 70, 70);
+    margin: 0;
 }
 
 .forms-input label {
@@ -420,15 +432,23 @@ body {
 }
 
 .forms-input input {
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-  padding: 5px;
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    padding: 5px;
 }
 
-#patient-fieldset {
+input:invalid {
+    border-color: rgb(182, 54, 54);
+}
+
+#patient_mi {
+    max-width: 50px;
+}
+
+#add-consultation-form fieldset {
     display: flex;
     gap: 10px;
 }

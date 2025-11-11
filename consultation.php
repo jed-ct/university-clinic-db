@@ -22,24 +22,29 @@ if (empty($_GET)) {
 <div id="add-consultation-modal" class="modal">
     <div class="modal-content">
         <div class="close-btn-div">
+            <div>Add new consultation</div>
             <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
         </div>
         <div class="modal-message">
-            <form method='POST'>
+            <form id='add-consultation-form' method='POST'>
                 <fieldset id='patient-fieldset'>
                     <legend>Patient</legend>
                     <div class="forms-input">
-                        <label for="patient_first_name">First Name</label>
-                        <input type="text" name="patient_first_name" id="patient_first_name" pattern="^[A-Za-z]+$">
+                        <label for="patient_first_name">*First Name</label>
+                        <input type="text" name="patientFirstName" id="patient_first_name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
                     </div>
                     <div class="forms-input">
-                        <label for="patient_first_name">MI</label>
-                        <input type="text" name="patient_first_name" id="patient_first_name" pattern="^[A-Za-z]+$">
+                        <label for="patient_mi">MI</label>
+                        <input type="text" name="patientMiddleInit" id="patient_mi" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="2">
                     </div>
                     <div class="forms-input">
-                        <label for="patient_first_name">Last Name</label>
-                        <input type="text" name="patient_first_name" id="patient_first_name" pattern="^[A-Za-z]+$">
+                        <label for="patient_last_name">*Last Name</label>
+                        <input type="text" name="patientLastName" id="patient_last_name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
                     </div>        
+                </fieldset>
+                <fieldset>
+                    <legend>Consultation</legend>
+
                 </fieldset>                
             </form>
         </div>
