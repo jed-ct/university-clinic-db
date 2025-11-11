@@ -52,7 +52,15 @@
     <h2>Search Results for <?php echo $_POST["patientsearch"]; ?></h2>
     <hr/>
     <?php
-        $query = mysqli_query($conn, "SELECT * FROM `PATIENT` WHERE `PatientFirstName` LIKE '%$searchname%' OR `PatientLastName` LIKE '%$searchname%' ORDER BY `PatientID`") or die(mysqli_error($conn));
+        $query = mysqli_query($conn, "SELECT * FROM `PATIENT` WHERE 
+        `PatientFirstName` LIKE '%$searchname%' 
+        OR `PatientLastName` LIKE '%$searchname%' 
+        OR CONCAT(PatientFirstName, ' ', PatientLastName) LIKE '%$searchname%' 
+        OR CONCAT(PatientFirstName, ' ', PatientMiddleInit, ' ', PatientLastName) LIKE '%$searchname%' 
+        OR CONCAT(PatientFirstName, ' ', PatientMiddleInit) LIKE '%$searchname%' 
+        OR CONCAT(PatientMiddleInit, ' ', PatientLastName) LIKE '%$searchname%' 
+        OR CONCAT(PatientLastName,' ', PatientFirstName) LIKE '%$searchname%' 
+        ORDER BY `PatientID`") or die(mysqli_error($conn));
         while($fetch = mysqli_fetch_array($query)){
     ?>
     <div style="word-wrap:break-word;">
