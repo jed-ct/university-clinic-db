@@ -58,6 +58,7 @@ if (empty($_GET)) {
 <div id="filter-consultation-modal" class="modal">
     <div class="modal-content">
         <div class="close-btn-div">
+            <div>Filter Consultation</div>
             <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
         </div>
         <div class="modal-message">
