@@ -44,27 +44,37 @@
 </div>
 
 <?php
-    if(ISSET($_POST['search'])){ 
-    $searchname = $_POST['patientsearch'];
+    if (isset($_POST['search'])) {
+        $searchname = htmlspecialchars($_POST['patientsearch']);
+        $search_term = "%" . $searchname . "%";
+        $sql = "SELECT * FROM `PATIENT` WHERE 
+            `PatientFirstName` LIKE ? 
+            OR `PatientLastName` LIKE ? 
+            OR CONCAT(PatientFirstName, ' ', PatientLastName) LIKE ? 
+            OR CONCAT(PatientFirstName, ' ', PatientMiddleInit, ' ', PatientLastName) LIKE ? 
+            OR CONCAT(PatientFirstName, ' ', PatientMiddleInit) LIKE ? 
+            OR CONCAT(PatientMiddleInit, ' ', PatientLastName) LIKE ? 
+            OR CONCAT(PatientLastName,' ', PatientFirstName) LIKE ? 
+            ORDER BY `PatientID`";
+
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "sssssss", 
+            $search_term, $search_term, $search_term, $search_term, 
+            $search_term, $search_term, $search_term);
+        mysqli_stmt_execute($stmt);
+        $query = mysqli_stmt_get_result($stmt);
 ?>
 
 <div class = "patient-search-results">
-    <h2>Search Results for <?php echo $_POST["patientsearch"]; ?></h2>
+    <h2>Search Results for <?php echo $searchname; ?></h2>
     <hr/>
     <?php
-        $query = mysqli_query($conn, "SELECT * FROM `PATIENT` WHERE 
-        `PatientFirstName` LIKE '%$searchname%' 
-        OR `PatientLastName` LIKE '%$searchname%' 
-        OR CONCAT(PatientFirstName, ' ', PatientLastName) LIKE '%$searchname%' 
-        OR CONCAT(PatientFirstName, ' ', PatientMiddleInit, ' ', PatientLastName) LIKE '%$searchname%' 
-        OR CONCAT(PatientFirstName, ' ', PatientMiddleInit) LIKE '%$searchname%' 
-        OR CONCAT(PatientMiddleInit, ' ', PatientLastName) LIKE '%$searchname%' 
-        OR CONCAT(PatientLastName,' ', PatientFirstName) LIKE '%$searchname%' 
-        ORDER BY `PatientID`") or die(mysqli_error($conn));
-        while($fetch = mysqli_fetch_array($query)){
+        while ($fetch = mysqli_fetch_array($query)) {
     ?>
     <div style="word-wrap:break-word;">
-        <a href="get_patient.php?id=<?php echo $fetch['PatientID']?>"><h4><?php echo $fetch['PatientFirstName']?> <?php echo $fetch['PatientLastName']?></h4></a>
+        <a href="get_patient.php?id=<?php echo $fetch['PatientID']?>">
+            <h4><?php echo htmlspecialchars($fetch['PatientFirstName'])?> <?php echo htmlspecialchars($fetch['PatientLastName'])?></h4>
+        </a>
     </div>
     <hr />
     <?php
@@ -72,7 +82,7 @@
     ?>
 </div>
 <?php
-}
+    }
 ?>
 
     <div id="footer">
