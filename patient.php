@@ -3,19 +3,19 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Information</title>
     <link rel="stylesheet" href="./style.css">
+     <script src="https://kit.fontawesome.com/ea8c838e77.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="header">
         <a id="hyperlink-logo" href="./index.php">
             <div class='header-img' id='logo'>
                 <img id='logo-img' src='./img/logo.svg'>
-                TBAClinic
+                TBAClinic 
             </div>
         </a>
         <ul class="links">
@@ -28,11 +28,19 @@
         <button id='mobile-menu-btn'><img class='header-img' src='./img/menu.svg'></button>
     </div>
 
-<div class="search-container">
-    <form method="POST" value="<?php echo isset($_POST['patientsearch']) ? $_POST['patientsearch'] : '' ?>">
-      <input type="text" placeholder="Search patient..." name="patientsearch">
-      <button type="submit" name = "search"><i class="fa fa-search"></i></button>
-    </form>
+ <div class="consultations-table-container">
+        <div><h2 class='consultation-history'>Patient Information</h2></div>
+        <div class="consultations-actions">
+            <button class="consultations action" id='add-consultation-btn'><i class="fa-solid fa-plus"></i> <span>Add new patient</span></button>
+            <button class='consultations action' id='filter-consultation-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
+        </div>
+        <div class="patient-search">
+                <form method="POST" value="<?php echo isset($_POST['patientsearch']) ? $_POST['patientsearch'] : '' ?>">
+                <input type="text" id ="patient-searchbox" placeholder="Search patient name..." name="patientsearch">
+                <button type="submit" name = "search"></button>
+                </form>
+        </div>
+        
 </div>
 
 <?php
@@ -40,7 +48,7 @@
     $searchname = $_POST['patientsearch'];
 ?>
 
-<div>
+<div class = "patient-search-results">
     <h2>Search Results for <?php echo $_POST["patientsearch"]; ?></h2>
     <hr/>
     <?php
