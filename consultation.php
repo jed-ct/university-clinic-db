@@ -73,10 +73,10 @@ if (empty($_GET)) {
 <div id="consultation-modal" class="modal">
     <div class="modal-content">
         <div class="close-btn-div">
+            <div>Consultation Details</div>
             <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
         </div>
         <div class="modal-message">
-            <h3>Consultation Details</h3>
             <h4>Date: <span id="consultation-date"></span></h4>
             <h4>Time: <span id="consultation-time"></span></h4>
             <h4>Patient First Name: <span id="patient-first-name">weeeeeeeeeeeeeeeeee</span></h4>

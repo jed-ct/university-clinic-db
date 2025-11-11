@@ -352,6 +352,7 @@ body {
 
 .close-btn-div {
     padding-left: 10px;
+    font-weight: 600;
     color: var(--color-base-bg);
     display: flex;
     align-items: center;
@@ -382,6 +383,14 @@ body {
     margin: 0;
     padding: 15px;
     text-align: left;
+}
+
+.modal-message h4 {
+    margin-bottom: 0;
+}
+
+.modal-message h4:first-child {
+    margin-top: 0;
 }
 
 .modal-message span {
