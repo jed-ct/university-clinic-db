@@ -460,10 +460,12 @@ input:invalid {
 
 #add-consultation-form fieldset {
     display: flex;
+    margin: 0;
 }
 
 #patient-fieldset, #doctor-fieldset {
     display: flex;
+    flex-direction: column;
     gap: 10px;
 }
 

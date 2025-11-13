@@ -46,27 +46,19 @@ if (empty($_GET)) {
                 <fieldset id='patient-fieldset'>
                     <legend>Patient</legend>
                     <div class="forms-input">
-                        <label for="patient_first_name">*First Name</label>
-                        <input type="text" name="patientFirstName" id="patient_first_name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        <label for="patient-name">Patient Name *</label>
+                        <input type="text" name="PatientName" id="patient-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
                     </div>
-                    <div class="forms-input">
-                        <label for="patient_mi">MI</label>
-                        <input type="text" name="patientMiddleInit" id="patient_mi" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="2">
-                    </div>
-                    <div class="forms-input">
-                        <label for="patient_last_name">*Last Name</label>
-                        <input type="text" name="patientLastName" id="patient_last_name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
-                    </div>        
                 </fieldset>
 
                 <fieldset id='consultation-fieldset'>
                     <legend>Consultation</legend>
                         <div class="forms-input">
-                            <label for="diagnosis">*Diagnosis</label>
+                            <label for="diagnosis">Diagnosis *</label>
                             <input type="text" name="Diagnosis" id="diagnosis" maxlength="64">
                         </div>
                         <div class="forms-input">
-                            <label for="prescription">Prescription</label>
+                            <label for="prescription">Prescription *</label>
                             <input type="text" name="Diagnosis" id="diagnosis" maxlength="64">
                         </div>
                         <div class="forms-input">
@@ -78,23 +70,15 @@ if (empty($_GET)) {
                 <fieldset id='doctor-fieldset'>
                     <legend>Doctor</legend>
                     <div class="forms-input">
-                        <label for="patient_first_name">*First Name</label>
-                        <input type="text" name="patientFirstName" id="patient_first_name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
-                    </div>
-                    <div class="forms-input">
-                        <label for="patient_mi">MI</label>
-                        <input type="text" name="patientMiddleInit" id="patient_mi" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="2">
-                    </div>
-                    <div class="forms-input">
-                        <label for="patient_last_name">*Last Name</label>
-                        <input type="text" name="patientLastName" id="patient_last_name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
-                    </div>        
+                        <label for="doctor-name">Doctor Name *</label>
+                        <input type="text" name="DoctorName" id="doctor-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                    </div>     
                 </fieldset>
 
             </form>
         </div>
         <div class='consultation-modal-actions'>
-            <button class='action add' data-id=''>Add</button>
+            <button class='action add' type='submit' form='add-consultation-form'>Add</button>
         </div>
 
     </div>
