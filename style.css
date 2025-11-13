@@ -436,8 +436,9 @@ form {
     margin: 0;
 }
 
-.forms-input label {
+label {
     font-weight: 500;
+    color: rgb(70, 70, 70);
 }
 
 .forms-input input {
@@ -460,4 +461,31 @@ input:invalid {
 #add-consultation-form fieldset {
     display: flex;
     gap: 10px;
+}
+
+#is-current-date-time-container {
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
+#date-time-fieldset {
+    display: flex;
+    flex-direction: column;
+}
+
+#set-date-time-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+legend {
+    font-size: 0.8rem;
+}
+
+#consultation-fieldset {
+    display: flex;
+    flex-direction: column;
 }

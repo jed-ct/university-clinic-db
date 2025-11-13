@@ -13,6 +13,7 @@ const editConsultationButton = document.querySelector('.action.edit');
 const confirmDeletionButton = document.querySelector('.action.confirm-delete');
 const addConsultationButton = document.querySelector('#add-consultation-btn');
 const consultationSearchBox = document.querySelector('#consultation-searchbox');
+const isCurrentDateTimeCheckbox = document.querySelector('#is-current-date-time');
 
 
 viewButton.forEach((viewButton)=> {
@@ -64,6 +65,20 @@ deleteConsultationButton.addEventListener("click", ()=> {
     deletionModal.style.display = 'flex';
     viewConsultationModal.style.display = 'none';
 });
+
+isCurrentDateTimeCheckbox.addEventListener("change", ()=> {
+    const isChecked = isCurrentDateTimeCheckbox.checked;
+    if (isChecked) {
+        console.log('check')
+        document.querySelector('#set-consultation-date').setAttribute('disabled', 0);
+        document.querySelector('#set-consultation-time').setAttribute('disabled', 0);
+    }
+    else {
+        console.log('fuck yU');
+        document.querySelector('#set-consultation-date').removeAttribute('disabled');
+        document.querySelector('#set-consultation-time').removeAttribute('disabled');
+    }
+})
 
 consultationSearchBox.addEventListener("input", ()=> {
 

@@ -27,6 +27,22 @@ if (empty($_GET)) {
         </div>
         <div class="modal-message">
             <form id='add-consultation-form' method='POST'>
+
+                <fieldset id='date-time-fieldset'>
+                    <legend>Date and Time</legend>
+                    <div id='is-current-date-time-container'>
+                        <label for="is-current-date-time">Current time and date</label>
+                        <input type='checkbox' id="is-current-date-time" checked>
+                    </div>
+                    <div id='set-date-time-container'>
+                        <label for="setConsultationDate">Date</label>
+                        <input type="date" name="ConsultationDate" id="set-consultation-date" disabled>
+
+                        <label for="setConsultationTime">Time</label>
+                        <input type="time" name="ConsultationTime" id="set-consultation-time" disabled> 
+                    </div>  
+                </fieldset>
+
                 <fieldset id='patient-fieldset'>
                     <legend>Patient</legend>
                     <div class="forms-input">
@@ -42,9 +58,17 @@ if (empty($_GET)) {
                         <input type="text" name="patientLastName" id="patient_last_name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
                     </div>        
                 </fieldset>
-                <fieldset>
-                    <legend>Consultation</legend>
 
+                <fieldset id='consultation-fieldset'>
+                    <legend>Consultation</legend>
+                        <div class="forms-input">
+                            <label for="diagnosis">*Diagnosis</label>
+                            <input type="text" name="Diagnosis" id="diagnosis" maxlength="64">
+                        </div>
+                        <div class="forms-input">
+                            <label for="prescription">Prescription</label>
+                            <input type="text" name="Diagnosis" id="diagnosis" maxlength="64">
+                        </div>
                 </fieldset>                
             </form>
         </div>
@@ -62,7 +86,19 @@ if (empty($_GET)) {
             <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
         </div>
         <div class="modal-message">
-
+            <form>
+                <fieldset style='display: flex; gap: 10px;'>
+                    <legend>By Date</legend>
+                    <div class="forms-input">
+                        <label for="patient_mi">Start Date</label>
+                        <input type="date" name="patientMiddleInit">
+                    </div>
+                    <div class="forms-input">
+                        <label for="patient_mi">End Date</label>
+                        <input type="date" name="patientMiddleInit">
+                    </div>
+                </fieldset>
+            </form>      
         </div>
         <div class='consultation-modal-actions'>
             <button class='action' data-id=''>Filter</button>
@@ -115,6 +151,7 @@ if (empty($_GET)) {
 <div id="delete-confirmation-modal" class='modal'>
     <div class='modal-content'>
         <div class="close-btn-div">
+            <div></div>
             <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
         </div>
         <div class='modal-message'>
