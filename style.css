@@ -460,6 +460,10 @@ input:invalid {
 
 #add-consultation-form fieldset {
     display: flex;
+}
+
+#patient-fieldset, #doctor-fieldset {
+    display: flex;
     gap: 10px;
 }
 
@@ -469,9 +473,14 @@ input:invalid {
     font-size: 0.8rem;
 }
 
+#is-current-date-time {
+    accent-color: var(--color-accent);
+}
+
 #date-time-fieldset {
     display: flex;
     flex-direction: column;
+    gap: 10px;
 }
 
 #set-date-time-container {
@@ -488,4 +497,5 @@ legend {
 #consultation-fieldset {
     display: flex;
     flex-direction: column;
+    gap: 0px;
 }

@@ -31,10 +31,10 @@ viewButton.forEach((viewButton)=> {
             document.querySelector('#patient-middle-initial').textContent = data.PatientMiddleInit;
             document.querySelector('#patient-last-name').textContent = data.PatientLastName;
             document.querySelector('#patient-age').textContent = data.PatientAge;
-            document.querySelector('#diagnosis').textContent = data.Diagnosis;
+            document.querySelector('#view-diagnosis').textContent = data.Diagnosis;
             document.querySelector('#prescription').textContent = data.Prescription;
             document.querySelector('#doctor-name').textContent = `${data.DocFirstName} ${data.DocMiddleInit}. ${data.DocLastName}`;
-            document.querySelector('#remarks').textContent = data.Remarks;
+            document.querySelector('#view-remarks').textContent = data.Remarks;
         } catch(error) {
             alert('not work')
         }

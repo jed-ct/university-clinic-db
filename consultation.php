@@ -31,8 +31,8 @@ if (empty($_GET)) {
                 <fieldset id='date-time-fieldset'>
                     <legend>Date and Time</legend>
                     <div id='is-current-date-time-container'>
-                        <label for="is-current-date-time">Current time and date</label>
                         <input type='checkbox' id="is-current-date-time" checked>
+                        <label for="is-current-date-time">Current time and date</label>
                     </div>
                     <div id='set-date-time-container'>
                         <label for="setConsultationDate">Date</label>
@@ -69,7 +69,28 @@ if (empty($_GET)) {
                             <label for="prescription">Prescription</label>
                             <input type="text" name="Diagnosis" id="diagnosis" maxlength="64">
                         </div>
-                </fieldset>                
+                        <div class="forms-input">
+                            <label for="remarks">Remarks</label>
+                            <input type='text' name='Remarks' id='remarks' maxlength='256'>
+                        </div>
+                </fieldset>
+            
+                <fieldset id='doctor-fieldset'>
+                    <legend>Doctor</legend>
+                    <div class="forms-input">
+                        <label for="patient_first_name">*First Name</label>
+                        <input type="text" name="patientFirstName" id="patient_first_name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                    </div>
+                    <div class="forms-input">
+                        <label for="patient_mi">MI</label>
+                        <input type="text" name="patientMiddleInit" id="patient_mi" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="2">
+                    </div>
+                    <div class="forms-input">
+                        <label for="patient_last_name">*Last Name</label>
+                        <input type="text" name="patientLastName" id="patient_last_name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                    </div>        
+                </fieldset>
+
             </form>
         </div>
         <div class='consultation-modal-actions'>
@@ -120,8 +141,8 @@ if (empty($_GET)) {
             <h4>Patient MI: <span id="patient-middle-initial"></span></h4>
             <h4>Patient Last Name: <span id="patient-last-name"></span></h4>
             <h4>Patient Age: <span id="patient-age"></span></h4>
-            <h4>Diagnosis: <span id="diagnosis"></span></h4>
-            <h4>Remarks: <span id="remarks"></span></h4>
+            <h4>Diagnosis: <span id="view-diagnosis"></span></h4>
+            <h4>Remarks: <span id="view-remarks"></span></h4>
             <h4>Prescription: <span id="prescription"></span></h4>
             <h4>Doctor: <span id="doctor-name"></span></h4>
         </div>
