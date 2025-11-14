@@ -87,6 +87,15 @@ addConsultationForm.addEventListener("submit", (event) => {
   console.log("Form Data as Object:", formObject);
 })
 
+addConsultationForm.addEventListener('input', (e)=> {
+    const field = e.target;
+    if (field.name == 'PatientName') {
+        if (!field.checkValidity()) {
+            
+        }
+    }
+});
+
 isCurrentDateTimeCheckbox.addEventListener("change", ()=> {
     const isChecked = isCurrentDateTimeCheckbox.checked;
     if (isChecked) {

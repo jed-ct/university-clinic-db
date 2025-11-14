@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                     <div id='set-date-time-container'>
                         <label>Date</label>
-                        <input type="date" name="ConsultationDate" id="set-consultation-date" disabled>
+                        <input type="date" name="ConsultationDate" id="set-consultation-date" min='2024-01-01' disabled>
 
                         <label>Time</label>
                         <input type="time" name="ConsultationTime" id="set-consultation-time" disabled> 
@@ -52,6 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="forms-input">
                         <label for="patient-name">Patient Name *</label>
                         <input type="text" name="PatientName" id="patient-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        <span class='error-message' id='add-patient-error-message'>Yipeee</span>
                     </div>
                 </fieldset>
 
@@ -61,11 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="forms-input">
                         <label for="diagnosis">Diagnosis *</label>
                         <input type="text" name="Diagnosis" id="diagnosis" maxlength="64">
+                        <span class='error-message' id='add-diagnosis-error-message'>Yipeee</span>
                     </div>
 
-                    <div class="forms-input u-tagsinput">
+                    <div class="forms-input">
                         <label for="prescription">Prescription *</label>
-                        <input type="text" name="Prescription" id="prescription" data-role='tagsinput' maxlength="64">
+                        <input type="text" name="Prescription" id="prescription" maxlength="64">
+                        <span class='error-message' id='add-prescription-error-message'>Yipeee</span>
                     </div>
 
                     <div class="forms-input">
@@ -79,6 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="forms-input">
                         <label for="doctor-name">Doctor Name *</label>
                         <input type="text" name="DoctorName" id="doctor-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        <span class='error-message' id='add-doctor-error-message'>Yipeee</span>
                     </div>     
                 </fieldset>
 
@@ -86,7 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class='consultation-modal-actions'>
-            <div class='error-message'>Invalid patient name.</div>
             <button class='action add' type='submit' form='add-consultation-form'>Add</button>
         </div>
     </div>
@@ -314,7 +317,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 <script src="./script.js"></script>
-<script src="../../assets/vendor/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js"></script>
 
 </body>
 </html>

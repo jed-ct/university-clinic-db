@@ -407,6 +407,7 @@ body {
 
 .error-message {
     color: rgb(187, 58, 58);
+    font-size: 0.8rem;
 }
 
 .action.edit:hover {
@@ -451,7 +452,6 @@ label {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    margin-bottom: 10px;
     padding: 5px;
 }
 
@@ -465,13 +465,11 @@ input:invalid {
 
 #add-consultation-form fieldset {
     display: flex;
-    margin: 0;
 }
 
 #patient-fieldset, #doctor-fieldset {
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 
 #is-current-date-time-container {
@@ -504,5 +502,5 @@ legend {
 #consultation-fieldset {
     display: flex;
     flex-direction: column;
-    gap: 0px;
+    gap: 10px;
 }
