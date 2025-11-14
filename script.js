@@ -14,7 +14,7 @@ const confirmDeletionButton = document.querySelector('.action.confirm-delete');
 const addConsultationButton = document.querySelector('#add-consultation-btn');
 const consultationSearchBox = document.querySelector('#consultation-searchbox');
 const isCurrentDateTimeCheckbox = document.querySelector('#is-current-date-time');
-
+const addConsultationForm = document.querySelector("#add-consultation-form");
 
 viewButton.forEach((viewButton)=> {
     viewButton.addEventListener("click", async ()=> {
@@ -25,15 +25,15 @@ viewButton.forEach((viewButton)=> {
             const response = await fetch(`get_consultation.php?id=${id}`);
             const data = await response.json();
             console.log(data);
-            document.querySelector('#consultation-date').textContent = data.ConsultDate;
-            document.querySelector('#consultation-time').textContent = data.ConsultTime;
-            document.querySelector('#patient-first-name').textContent = data.PatientFirstName;
-            document.querySelector('#patient-middle-initial').textContent = data.PatientMiddleInit;
-            document.querySelector('#patient-last-name').textContent = data.PatientLastName;
-            document.querySelector('#patient-age').textContent = data.PatientAge;
+            document.querySelector('#view-consultation-date').textContent = data.ConsultDate;
+            document.querySelector('#view-consultation-time').textContent = data.ConsultTime;
+            document.querySelector('#view-patient-first-name').textContent = data.PatientFirstName;
+            document.querySelector('#view-patient-middle-initial').textContent = data.PatientMiddleInit;
+            document.querySelector('#view-patient-last-name').textContent = data.PatientLastName;
+            document.querySelector('#view-patient-age').textContent = data.PatientAge;
             document.querySelector('#view-diagnosis').textContent = data.Diagnosis;
-            document.querySelector('#prescription').textContent = data.Prescription;
-            document.querySelector('#doctor-name').textContent = `${data.DocFirstName} ${data.DocMiddleInit}. ${data.DocLastName}`;
+            document.querySelector('#view-prescription').textContent = data.Prescription;
+            document.querySelector('#view-doctor-name').textContent = `${data.DocFirstName} ${data.DocMiddleInit}. ${data.DocLastName}`;
             document.querySelector('#view-remarks').textContent = data.Remarks;
         } catch(error) {
             alert('not work')
@@ -66,15 +66,35 @@ deleteConsultationButton.addEventListener("click", ()=> {
     viewConsultationModal.style.display = 'none';
 });
 
+// Add an event listener for form submission
+addConsultationForm.addEventListener("submit", (event) => {
+  // Prevent the default form submission (which would reload the page)
+  event.preventDefault();
+
+  // Create a FormData object from the form
+  const formData = new FormData(addConsultationForm);
+
+  // You can iterate over the FormData entries and log them
+  console.log("Form Data:");
+  for (const [key, value] of formData.entries()) {
+    console.log(`${key}: ${value}`);
+  }
+
+  // Alternatively, if you want a plain object representation:
+  const formObject = {};
+  formData.forEach((value, key) => {
+    formObject[key] = value;
+  });
+  console.log("Form Data as Object:", formObject);
+})
+
 isCurrentDateTimeCheckbox.addEventListener("change", ()=> {
     const isChecked = isCurrentDateTimeCheckbox.checked;
     if (isChecked) {
-        console.log('check')
         document.querySelector('#set-consultation-date').setAttribute('disabled', 0);
         document.querySelector('#set-consultation-time').setAttribute('disabled', 0);
     }
     else {
-        console.log('fuck yU');
         document.querySelector('#set-consultation-date').removeAttribute('disabled');
         document.querySelector('#set-consultation-time').removeAttribute('disabled');
     }

@@ -8,13 +8,17 @@ include("database.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultation History</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="../../assets/vendor/bootstrap-tagsinput/css/bootstrap-tagsinput.css">
     <script src="https://kit.fontawesome.com/ea8c838e77.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <?php
-if (empty($_GET)) {
-    header("Location: ?page=1");
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Handle form submission (insert into database, etc.)
+
+    // Then redirect to prevent form resubmission
+    header("Location: consultation.php?page=1");
     exit;
 }
 ?>
@@ -57,9 +61,9 @@ if (empty($_GET)) {
                             <label for="diagnosis">Diagnosis *</label>
                             <input type="text" name="Diagnosis" id="diagnosis" maxlength="64">
                         </div>
-                        <div class="forms-input">
+                        <div class="forms-input u-tagsinput">
                             <label for="prescription">Prescription *</label>
-                            <input type="text" name="Diagnosis" id="diagnosis" maxlength="64">
+                            <input type="text" name="Prescription" id="prescription" data-role='tagsinput' maxlength="64">
                         </div>
                         <div class="forms-input">
                             <label for="remarks">Remarks</label>
@@ -78,6 +82,7 @@ if (empty($_GET)) {
             </form>
         </div>
         <div class='consultation-modal-actions'>
+            <div class='error-message'>Invalid patient name.</div>
             <button class='action add' type='submit' form='add-consultation-form'>Add</button>
         </div>
 
@@ -103,6 +108,28 @@ if (empty($_GET)) {
                         <input type="date" name="patientMiddleInit">
                     </div>
                 </fieldset>
+                    <fieldset>
+                    <legend>By Person</legend>
+                        <div class="forms-input">
+                            <label for="patient-name">Patient</label>
+                            <input type="text" name="PatientName" id="patient-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        </div>
+                        <div class="forms-input">
+                            <label for="patient-name">Doctor</label>
+                            <input type="text" name="PatientName" id="patient-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        </div>                        
+                    </fieldset>
+                    <fieldset>
+                        <legend>By Treatment</legend>
+                        <div class="forms-input">
+                            <label for="patient-name">Diagnosis</label>
+                            <input type="text" name="PatientName" id="patient-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        </div>
+                        <div class="forms-input">
+                            <label for="patient-name">Prescription</label>
+                            <input type="text" name="PatientName" id="patient-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        </div>                                 
+                    </fieldset>
             </form>      
         </div>
         <div class='consultation-modal-actions'>
@@ -119,16 +146,16 @@ if (empty($_GET)) {
             <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
         </div>
         <div class="modal-message">
-            <h4>Date: <span id="consultation-date"></span></h4>
-            <h4>Time: <span id="consultation-time"></span></h4>
-            <h4>Patient First Name: <span id="patient-first-name">weeeeeeeeeeeeeeeeee</span></h4>
-            <h4>Patient MI: <span id="patient-middle-initial"></span></h4>
-            <h4>Patient Last Name: <span id="patient-last-name"></span></h4>
-            <h4>Patient Age: <span id="patient-age"></span></h4>
+            <h4>Date: <span id="view-consultation-date"></span></h4>
+            <h4>Time: <span id="view-consultation-time"></span></h4>
+            <h4>Patient First Name: <span id="view-patient-first-name"></span></h4>
+            <h4>Patient MI: <span id="view-patient-middle-initial"></span></h4>
+            <h4>Patient Last Name: <span id="view-patient-last-name"></span></h4>
+            <h4>Patient Age: <span id="view-patient-age"></span></h4>
             <h4>Diagnosis: <span id="view-diagnosis"></span></h4>
             <h4>Remarks: <span id="view-remarks"></span></h4>
-            <h4>Prescription: <span id="prescription"></span></h4>
-            <h4>Doctor: <span id="doctor-name"></span></h4>
+            <h4>Prescription: <span id="view-prescription"></span></h4>
+            <h4>Doctor: <span id="view-doctor-name"></span></h4>
         </div>
         <div class='consultation-modal-actions'>
             <button class='action edit' data-id=''>Edit</button>
@@ -255,5 +282,6 @@ if (empty($_GET)) {
     </div>
 
     <script src="./script.js"></script>
+    <script src="../../assets/vendor/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js"></script>
 </body>
 </html>
