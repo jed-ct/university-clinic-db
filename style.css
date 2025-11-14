@@ -408,6 +408,7 @@ body {
 .error-message {
     color: rgb(187, 58, 58);
     font-size: 0.8rem;
+    display: none;
 }
 
 .action.edit:hover {

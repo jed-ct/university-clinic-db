@@ -87,14 +87,27 @@ addConsultationForm.addEventListener("submit", (event) => {
   console.log("Form Data as Object:", formObject);
 })
 
-addConsultationForm.addEventListener('input', (e)=> {
-    const field = e.target;
-    if (field.name == 'PatientName') {
-        if (!field.checkValidity()) {
-            
-        }
-    }
-});
+addConsultationForm.addEventListener('input', (() => {
+    let timeoutId;
+    return (e) => {
+        clearTimeout(timeoutId); // reset timer on each input
+        timeoutId = setTimeout(() => {
+            const field = e.target;
+
+            if (field.name === 'PatientName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#add-patient-error-message').textContent = 'Please enter a valid name.';
+                    document.querySelector('#add-patient-error-message').style.display = 'block';
+                    disableButton(document.querySelector('.action.add'));
+                } else {
+                    document.querySelector('#add-patient-error-message').style.display = 'none';
+                    disableButton(document.querySelector('.action.add'));
+
+                }
+            }
+        }, 500); // 500ms debounce delay
+    };
+})());
 
 isCurrentDateTimeCheckbox.addEventListener("change", ()=> {
     const isChecked = isCurrentDateTimeCheckbox.checked;
@@ -137,4 +150,12 @@ function clearTableBody(tableId) {
     table.appendChild(tbody);
 }
 
+function disableButton(button, isButtonDisabled=true) {
+    if (isButtonDisabled) {
+        button.setAttribute('disabled', 0);
+    }
+    else {
+        button.removeAttribute('disabled');
+    }
+}
 
