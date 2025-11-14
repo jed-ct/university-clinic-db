@@ -226,6 +226,43 @@ body {
     pointer-events: none;
 }
 
+/*PATIENT*/
+
+.patient-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+#patient-searchbox {
+    width: min(800px, 70vw);
+    padding: 6px 14px 6px 38px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.5;
+    background-color: var(--color-base-bg);
+    background-clip: padding-box;
+    border: 1px solid gray;
+    appearance: none;
+    border-radius: 12px;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;    
+    background-image: url(./img/search.svg);
+    background-position: 8px 8px; 
+    background-repeat: no-repeat;   
+}
+
+.patient-search-results {
+    padding: 6px 38px 38px 38px;
+    width: 50%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
 /* 📱 When screen is small, turn table rows into cards */
 @media (max-width: 768px) {
     .links {
@@ -292,6 +329,9 @@ body {
     }
 
 }
+
+
+
 
 .action {
     background-color: var(--color-accent);

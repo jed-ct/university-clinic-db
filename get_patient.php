@@ -6,12 +6,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UPB HSO Database</title>
+    <title>Patient Information</title>
     <link rel="stylesheet" href="./style.css">
+     <script src="https://kit.fontawesome.com/ea8c838e77.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="header">
-        <a class="logo" href="./index.php">UPB HSO</a>
+        <a id="hyperlink-logo" href="./index.php">
+            <div class='header-img' id='logo'>
+                <img id='logo-img' src='./img/logo.svg'>
+                TBAClinic 
+            </div>
+        </a>
         <ul class="links">
             <li><a href="./index.php">Home</a></li>
             <li><a href="./consultation.php">Consultations</a></li>
@@ -19,6 +25,7 @@
             <li><a href="./staff.php">Staff</a></li>
             <li><a href="#footer">Contact</a></li>
         </ul>
+        <button id='mobile-menu-btn'><img class='header-img' src='./img/menu.svg'></button>
     </div>
     
     <div>
