@@ -12,7 +12,6 @@ const filterConsultationButton = document.querySelector('#filter-consultation-bt
 const editConsultationButton = document.querySelector('.action.edit');
 const confirmDeletionButton = document.querySelector('.action.confirm-delete');
 const addConsultationButton = document.querySelector('#add-consultation-btn');
-const consultationSearchBox = document.querySelector('#consultation-searchbox');
 const isCurrentDateTimeCheckbox = document.querySelector('#is-current-date-time');
 const addConsultationForm = document.querySelector("#add-consultation-form");
 
@@ -100,12 +99,9 @@ isCurrentDateTimeCheckbox.addEventListener("change", ()=> {
     }
 })
 
-consultationSearchBox.addEventListener("input", ()=> {
-
-});
-
 modalCloseButton.forEach((btn) => {
     btn.addEventListener("click", ()=> {
+        console.log('hello worl');
         deletionModal.style.display = 'none';
         viewConsultationModal.style.display = 'none';
         addConsultationModal.style.display = 'none';

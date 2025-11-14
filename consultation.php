@@ -8,41 +8,41 @@ include("database.php");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consultation History</title>
     <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="../../assets/vendor/bootstrap-tagsinput/css/bootstrap-tagsinput.css">
     <script src="https://kit.fontawesome.com/ea8c838e77.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Handle form submission (insert into database, etc.)
-
-    // Then redirect to prevent form resubmission
     header("Location: consultation.php?page=1");
     exit;
 }
 ?>
 
+<!-- ADD CONSULTATION MODAL -->
 <div id="add-consultation-modal" class="modal">
     <div class="modal-content">
         <div class="close-btn-div">
             <div>Add new consultation</div>
-            <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
+            <button class="close-btn"><img class='btn-img' src="./img/close.svg"></button>
         </div>
+
         <div class="modal-message">
             <form id='add-consultation-form' method='POST'>
 
                 <fieldset id='date-time-fieldset'>
                     <legend>Date and Time</legend>
+
                     <div id='is-current-date-time-container'>
                         <input type='checkbox' id="is-current-date-time" checked>
                         <label for="is-current-date-time">Current time and date</label>
                     </div>
+
                     <div id='set-date-time-container'>
-                        <label for="setConsultationDate">Date</label>
+                        <label>Date</label>
                         <input type="date" name="ConsultationDate" id="set-consultation-date" disabled>
 
-                        <label for="setConsultationTime">Time</label>
+                        <label>Time</label>
                         <input type="time" name="ConsultationTime" id="set-consultation-time" disabled> 
                     </div>  
                 </fieldset>
@@ -57,18 +57,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <fieldset id='consultation-fieldset'>
                     <legend>Consultation</legend>
-                        <div class="forms-input">
-                            <label for="diagnosis">Diagnosis *</label>
-                            <input type="text" name="Diagnosis" id="diagnosis" maxlength="64">
-                        </div>
-                        <div class="forms-input u-tagsinput">
-                            <label for="prescription">Prescription *</label>
-                            <input type="text" name="Prescription" id="prescription" data-role='tagsinput' maxlength="64">
-                        </div>
-                        <div class="forms-input">
-                            <label for="remarks">Remarks</label>
-                            <input type='text' name='Remarks' id='remarks' maxlength='256'>
-                        </div>
+
+                    <div class="forms-input">
+                        <label for="diagnosis">Diagnosis *</label>
+                        <input type="text" name="Diagnosis" id="diagnosis" maxlength="64">
+                    </div>
+
+                    <div class="forms-input u-tagsinput">
+                        <label for="prescription">Prescription *</label>
+                        <input type="text" name="Prescription" id="prescription" data-role='tagsinput' maxlength="64">
+                    </div>
+
+                    <div class="forms-input">
+                        <label for="remarks">Remarks</label>
+                        <input type='text' name='Remarks' id='remarks' maxlength='256'>
+                    </div>
                 </fieldset>
             
                 <fieldset id='doctor-fieldset'>
@@ -81,70 +84,87 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             </form>
         </div>
+
         <div class='consultation-modal-actions'>
             <div class='error-message'>Invalid patient name.</div>
             <button class='action add' type='submit' form='add-consultation-form'>Add</button>
         </div>
-
     </div>
 </div>
 
+<!-- FILTER CONSULTATION MODAL -->
 <div id="filter-consultation-modal" class="modal">
     <div class="modal-content">
+
         <div class="close-btn-div">
             <div>Filter Consultation</div>
-            <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
+            <button class="close-btn"><img class='btn-img' src="./img/close.svg"></button>
         </div>
+
         <div class="modal-message">
             <form>
+
                 <fieldset style='display: flex; gap: 10px;'>
                     <legend>By Date</legend>
+
                     <div class="forms-input">
-                        <label for="patient_mi">Start Date</label>
-                        <input type="date" name="patientMiddleInit">
+                        <label for="filter-start-date">Start Date</label>
+                        <input type="date" id="filter-start-date" name="StartDate">
                     </div>
+
                     <div class="forms-input">
-                        <label for="patient_mi">End Date</label>
-                        <input type="date" name="patientMiddleInit">
+                        <label for="filter-end-date">End Date</label>
+                        <input type="date" id="filter-end-date" name="EndDate">
                     </div>
                 </fieldset>
-                    <fieldset>
+
+                <fieldset>
                     <legend>By Person</legend>
-                        <div class="forms-input">
-                            <label for="patient-name">Patient</label>
-                            <input type="text" name="PatientName" id="patient-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
-                        </div>
-                        <div class="forms-input">
-                            <label for="patient-name">Doctor</label>
-                            <input type="text" name="PatientName" id="patient-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
-                        </div>                        
-                    </fieldset>
-                    <fieldset>
-                        <legend>By Treatment</legend>
-                        <div class="forms-input">
-                            <label for="patient-name">Diagnosis</label>
-                            <input type="text" name="PatientName" id="patient-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
-                        </div>
-                        <div class="forms-input">
-                            <label for="patient-name">Prescription</label>
-                            <input type="text" name="PatientName" id="patient-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
-                        </div>                                 
-                    </fieldset>
+
+                    <div class="forms-input">
+                        <label for="filter-patient">Patient</label>
+                        <input type="text" name="PatientName" id="filter-patient" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                    </div>
+
+                    <div class="forms-input">
+                        <label for="filter-doctor">Doctor</label>
+                        <input type="text" name="DoctorName" id="filter-doctor" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                    </div>                        
+                </fieldset>
+
+                <fieldset>
+                    <legend>By Treatment</legend>
+
+                    <div class="forms-input">
+                        <label for="filter-diagnosis">Diagnosis</label>
+                        <input type="text" name="Diagnosis" id="filter-diagnosis" maxlength="64">
+                    </div>
+
+                    <div class="forms-input">
+                        <label for="filter-prescription">Prescription</label>
+                        <input type="text" name="Prescription" id="filter-prescription" maxlength="64">
+                    </div>                                 
+                </fieldset>
+
             </form>      
         </div>
+
         <div class='consultation-modal-actions'>
-            <button class='action' data-id=''>Filter</button>
+            <button class='action'>Filter</button>
         </div>
 
     </div>
 </div>
 
+<!-- VIEW CONSULTATION MODAL -->
 <div id="consultation-modal" class="modal">
     <div class="modal-content">
+
         <div class="close-btn-div">
             <div>Consultation Details</div>
-            <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
+            <button class="close-btn"><img class='btn-img' src="./img/close.svg"></button>
         </div>
+
         <div class="modal-message">
             <h4>Date: <span id="view-consultation-date"></span></h4>
             <h4>Time: <span id="view-consultation-time"></span></h4>
@@ -157,6 +177,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h4>Prescription: <span id="view-prescription"></span></h4>
             <h4>Doctor: <span id="view-doctor-name"></span></h4>
         </div>
+
         <div class='consultation-modal-actions'>
             <button class='action edit' data-id=''>Edit</button>
             <button class='action delete' data-id=''>Delete</button>
@@ -165,14 +186,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
+<!-- EDIT MODAL -->
 <div id="edit-consultation-modal" class="modal">
     <div class="modal-content">
-        <div class="close-btn-div">
-            <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
-        </div>
-        <div class="modal-message">
 
+        <div class="close-btn-div">
+            <button class="close-btn"><img class='btn-img' src="./img/close.svg"></button>
         </div>
+
+        <div class="modal-message"></div>
+
         <div class='consultation-modal-actions'>
             <button class='action add' data-id=''>Add</button>
         </div>
@@ -180,108 +203,118 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
+<!-- DELETE CONFIRMATION MODAL -->
 <div id="delete-confirmation-modal" class='modal'>
     <div class='modal-content'>
+
         <div class="close-btn-div">
             <div></div>
-            <button class="close-btn" id="close-modal"><img class='btn-img' src="./img/close.svg"></button>
+            <button class="close-btn"><img class='btn-img' src="./img/close.svg"></button>
         </div>
+
         <div class='modal-message'>
             Are you sure you want to delete this consultation? This cannot be undone.
         </div>
+
         <div class='consultation-modal-actions'>
             <button class='action confirm-delete'>Yes</button>
             <button class='close-btn action'>No</button>
         </div>
+
     </div>
 </div>
 
-    <div class="header">
-        <a id="hyperlink-logo" href="./index.php">
-            <div class='header-img' id='logo'>
-                <img id='logo-img' src='./img/logo.svg'>
-                TBAClinic
-            </div>
-        </a>
-        <ul class="links">
-            <li><a href="./index.php">Home</a></li>
-            <li><a href="./consultation.php">Consultations</a></li>
-            <li><a href="./patient.php">Patients</a></li>
-            <li><a href="./staff.php">Staff</a></li>
-            <li><a href="#footer">Contact</a></li>
-        </ul>
-        <button id='mobile-menu-btn'><img class='header-img' src='./img/menu.svg'></button>
-    </div>
-
-
-
-    <div class="consultations-table-container">
-        <div><h2 class='consultation-history'>Consultation History</h2></div>
-            <div class="consultation-search">
-        <input type="text" id="consultation-searchbox" placeholder="Search by patient or doctor"> 
-    </div>
-        <div class="consultations-actions">
-            <button class="consultations action" id='add-consultation-btn'><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>
-            <button class='consultations action' id='filter-consultation-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
+<!-- HEADER -->
+<div class="header">
+    <a id="hyperlink-logo" href="./index.php">
+        <div class='header-img' id='logo'>
+            <img id='logo-img' src='./img/logo.svg'>
+            TBAClinic
         </div>
+    </a>
+    <ul class="links">
+        <li><a href="./index.php">Home</a></li>
+        <li><a href="./consultation.php">Consultations</a></li>
+        <li><a href="./patient.php">Patients</a></li>
+        <li><a href="./staff.php">Staff</a></li>
+        <li><a href="#footer">Contact</a></li>
+    </ul>
+    <button id='mobile-menu-btn'><img class='header-img' src='./img/menu.svg'></button>
+</div>
 
-        <table id='consultations-table' class="consultations-table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Patient</th>
-                    <th>Doctor</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                    $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime,
-                    CONCAT(
-                        PATIENT.PatientFirstName, ' ',
-                        IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
-                        PATIENT.PatientLastName
-                    ) AS PatientFullName,
-                    CONCAT(
-                        DOCTOR.DocFirstName, ' ',
-                        IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
-                        DOCTOR.DocLastName
-                    ) AS DoctorFullName
-                    FROM PATIENT
-                    INNER JOIN CONSULTATION ON PATIENT.PatientID = CONSULTATION.PatientID
-                    INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
-                    ORDER BY CONSULTATION.ConsultDateTime DESC;";
-                    $result = $conn->query($sql); 
-                    
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>
-                            <td data-label='Date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
-                            <td data-label='Time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
-                            <td data-label='Patient'>" . $row["PatientFullName"] . "</td>
-                            <td data-label='Doctor'>" . $row["DoctorFullName"] . "</td>
-                            <td style='width:1%; white-space:nowrap;'>
-                                <button href='#' class='action view' data-id='" . $row["ConsultationID"] . "'>View</button>
-                            </td>
-                        </tr>";
-                    }
-                ?>
-            </tbody>
-        </table>
-        <div class="pagination">
-            <a href="#" class="prev">&laquo;</a>
-            <a href="consultation.php?page=1" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#" class="next">&raquo;</a>
-        </div>
+<!-- CONSULTATION TABLE -->
+<div class="consultations-table-container">
+
+    <div><h2 class='consultation-history'>Consultation History</h2></div>
+
+    <div class="consultations-actions">
+        <button class="consultations action" id='add-consultation-btn'><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>
+        <button class='consultations action' id='filter-consultation-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
     </div>
 
-    <div id="footer">
-        basta contact info
+    <table id='consultations-table' class="consultations-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php
+                $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime,
+                CONCAT(
+                    PATIENT.PatientFirstName, ' ',
+                    IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
+                    PATIENT.PatientLastName
+                ) AS PatientFullName,
+                CONCAT(
+                    DOCTOR.DocFirstName, ' ',
+                    IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
+                    DOCTOR.DocLastName
+                ) AS DoctorFullName
+                FROM PATIENT
+                INNER JOIN CONSULTATION ON PATIENT.PatientID = CONSULTATION.PatientID
+                INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
+                ORDER BY CONSULTATION.ConsultDateTime DESC;";
+                
+                $result = $conn->query($sql); 
+                
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                        <td data-label='Date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
+                        <td data-label='Time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
+                        <td data-label='Patient'>" . $row["PatientFullName"] . "</td>
+                        <td data-label='Doctor'>" . $row["DoctorFullName"] . "</td>
+                        <td style='width:1%; white-space:nowrap;'>
+                            <button class='action view' data-id='" . $row["ConsultationID"] . "'>View</button>
+                        </td>
+                    </tr>";
+                }
+            ?>
+        </tbody>
+
+    </table>
+
+    <div class="pagination">
+        <a href="#" class="prev">&laquo;</a>
+        <a href="consultation.php?page=1" class="active">1</a>
+        <a href="#">2</a>
+        <a href="#">3</a>
+        <a href="#" class="next">&raquo;</a>
     </div>
 
-    <script src="./script.js"></script>
-    <script src="../../assets/vendor/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js"></script>
+</div>
+
+<div id="footer">
+    basta contact info
+</div>
+
+<script src="./script.js"></script>
+<script src="../../assets/vendor/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js"></script>
+
 </body>
 </html>
