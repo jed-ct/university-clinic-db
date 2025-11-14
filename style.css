@@ -268,8 +268,8 @@ body {
 
 #patient-information {
     padding: 6px 38px 38px 38px;
-    width: 50%;
-    margin: 0 auto;
+    width: 90%;
+    margin: 30px auto;
     border-radius: 8px;
     overflow: hidden;
     background-color: #fff;
@@ -278,15 +278,13 @@ body {
     
 }
 
-.patient-information-table {
-    padding: 30px 38px 38px 38px;
+#patient-information-table {
     width: 50%;
     margin: 0 auto;
     border-radius: 8px;
     overflow: hidden;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    justify-content: center;
 }
 
 .patient-information-table th, td {
@@ -308,10 +306,6 @@ body {
     align-items: center;
 }
 
-.patient-info-contents {
-    margin-top: 20px;
-}
-
 .patient.action {
     padding: 10px;
     text-decoration: none;
@@ -322,8 +316,8 @@ body {
 .patient-actions {
     width:50%;
     gap: 5px;
-    margin: 30px 30px 10px 30px;
-    align-self:flex-start;
+    margin: 10px 30px 10px 0px;
+
 }
 
 /* 📱 When screen is small, turn table rows into cards */
