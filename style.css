@@ -568,7 +568,7 @@ input:invalid {
     display: flex;
 }
 
-#patient-fieldset, #doctor-fieldset {
+.patient-fieldset, .doctor-fieldset {
     display: flex;
     flex-direction: column;
 }
@@ -583,7 +583,7 @@ input:invalid {
     accent-color: var(--color-accent);
 }
 
-#date-time-fieldset {
+.date-time-fieldset {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -600,7 +600,7 @@ legend {
     font-size: 0.8rem;
 }
 
-#consultation-fieldset {
+.consultation-fieldset {
     display: flex;
     flex-direction: column;
     gap: 10px;

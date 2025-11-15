@@ -20,6 +20,7 @@ viewButton.forEach((viewButton)=> {
         viewConsultationModal.style.display = 'flex';
         const id = viewButton.dataset.id;
         deleteConsultationButton.dataset.id = id;
+        editConsultationButton.dataset.id = id;
         try {
             const response = await fetch(`get_consultation.php?id=${id}`);
             const data = await response.json();
@@ -55,9 +56,20 @@ filterConsultationButton.addEventListener("click", () => {
     filterConsultationModal.style.display = 'flex';
 });
 
-editConsultationButton.addEventListener("click", ()=> {
+editConsultationButton.addEventListener("click", async ()=> {
     editConsultationModal.style.display = 'flex';
     viewConsultationModal.style.display = 'none';
+    const id = editConsultationButton.dataset.id;
+    try {
+        const response = await fetch(`get_consultation.php?id=${id}`);
+        const data = await response.json();
+        document.querySelector('')
+        document.querySelector('#edit-patient-name').value = `${data.PatientFirstName} ${data.PatientMiddleInit}. ${data.PatientLastName}`;
+        console.log('hello');
+    }
+    catch(error) {
+        alert('not work');
+    }    
 });
 
 deleteConsultationButton.addEventListener("click", ()=> {
@@ -101,7 +113,7 @@ addConsultationForm.addEventListener('input', (() => {
                     disableButton(document.querySelector('.action.add'));
                 } else {
                     document.querySelector('#add-patient-error-message').style.display = 'none';
-                    disableButton(document.querySelector('.action.add'));
+                    disableButton(document.querySelector('.action.add', false));
 
                 }
             }

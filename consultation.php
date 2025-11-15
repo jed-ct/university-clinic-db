@@ -28,9 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="modal-message">
-            <form id='add-consultation-form' method='POST'>
+            <form id='add-consultation-form' method='POST' autocomplete="off">
 
-                <fieldset id='date-time-fieldset'>
+                <fieldset class='date-time-fieldset'>
                     <legend>Date and Time</legend>
 
                     <div id='is-current-date-time-container'>
@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>  
                 </fieldset>
 
-                <fieldset id='patient-fieldset'>
+                <fieldset class='patient-fieldset'>
                     <legend>Patient</legend>
                     <div class="forms-input">
                         <label for="patient-name">Patient Name *</label>
@@ -56,32 +56,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </fieldset>
 
-                <fieldset id='consultation-fieldset'>
+                <fieldset class='consultation-fieldset'>
                     <legend>Consultation</legend>
 
                     <div class="forms-input">
-                        <label for="diagnosis">Diagnosis *</label>
-                        <input type="text" name="Diagnosis" id="diagnosis" maxlength="64">
+                        <label for="add-diagnosis">Diagnosis *</label>
+                        <input type="text" name="Diagnosis" id="add-diagnosis" maxlength="64">
                         <span class='error-message' id='add-diagnosis-error-message'>Yipeee</span>
                     </div>
 
                     <div class="forms-input">
-                        <label for="prescription">Prescription *</label>
-                        <input type="text" name="Prescription" id="prescription" maxlength="64">
+                        <label for="add-prescription">Prescription *</label>
+                        <input type="text" name="Prescription" id="add-prescription" maxlength="64">
                         <span class='error-message' id='add-prescription-error-message'>Yipeee</span>
                     </div>
 
                     <div class="forms-input">
-                        <label for="remarks">Remarks</label>
-                        <input type='text' name='Remarks' id='remarks' maxlength='256'>
+                        <label for="add-remarks">Remarks</label>
+                        <input type='text' name='Remarks' id='add-remarks' maxlength='256'>
                     </div>
                 </fieldset>
             
-                <fieldset id='doctor-fieldset'>
+                <fieldset class='doctor-fieldset'>
                     <legend>Doctor</legend>
                     <div class="forms-input">
-                        <label for="doctor-name">Doctor Name *</label>
-                        <input type="text" name="DoctorName" id="doctor-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        <label for="add-doctor-name">Doctor Name *</label>
+                        <input type="text" name="DoctorName" id="add-doctor-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
                         <span class='error-message' id='add-doctor-error-message'>Yipeee</span>
                     </div>     
                 </fieldset>
@@ -194,13 +194,67 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="modal-content">
 
         <div class="close-btn-div">
+            <div>Edit Consultation</div>
             <button class="close-btn"><img class='btn-img' src="./img/close.svg"></button>
         </div>
 
-        <div class="modal-message"></div>
+        <div class="modal-message">
+           <form id='edit-consultation-form' method='POST'>
+                <fieldset class='date-time-fieldset'>
+                    <legend>Date and Time</legend>
+                    <div id='set-date-time-container'>
+                        <label>Date</label>
+                        <input type="date" name="ConsultationDate" id="edit-consultation-date" min='2024-01-01' value='2025-01-02'>
+
+                        <label>Time</label>
+                        <input type="time" name="ConsultationTime" id="edit-consultation-time"> 
+                    </div>  
+                </fieldset>
+
+                <fieldset class='patient-fieldset'>
+                    <legend>Patient</legend>
+                    <div class="forms-input">
+                        <label for="edit-patient-name">Patient Name *</label>
+                        <input type="text" name="PatientName" id="edit-patient-name" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
+                        <span class='error-message' id='add-patient-error-message'>Yipeee</span>
+                    </div>
+                </fieldset>
+
+                <fieldset class='consultation-fieldset'>
+                    <legend>Consultation</legend>
+
+                    <div class="forms-input">
+                        <label for="edit-diagnosis">Diagnosis *</label>
+                        <input type="text" name="Diagnosis" id="edit-diagnosis" maxlength="64">
+                        <span class='error-message' id='add-diagnosis-error-message'>Yipeee</span>
+                    </div>
+
+                    <div class="forms-input">
+                        <label for="edit-prescription">Prescription *</label>
+                        <input type="text" name="Prescription" id="edit-prescription" maxlength="64">
+                        <span class='error-message' id='add-prescription-error-message'>Yipeee</span>
+                    </div>
+
+                    <div class="forms-input">
+                        <label for="edit-remarks">Remarks</label>
+                        <input type='text' name='Remarks' id='edit-remarks' maxlength='256'>
+                    </div>
+                </fieldset>
+            
+                <fieldset class='doctor-fieldset'>
+                    <legend>Doctor</legend>
+                    <div class="forms-input">
+                        <label for="edit-doctor-name">Doctor Name *</label>
+                        <input type="text" name="DoctorName" id="edit-doctor-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        <span class='error-message' id='add-doctor-error-message'>Yipeee</span>
+                    </div>     
+                </fieldset>
+
+            </form>
+        </div>
 
         <div class='consultation-modal-actions'>
-            <button class='action add' data-id=''>Add</button>
+            <button class='action add' data-id=''>Edit</button>
         </div>
 
     </div>
