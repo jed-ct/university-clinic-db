@@ -37,10 +37,9 @@
         <div class="patient-search">
                 <form method="POST" value="<?php echo isset($_POST['patientsearch']) ? $_POST['patientsearch'] : '' ?>">
                 <input type="text" id ="patient-searchbox" placeholder="Search patient name..." name="patientsearch">
-                <button type="submit" name = "search"></button>
+                <button type="submit" name = "search" style="display:none;"></button>
                 </form>
-        </div>
-        
+        </div>  
 </div>
 
 <?php
@@ -73,7 +72,7 @@
     ?>
     <div style="word-wrap:break-word;">
         <a href="get_patient.php?id=<?php echo $fetch['PatientID']?>">
-            <h4><?php echo htmlspecialchars($fetch['PatientFirstName'])?> <?php echo htmlspecialchars($fetch['PatientLastName'])?></h4>
+            <h4 class = "link-to-other" ><?php echo htmlspecialchars($fetch['PatientFirstName'])?> <?php echo htmlspecialchars($fetch['PatientLastName'])?></h4>
         </a>
     </div>
     <hr />
@@ -86,7 +85,7 @@
 ?>
 
     <div id="footer">
-        BLABLABLABLABLABLABL
+        fuckshet fuck
     </div>
 </body>
 </html>
