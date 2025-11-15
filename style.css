@@ -287,7 +287,7 @@ body {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
-.patient-information-table th, td {
+.patient-information-table th, .patient-information-table td {
     padding: 10px;
     text-align: left;
     width: 50%;
