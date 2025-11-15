@@ -63,9 +63,13 @@ editConsultationButton.addEventListener("click", async ()=> {
     try {
         const response = await fetch(`get_consultation.php?id=${id}`);
         const data = await response.json();
-        document.querySelector('')
+        document.querySelector('#edit-consultation-date').value = convertToISO(data.ConsultDate); 
+        document.querySelector('#edit-consultation-time').value = convertTo24Hour(data.ConsultTime);
         document.querySelector('#edit-patient-name').value = `${data.PatientFirstName} ${data.PatientMiddleInit}. ${data.PatientLastName}`;
-        console.log('hello');
+        document.querySelector('#edit-diagnosis').value = data.Diagnosis;
+        document.querySelector('#edit-prescription').value = data.Prescription;
+        document.querySelector('#edit-remarks').value = data.Remarks;
+        document.querySelector('#edit-doctor-name').value = `${data.DocFirstName} ${data.DocMiddleInit}. ${data.DocLastName}`;
     }
     catch(error) {
         alert('not work');
@@ -182,3 +186,31 @@ function disableButton(button, isButtonDisabled=true) {
     }
 }
 
+function convertToISO(dateStr) {
+    const date = new Date(dateStr);
+
+    if (isNaN(date)) {
+        throw new Error("Invalid date format");
+    }
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+}
+
+
+function convertTo24Hour(timeStr) {
+    const [time, modifier] = timeStr.split(' '); // e.g., ["11:00", "AM"]
+    let [hours, minutes] = time.split(':').map(Number);
+
+    if (modifier.toUpperCase() === 'PM' && hours !== 12) {
+        hours += 12;
+    } else if (modifier.toUpperCase() === 'AM' && hours === 12) {
+        hours = 0;
+    }
+    const hh = String(hours).padStart(2, '0');
+    const mm = String(minutes).padStart(2, '0');
+
+    return `${hh}:${mm}`;
+}

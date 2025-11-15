@@ -245,7 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <legend>Doctor</legend>
                     <div class="forms-input">
                         <label for="edit-doctor-name">Doctor Name *</label>
-                        <input type="text" name="DoctorName" id="edit-doctor-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        <input type="text" name="DoctorName" id="edit-doctor-name" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
                         <span class='error-message' id='add-doctor-error-message'>Yipeee</span>
                     </div>     
                 </fieldset>
