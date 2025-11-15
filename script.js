@@ -113,7 +113,7 @@ addConsultationForm.addEventListener('input', (() => {
                     disableButton(document.querySelector('.action.add'));
                 } else {
                     document.querySelector('#add-patient-error-message').style.display = 'none';
-                    disableButton(document.querySelector('.action.add', false));
+                    disableButton(document.querySelector('.action.add'), false);
 
                 }
             }
