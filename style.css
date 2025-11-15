@@ -404,6 +404,10 @@ body {
     margin: 0;
 }
 
+.action:disabled {
+    background-color: #89bbbb;
+}
+
 .action.view {
     background-color: rgb(51, 151, 51);
 }

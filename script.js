@@ -105,6 +105,17 @@ addConsultationForm.addEventListener('input', (() => {
 
                 }
             }
+            if (field.name === 'DoctorName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#add-doctor-error-message').textContent = 'Please enter a valid name.';
+                    document.querySelector('#add-doctor-error-message').style.display = 'block';
+                    disableButton(document.querySelector('.action.add'));
+                } else {
+                    document.querySelector('#add-doctor-error-message').style.display = 'none';
+                    disableButton(document.querySelector('.action.add'), false);
+
+                }
+            }
         }, 500); // 500ms debounce delay
     };
 })());
