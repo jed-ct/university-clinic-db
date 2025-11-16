@@ -106,18 +106,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="modal-message">
-            <form id='filter-consultation-form'>
+            <form id='filter-consultation-form' method='GET' action='retrieve_consultation.php'>
 
                 <fieldset>
                     <legend>By Date</legend>
                     <div style='display: flex; gap: 10px;'>
                         <div class="forms-input">
                             <label for="filter-start-date">Start Date</label>
-                            <input type="date" id="filter-start-date" name="StartDate">
+                            <input type="date" id="filter-start-date" min='2024-01-01' name="StartDate">
                         </div>
                         <div class="forms-input">
                             <label for="filter-end-date">End Date</label>
-                            <input type="date" id="filter-end-date" name="EndDate">
+                            <input type="date" id="filter-end-date" min='2024-01-01' name="EndDate">
                         </div>
                     </div>
                     <span class='error-message' id='filter-date-error-message'></span>

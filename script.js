@@ -205,7 +205,9 @@ filterConsultationForm.addEventListener('input', (() => {
     let timeoutId;
     const startDateInput = document.querySelector('#filter-start-date');
     const endDateInput = document.querySelector('#filter-end-date');
-    
+    //set max possible dates to current
+    startDateInput.setAttribute('max', new Date().toISOString().slice(0, 10));
+    endDateInput.setAttribute('max', new Date().toISOString().slice(0, 10));
     return (e) => {
         clearTimeout(timeoutId);
         const field = e.target;
@@ -215,11 +217,12 @@ filterConsultationForm.addEventListener('input', (() => {
                 const startDate = new Date(startDateInput.value);
                 const endDate = new Date(endDateInput.value);
                 if (endDate < startDate) {
-                    document.querySelector('#filter-date-error-message').textContent =
-                        "End date must not be earlier than starting date";
+                    document.querySelector('#filter-date-error-message').textContent = "End date must not be earlier than starting date";
+                    disableButton(document.querySelector('.action.filter'));
                     document.querySelector('#filter-date-error-message').style.display = "block";
                 } else {
                     document.querySelector('#filter-date-error-message').style.display = "none";
+                    disableButton(document.querySelector('.action.filter'), false);
                 }
             }
 
