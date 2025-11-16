@@ -561,6 +561,11 @@ input:invalid {
     border-color: rgb(182, 54, 54);
 }
 
+input:focus {
+    outline: none;
+    border-color: var(--color-accent);
+}
+
 #patient_mi {
     max-width: 50px;
 }

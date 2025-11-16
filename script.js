@@ -152,10 +152,11 @@ if (!isCurrentDateTimeCheckbox.checked) {
   console.log("Form Data as Object:", formObject);
 })
 
+// input event listener
 addConsultationForm.addEventListener('input', (() => {
     let timeoutId;
     return (e) => {
-        clearTimeout(timeoutId); // reset timer on each input
+        clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {
             const field = e.target;
             if (field.name == "ConsultationDate" || field.name == "ConsultationTime") {
