@@ -216,7 +216,7 @@ filterConsultationForm.addEventListener('input', (() => {
                 const endDate = new Date(endDateInput.value);
                 if (endDate < startDate) {
                     document.querySelector('#filter-date-error-message').textContent =
-                        "End date must not be greater than starting date";
+                        "End date must not be earlier than starting date";
                     document.querySelector('#filter-date-error-message').style.display = "block";
                 } else {
                     document.querySelector('#filter-date-error-message').style.display = "none";
@@ -231,9 +231,20 @@ filterConsultationForm.addEventListener('input', (() => {
                 } else {
                     document.querySelector('#filter-patient-error-message').style.display = 'none';
                     disableButton(document.querySelector('.action.filter'), false);
-
                 }
             }
+
+            else if (field.name === "DoctorName") {
+                if (!field.checkValidity()) {
+                    document.querySelector('#filter-doctor-error-message').textContent = 'Please enter a valid name.';
+                    document.querySelector('#filter-doctor-error-message').style.display = 'block';
+                    disableButton(document.querySelector('.action.filter'));
+                } else {
+                    document.querySelector('#filter-doctor-error-message').style.display = 'none';
+                    disableButton(document.querySelector('.action.filter'), false);
+                }
+            }
+
         }, 500);
     };
 })());
