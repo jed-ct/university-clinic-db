@@ -62,7 +62,18 @@
 
         <div id="consult-information">
             <h2 style="text-align: center;">Consultation History</h2>
-                <div id="consult-information-table"> <table class = "table table-striped">
+                <div id="consult-information-table"> 
+                    <?php $sql = " SELECT c.ConsultationID, c.ConsultDateTime,c.Diagnosis,c.Prescription,c.Remarks,
+                        CONCAT(d.DocFirstName, ' ', IFNULL(CONCAT(d.DocMiddleInit, '. '), ''),d.DocLastName) AS DoctorFullName
+                        FROM Consultation c
+                        INNER JOIN Doctor d ON d.DoctorID = c.DoctorID
+                        WHERE c.PatientID = '$patientID'
+                        ORDER BY c.ConsultDateTime DESC";
+
+$result = $conn->query($sql);
+?>
+
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th class="col-date">Date</th>
@@ -73,32 +84,30 @@
                             <th class="col-doc">Doctor</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <?php while ($row = $result->fetch_assoc()) { ?>
+                            <tr>
+                                <td class="col-date">
+                                    <?= date("M j, Y", strtotime($row["ConsultDateTime"])) ?>
+                                </td>
 
-                <?php
-                $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime, CONSULTATION.Diagnosis, 
-                CONSULTATION.Prescription, CONSULTATION.Remarks,
-                CONCAT(
-                    DOCTOR.DocFirstName, ' ',
-                    IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
-                    DOCTOR.DocLastName
-                ) AS DoctorFullName
-                FROM PATIENT
-                INNER JOIN CONSULTATION ON PATIENT.PatientID = CONSULTATION.PatientID
-                INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
-                ORDER BY CONSULTATION.ConsultDateTime DESC;";
-                
-                $result = $conn->query($sql); 
-                
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>
-                        <td data-label='Date' class='col-date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
-                        <td data-label='Time' class='col-time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
-                        <td data-label='Diagnosis' class='col-diag'>" . $row["Diagnosis"] . "</td>
-                        <td data-label='Prescription' class='col-prescr'>" . $row["Prescription"] . "</td>
-                        <td data-label='Remarks' class='col-remrks' >" . $row["Remarks"] . "</td>
-                        <td data-label='Doctor' class='col-doc'>" . $row["DoctorFullName"] . "</td>
-                    </tr>";}?>
+                                <td class="col-time">
+                                    <?= date("g:i A", strtotime($row["ConsultDateTime"])) ?>
+                                </td>
+
+                                <td class="col-diag"><?= $row["Diagnosis"] ?></td>
+                                <td class="col-prescr"><?= $row["Prescription"] ?></td>
+
+                                <td class="col-remrks">
+                                    <?= $row["Remarks"] ?>
+                                </td>
+
+                                <td class="col-doc"><?= $row["DoctorFullName"] ?></td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
                 </table>
+
             </div>
         </div>
     </div>
