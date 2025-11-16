@@ -12,6 +12,7 @@ const confirmDeletionButton = document.querySelector('.action.confirm-delete');
 const addConsultationButton = document.querySelector('#add-consultation-btn');
 const isCurrentDateTimeCheckbox = document.querySelector('#is-current-date-time');
 const addConsultationForm = document.querySelector("#add-consultation-form");
+const filterConsultationForm = document.querySelector('#filter-consultation-form');
 
 viewButton.forEach((viewButton)=> {
     viewButton.addEventListener("click", async ()=> {
@@ -79,7 +80,7 @@ deleteConsultationButton.addEventListener("click", ()=> {
     viewConsultationModal.style.display = 'none';
 });
 
-// Add an event listener for form submission
+
 addConsultationForm.addEventListener("submit", async (e) => {
   // Prevent the default form submission (which would reload the page)
     e.preventDefault();
@@ -200,6 +201,42 @@ isCurrentDateTimeCheckbox.addEventListener("change", ()=> {
     }
 })
 
+filterConsultationForm.addEventListener('input', (() => {
+    let timeoutId;
+    const startDateInput = document.querySelector('#filter-start-date');
+    const endDateInput = document.querySelector('#filter-end-date');
+    
+    return (e) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            console.log(startDateInput.value);
+            console.log(endDateInput.value);
+            //Validation for dates
+            if (startDateInput.value && endDateInput.value) {
+                console.log('both have values');
+
+                const startDate = new Date(startDateInput.value);
+                const endDate = new Date(endDateInput.value);
+
+                if (endDate < startDate) {
+                    document.querySelector('#filter-date-error-message').textContent =
+                        "End date must not be greater than starting date";
+                    document.querySelector('#filter-date-error-message').style.display = "block";
+                } else {
+                    document.querySelector('#filter-date-error-message').style.display = "none";
+                }
+            }
+        }, 500);
+    };
+})());
+
+
+
+
+
+
+
+
 modalCloseButton.forEach((btn) => {
     btn.addEventListener("click", ()=> {
         deletionModal.style.display = 'none';
@@ -209,6 +246,7 @@ modalCloseButton.forEach((btn) => {
         filterConsultationModal.style.display = 'none';
     })
 });
+
 
 function updateConsultationTable(tableData) {
     const table = document.querySelector('#consultations-table tbody');

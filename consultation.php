@@ -106,20 +106,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="modal-message">
-            <form>
+            <form id='filter-consultation-form'>
 
-                <fieldset style='display: flex; gap: 10px;'>
+                <fieldset>
                     <legend>By Date</legend>
-
-                    <div class="forms-input">
-                        <label for="filter-start-date">Start Date</label>
-                        <input type="date" id="filter-start-date" name="StartDate">
+                    <div style='display: flex; gap: 10px;'>
+                        <div class="forms-input">
+                            <label for="filter-start-date">Start Date</label>
+                            <input type="date" id="filter-start-date" name="StartDate">
+                        </div>
+                        <div class="forms-input">
+                            <label for="filter-end-date">End Date</label>
+                            <input type="date" id="filter-end-date" name="EndDate">
+                        </div>
                     </div>
-
-                    <div class="forms-input">
-                        <label for="filter-end-date">End Date</label>
-                        <input type="date" id="filter-end-date" name="EndDate">
-                    </div>
+                    <span class='error-message' id='filter-date-error-message'></span>
                 </fieldset>
 
                 <fieldset>
@@ -128,11 +129,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="forms-input">
                         <label for="filter-patient">Patient</label>
                         <input type="text" name="PatientName" id="filter-patient" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        <span class='error-message' id='filter-patient-error-message'></span>
                     </div>
 
                     <div class="forms-input">
                         <label for="filter-doctor">Doctor</label>
                         <input type="text" name="DoctorName" id="filter-doctor" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        <span class='error-message' id='filter-doctor-error-message'></span>
                     </div>                        
                 </fieldset>
 
@@ -142,11 +145,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="forms-input">
                         <label for="filter-diagnosis">Diagnosis</label>
                         <input type="text" name="Diagnosis" id="filter-diagnosis" maxlength="64">
+                        <span class='error-message' id='filter-diagnosis-error-message'></span>
                     </div>
 
                     <div class="forms-input">
                         <label for="filter-prescription">Prescription</label>
                         <input type="text" name="Prescription" id="filter-prescription" maxlength="64">
+                        <span class='error-message' id='filter-prescription-error-message'></span>
                     </div>                                 
                 </fieldset>
 
@@ -154,7 +159,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class='consultation-modal-actions'>
-            <button class='action'>Filter</button>
+            <button class='action filter' type='submit' form='filter-consultation-form'>Filter</button>
         </div>
 
     </div>
