@@ -1,5 +1,3 @@
-console.log('hello w');
-
 const viewButton = document.querySelectorAll('.action.view');
 const viewConsultationModal = document.querySelector('#consultation-modal');
 const addConsultationModal = document.querySelector('#add-consultation-modal');
@@ -84,7 +82,47 @@ deleteConsultationButton.addEventListener("click", ()=> {
 // Add an event listener for form submission
 addConsultationForm.addEventListener("submit", async (e) => {
   // Prevent the default form submission (which would reload the page)
-  e.preventDefault();
+    e.preventDefault();
+if (!isCurrentDateTimeCheckbox.checked) {
+    const dateValue = document.querySelector('#set-consultation-date').value;
+    const timeValue = document.querySelector('#set-consultation-time').value;
+
+    if (!dateValue || !timeValue) {
+        document.querySelector('#add-datetime-error-message').textContent = 'Please input your desired date and time.';
+        document.querySelector('#add-datetime-error-message').style.display = 'block';
+        return; // stop form submission
+    }
+}
+    if (!document.querySelector('#add-patient-name').value.trim()) {
+        document.querySelector('#add-patient-error-message').textContent = 'Required.';
+        document.querySelector('#add-patient-error-message').style.display = 'block';
+        document.querySelector('#add-patient-name').focus();
+        return;
+    }
+
+    const diagnosis = document.querySelector('#add-diagnosis').value.trim();
+    if (!diagnosis) {
+        document.querySelector('#add-diagnosis-error-message').textContent = 'Required.';
+        document.querySelector('#add-diagnosis-error-message').style.display = 'block';
+        document.querySelector('#add-diagnosis').focus();
+        return;
+    }
+
+    const prescription = document.querySelector('#add-prescription').value.trim();
+    if (!prescription) {
+        document.querySelector('#add-prescription-error-message').textContent = 'Required.';
+        document.querySelector('#add-prescription-error-message').style.display = 'block';
+        document.querySelector('#add-prescription').focus();
+        return;
+    }
+    const doctorName = document.querySelector('#add-doctor-name').value.trim();
+    if (!doctorName) {
+        document.querySelector('#add-doctor-error-message').textContent = 'Required.';
+        document.querySelector('#add-doctor-name').focus();
+        document.querySelector('#add-doctor-error-message').style.display = 'block';
+        return;
+    }
+
 
     const formData = new FormData(addConsultationForm);
 
@@ -120,7 +158,9 @@ addConsultationForm.addEventListener('input', (() => {
         clearTimeout(timeoutId); // reset timer on each input
         timeoutId = setTimeout(() => {
             const field = e.target;
-
+            if (field.name == "ConsultationDate" || field.name == "ConsultationTime") {
+                document.querySelector('#add-datetime-error-message').style.display = 'none';
+            }
             if (field.name === 'PatientName') {
                 if (!field.checkValidity()) {
                     document.querySelector('#add-patient-error-message').textContent = 'Please enter a valid name.';
@@ -161,7 +201,6 @@ isCurrentDateTimeCheckbox.addEventListener("change", ()=> {
 
 modalCloseButton.forEach((btn) => {
     btn.addEventListener("click", ()=> {
-        console.log('hello worl');
         deletionModal.style.display = 'none';
         viewConsultationModal.style.display = 'none';
         addConsultationModal.style.display = 'none';

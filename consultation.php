@@ -44,14 +44,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                         <label>Time</label>
                         <input type="time" name="ConsultationTime" id="set-consultation-time" disabled> 
-                    </div>  
+                    </div>
+                    <span class='error-message' id='add-datetime-error-message'>Yipeee</span>  
                 </fieldset>
 
                 <fieldset class='patient-fieldset'>
                     <legend>Patient</legend>
                     <div class="forms-input">
                         <label for="patient-name">Patient Name *</label>
-                        <input type="text" name="PatientName" id="patient-name" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
+                        <input type="text" name="PatientName" id="add-patient-name" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
                         <span class='error-message' id='add-patient-error-message'>Yipeee</span>
                     </div>
                 </fieldset>

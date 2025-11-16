@@ -1,4 +1,5 @@
 <?php 
+    date_default_timezone_set('Asia/Manila');
     
     include("database.php");
     // $sql = "INSERT INTO CONSULTATION (PatientID, DiagnosisID, PrescriptionID, Remarks, ConsultDateTime, DoctorID)
