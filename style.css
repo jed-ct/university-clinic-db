@@ -294,7 +294,7 @@ body {
 }
 
 #consult-information {
-    padding: 6px 38px 38px 38px;
+    padding: 20px 38px 38px 38px;
     width: 90%;
     margin: 30px auto;
     border-radius: 8px;
@@ -308,6 +308,7 @@ body {
 #consult-information-table {
     width: 90%;
     margin: 0 auto;
+    margin-top: 20px;
     border-radius: 8px;
     overflow: hidden;
     background-color: #fff;
@@ -315,15 +316,42 @@ body {
 }
 
 #consult-information-table th, #consult-information-table td {
-    padding: 10px;
     text-align: left;
-    width: 50%;
+    width: 50%;  
 }
 
 #consult-information-table thead {
     background-color: var(--color-primary);
     color: #fff;
     font-weight: 600;
+}
+
+.col-date {
+     width: 90px !important
+}
+
+.col-time {
+     width: 70px !important
+}
+
+.col-diag {
+    width: 250px !important
+}
+
+.col-prescr {
+    width: 250px !important
+}
+
+.col-remrks {
+    max-width: 250px;      
+    white-space: normal;   
+    word-wrap: break-word; 
+    overflow-wrap: break-word; 
+}
+
+.col-doc{
+    width: 250px !important;
+    
 }
 
 .link-to-other {
@@ -592,11 +620,6 @@ input:invalid {
     border-color: rgb(182, 54, 54);
 }
 
-input:focus {
-    outline: none;
-    border-color: var(--color-accent);
-}
-
 #patient_mi {
     max-width: 50px;
 }
@@ -623,7 +646,7 @@ input:focus {
 .date-time-fieldset {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 10px;
 }
 
 #set-date-time-container {

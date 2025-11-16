@@ -7,9 +7,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Information</title>
-    <link rel="stylesheet" href="./style.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-     <script src="https://kit.fontawesome.com/ea8c838e77.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="./style.css">
+        <script src="https://kit.fontawesome.com/ea8c838e77.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="header">
@@ -65,16 +65,16 @@
                 <div id="consult-information-table"> <table class = "table table-striped">
                     <thead>
                         <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Diagnosis</th>
-                            <th>Prescription</th>
-                            <th>Remarks</th>
-                            <th>Doctor</th>
+                            <th class="col-date">Date</th>
+                            <th class="col-time">Time</th>
+                            <th class="col-diag">Diagnosis</th>
+                            <th class="col-prescr">Prescription</th>
+                            <th class="col-remrks">Remarks</th>
+                            <th class="col-doc">Doctor</th>
                         </tr>
                     </thead>
 
-         <?php
+                <?php
                 $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime, CONSULTATION.Diagnosis, 
                 CONSULTATION.Prescription, CONSULTATION.Remarks,
                 CONCAT(
@@ -91,16 +91,14 @@
                 
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>
-                        <td data-label='Date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
-                        <td data-label='Time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
-                        <td data-label='Diagnosis'>" . $row["Diagnosis"] . "</td>
-                        <td data-label='Prescription'>" . $row["Prescription"] . "</td>
-                        <td data-label='Remarks'>" . $row["Remarks"] . "</td>
-                        <td data-label='Doctor'>" . $row["DoctorFullName"] . "</td>
-                    </tr>";
-                }
-            ?>
-    </table>
+                        <td data-label='Date' class='col-date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
+                        <td data-label='Time' class='col-time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
+                        <td data-label='Diagnosis' class='col-diag'>" . $row["Diagnosis"] . "</td>
+                        <td data-label='Prescription' class='col-prescr'>" . $row["Prescription"] . "</td>
+                        <td data-label='Remarks' class='col-remrks' >" . $row["Remarks"] . "</td>
+                        <td data-label='Doctor' class='col-doc'>" . $row["DoctorFullName"] . "</td>
+                    </tr>";}?>
+                </table>
             </div>
         </div>
     </div>
