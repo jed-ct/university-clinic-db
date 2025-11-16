@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="modal-message">
-            <form id='add-consultation-form' method='POST' autocomplete="off">
+            <form id='add-consultation-form' action='./add_consultation.php' method='POST' autocomplete="off">
 
                 <fieldset class='date-time-fieldset'>
                     <legend>Date and Time</legend>
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <legend>Patient</legend>
                     <div class="forms-input">
                         <label for="patient-name">Patient Name *</label>
-                        <input type="text" name="PatientName" id="patient-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        <input type="text" name="PatientName" id="patient-name" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
                         <span class='error-message' id='add-patient-error-message'>Yipeee</span>
                     </div>
                 </fieldset>
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <legend>Doctor</legend>
                     <div class="forms-input">
                         <label for="add-doctor-name">Doctor Name *</label>
-                        <input type="text" name="DoctorName" id="add-doctor-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                        <input type="text" name="DoctorName" id="add-doctor-name" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
                         <span class='error-message' id='add-doctor-error-message'>Yipeee</span>
                     </div>     
                 </fieldset>

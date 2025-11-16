@@ -82,13 +82,24 @@ deleteConsultationButton.addEventListener("click", ()=> {
 });
 
 // Add an event listener for form submission
-addConsultationForm.addEventListener("submit", (event) => {
+addConsultationForm.addEventListener("submit", async (e) => {
   // Prevent the default form submission (which would reload the page)
-  event.preventDefault();
+  e.preventDefault();
 
-  // Create a FormData object from the form
-  const formData = new FormData(addConsultationForm);
+    const formData = new FormData(addConsultationForm);
 
+    const response = await fetch('./add_consultation.php', {
+        method: 'POST',
+        body: formData
+    });
+    const text = (await response.text()).trim();
+    console.log('PHP response:', text);
+
+    if (text === "New record created successfully") {
+        addConsultationModal.style.display = 'none';
+    } else {
+        alert("Error: " + text);
+    }
   // You can iterate over the FormData entries and log them
   console.log("Form Data:");
   for (const [key, value] of formData.entries()) {
