@@ -208,22 +208,30 @@ filterConsultationForm.addEventListener('input', (() => {
     
     return (e) => {
         clearTimeout(timeoutId);
+        const field = e.target;
         timeoutId = setTimeout(() => {
-            console.log(startDateInput.value);
-            console.log(endDateInput.value);
             //Validation for dates
             if (startDateInput.value && endDateInput.value) {
-                console.log('both have values');
-
                 const startDate = new Date(startDateInput.value);
                 const endDate = new Date(endDateInput.value);
-
                 if (endDate < startDate) {
                     document.querySelector('#filter-date-error-message').textContent =
                         "End date must not be greater than starting date";
                     document.querySelector('#filter-date-error-message').style.display = "block";
                 } else {
                     document.querySelector('#filter-date-error-message').style.display = "none";
+                }
+            }
+
+            else if (field.name === "PatientName") {
+                if (!field.checkValidity()) {
+                    document.querySelector('#filter-patient-error-message').textContent = 'Please enter a valid name.';
+                    document.querySelector('#filter-patient-error-message').style.display = 'block';
+                    disableButton(document.querySelector('.action.filter'));
+                } else {
+                    document.querySelector('#filter-patient-error-message').style.display = 'none';
+                    disableButton(document.querySelector('.action.filter'), false);
+
                 }
             }
         }, 500);
