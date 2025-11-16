@@ -35,6 +35,11 @@
                 if(ISSET($_REQUEST['id'])){
                     $query = mysqli_query($conn, "SELECT * FROM `Patient` WHERE `PatientID` = '$_REQUEST[id]'") or die(mysqli_error($conn));
                     $fetch = mysqli_fetch_array($query);
+                    $patientID = $fetch['PatientID'];
+                    $consultQuery = mysqli_query(
+                        $conn,
+                        "SELECT * FROM Consultation WHERE PatientID = '$patientID' ORDER BY ConsultDateTime DESC"
+                    ) or die(mysqli_error($conn));
     ?>
     <div class="patient-information-container">
         <div id="patient-information">
@@ -53,6 +58,50 @@
                 </table>
             </div>
             <?php }?>
+        </div>
+
+        <div id="consult-information">
+            <h2 style="text-align: center;">Consultation History</h2>
+                <div id="consult-information-table"> <table class = "table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Diagnosis</th>
+                            <th>Prescription</th>
+                            <th>Remarks</th>
+                            <th>Doctor</th>
+                        </tr>
+                    </thead>
+
+         <?php
+                $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime, CONSULTATION.Diagnosis, 
+                CONSULTATION.Prescription, CONSULTATION.Remarks,
+                CONCAT(
+                    DOCTOR.DocFirstName, ' ',
+                    IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
+                    DOCTOR.DocLastName
+                ) AS DoctorFullName
+                FROM PATIENT
+                INNER JOIN CONSULTATION ON PATIENT.PatientID = CONSULTATION.PatientID
+                INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
+                ORDER BY CONSULTATION.ConsultDateTime DESC;";
+                
+                $result = $conn->query($sql); 
+                
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>
+                        <td data-label='Date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
+                        <td data-label='Time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
+                        <td data-label='Diagnosis'>" . $row["Diagnosis"] . "</td>
+                        <td data-label='Prescription'>" . $row["Prescription"] . "</td>
+                        <td data-label='Remarks'>" . $row["Remarks"] . "</td>
+                        <td data-label='Doctor'>" . $row["DoctorFullName"] . "</td>
+                    </tr>";
+                }
+            ?>
+    </table>
+            </div>
         </div>
     </div>
 
