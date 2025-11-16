@@ -68,7 +68,9 @@
     <h2>Search Results for <?php echo $searchname; ?></h2>
     <hr/>
     <?php
+        $count = 0;
         while ($fetch = mysqli_fetch_array($query)) {
+             
     ?>
     <div style="word-wrap:break-word;">
         <a href="get_patient.php?id=<?php echo $fetch['PatientID']?>">
@@ -76,6 +78,14 @@
         </a>
     </div>
     <hr />
+    <?php
+        $count++; }
+        if ($count == 0) {
+    ?>
+        <br><p>No patients found</p>
+        <br>
+        <hr />
+        
     <?php
         }
     ?>
