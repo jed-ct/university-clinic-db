@@ -12,6 +12,27 @@
         <script src="https://kit.fontawesome.com/ea8c838e77.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
+    <!-- DELETE CONFIRMATION MODAL -->
+    <div id="delete-patient-modal" class='modal'>
+    <div class='modal-content'>
+        <div class="close-btn-div">
+            <div></div>
+            <button class="close-btn"><img class='btn-img' src="./img/close.svg"></button>
+        </div>
+
+        <div class='modal-message'>
+            Are you sure you want to delete this patient? This action cannot be undone.
+        </div>
+
+        <div class='consultation-modal-actions'>
+            <button class='action confirm-delete'>Yes</button>
+            <button class='close-btn action'>No</button>
+        </div>
+
+    </div>
+</div>
+
     <div class="header">
         <a id="hyperlink-logo" href="./index.php">
             <div class='header-img' id='logo'>
@@ -29,8 +50,7 @@
         <button id='mobile-menu-btn'><img class='header-img' src='./img/menu.svg'></button>
     </div>
 
- 
-
+<!--PATIENT DETAILS-->
     <?php
                 if(ISSET($_REQUEST['id'])){
                     $query = mysqli_query($conn, "SELECT * FROM `Patient` WHERE `PatientID` = '$_REQUEST[id]'") or die(mysqli_error($conn));
@@ -44,8 +64,8 @@
     <div class="patient-information-container">
         <div id="patient-information">
             <div class="patient-actions">
-                <button  class="patient action" id='edit-patient-btn'><i class="fa-solid fa-pen-to-square"></i> <span>Edit patient information</span></button>
-                <button class="patient action" id='delete-patient-btn'><i class="fa-solid fa-trash"></i> <span>Delete patient</span></button>
+                <button type="button" class="action edit-ptnt" ><i class="fa-solid fa-pen-to-square"></i> <span>Edit patient information</span></button>
+                <button type="button" class="action delete-ptnt"  data-toggle="modal" data-target="#staticBackdrop"><i class="fa-solid fa-trash"></i> <span>Delete patient</span></button>
             </div>
 
             <h2 style="text-align: center;">Patient Details</h2>
@@ -60,6 +80,7 @@
             <?php }?>
         </div>
 
+<!--CONSULTATION HISTORY-->
         <div id="consult-information">
             <h2 style="text-align: center;">Consultation History</h2>
                 <div id="consult-information-table"> 
@@ -69,10 +90,8 @@
                         INNER JOIN Doctor d ON d.DoctorID = c.DoctorID
                         WHERE c.PatientID = '$patientID'
                         ORDER BY c.ConsultDateTime DESC";
-
-$result = $conn->query($sql);
-?>
-
+                        $result = $conn->query($sql);
+                        ?>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -116,6 +135,10 @@ $result = $conn->query($sql);
     <div id="footer">
         basta contact info
     </div>
-    
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="./script.js"></script>
 </body>
 </html>
