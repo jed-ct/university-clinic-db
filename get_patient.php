@@ -13,7 +13,7 @@
 </head>
 <body>
 
-    <!-- DELETE CONFIRMATION MODAL -->
+<!-- DELETE CONFIRMATION MODAL -->
     <div id="delete-patient-modal" class='modal'>
     <div class='modal-content'>
         <div class="close-btn-div">
@@ -31,7 +31,7 @@
         </div>
 
     </div>
-</div>
+    </div>
 
     <div class="header">
         <a id="hyperlink-logo" href="./index.php">
@@ -81,6 +81,7 @@
         </div>
 
 <!--CONSULTATION HISTORY-->
+        
         <div id="consult-information">
             <h2 style="text-align: center;">Consultation History</h2>
                 <div id="consult-information-table"> 
@@ -90,8 +91,15 @@
                         INNER JOIN Doctor d ON d.DoctorID = c.DoctorID
                         WHERE c.PatientID = '$patientID'
                         ORDER BY c.ConsultDateTime DESC";
-                        $result = $conn->query($sql);
+                        $result = $conn->query($sql); 
                         ?>
+
+                <?php if ($result->num_rows === 0): ?>
+                    <p class="no-consults-msg">
+                        This patient has no consultation history yet.
+                    </p>
+
+                <?php else: ?>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -126,7 +134,16 @@
                         <?php } ?>
                     </tbody>
                 </table>
+                
+                <div class="pagination">
+                    <a href="#" class="prev">&laquo;</a>
+                    <a href="consultation.php?page=1" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#" class="next">&raquo;</a>
+                </div>
 
+                <?php endif; ?>
             </div>
         </div>
     </div>

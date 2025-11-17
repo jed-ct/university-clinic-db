@@ -373,6 +373,12 @@ body {
 
 }
 
+.no-consults-msg {
+    text-align:center; 
+    margin-top:20px; 
+    color:#5f5f5f; 
+    font-style:italic;
+}
 
 
 /* 📱 When screen is small, turn table rows into cards */
