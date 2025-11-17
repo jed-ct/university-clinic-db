@@ -338,10 +338,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     DOCTOR.DocFirstName, ' ',
                     IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
                     DOCTOR.DocLastName
-                ) AS DoctorFullName
+                ) AS DoctorFullName,
+                DIAGNOSIS.Diagnosis, PRESCRIPTION.Prescription
                 FROM PATIENT
                 INNER JOIN CONSULTATION ON PATIENT.PatientID = CONSULTATION.PatientID
                 INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
+                INNER JOIN DIAGNOSIS ON DIAGNOSIS.DiagnosisID = CONSULTATION.DiagnosisID
+                INNER JOIN PRESCRIPTION ON PRESCRIPTION.PrescriptionID = CONSULTATION.PrescriptionID
                 ORDER BY CONSULTATION.ConsultDateTime DESC;";
                 
                 $result = $conn->query($sql); 
