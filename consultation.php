@@ -13,6 +13,8 @@ include("database.php");
 <body>
 
 <?php
+    $filterStartDate = isset($_GET['StartDate']) ? trim($_GET['StartDate']) : '';
+    $filterEndDate = isset($_GET['EndDate']) ? trim($_GET['EndDate']) : '';
     $filterPatientName = isset($_GET['PatientName']) ? trim($_GET['PatientName']) : '';
     $filterDoctorName = isset($_GET['DoctorName']) ? trim($_GET['DoctorName']) : '';
     $filterDiagnosis = isset($_GET['Diagnosis']) ? trim($_GET['Diagnosis']) : '';
@@ -347,8 +349,17 @@ include("database.php");
                 INNER JOIN DIAGNOSIS ON DIAGNOSIS.DiagnosisID = CONSULTATION.DiagnosisID
                 INNER JOIN PRESCRIPTION ON PRESCRIPTION.PrescriptionID = CONSULTATION.PrescriptionID
                 WHERE 1=1";
+                if ($filterStartDate && $filterEndDate) {
+                    $sql .= " AND DATE(ConsultDateTime) BETWEEN '$filterStartDate' AND '$filterEndDate'";
+                }
+                else if ($filterStartDate) {
+                    $sql .= " AND DATE(ConsultDateTime) >= '$filterStartDate'";
+                }
+                else if ($filterEndDate) {
+                    $sql .= " AND DATE(ConsultDateTime) <= '$filterEndDate'";
+                }
 
-                if ($filterPatientName != '') {
+                if ($filterPatientName) {
                     $sql .= " AND CONCAT(
                     PATIENT.PatientFirstName, ' ',
                     IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
@@ -356,7 +367,7 @@ include("database.php");
                 ) LIKE '%$filterPatientName%'";
                 }
                 
-                if ($filterDoctorName != '') {
+                if ($filterDoctorName) {
                     $sql .= " AND CONCAT(
                     DOCTOR.DocFirstName, ' ',
                     IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
@@ -364,11 +375,11 @@ include("database.php");
                 ) LIKE '%$filterDoctorName%'";
                 }
                 
-                if ($filterDiagnosis != '') {
+                if ($filterDiagnosis) {
                     $sql .= " AND DIAGNOSIS LIKE '%$filterDiagnosis%'";
                 }
 
-                if ($filterPrescription != '') {
+                if ($filterPrescription) {
                     $sql .= " AND PRESCRIPTION LIKE '%$filterPrescription%'";
                 }                
 
