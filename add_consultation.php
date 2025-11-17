@@ -2,13 +2,6 @@
     date_default_timezone_set('Asia/Manila');
     
     include("database.php");
-    // $sql = "INSERT INTO CONSULTATION (PatientID, DiagnosisID, PrescriptionID, Remarks, ConsultDateTime, DoctorID)
-    //  VALUES(100001, 50002, 60004, 'jabol', '2025-08-16 09:30:00', 200015)";
-    // if (mysqli_query($conn, $sql)) {
-    //     echo "New record created successfully";
-    // } else {
-    //     echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-    // }
     function searchIDFromTable($tableName, $queryColumn, $searchQuery, $idColumn) {
         global $conn;
         if ($tableName == "PATIENT") {

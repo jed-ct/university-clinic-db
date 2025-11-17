@@ -106,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <div class="modal-message">
-            <form id='filter-consultation-form' method='GET' action='retrieve_consultation.php'>
+            <form id='filter-consultation-form' method='GET' action='consultation.php' autocomplete='off'>
 
                 <fieldset>
                     <legend>By Date</legend>

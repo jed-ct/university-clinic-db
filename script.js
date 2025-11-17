@@ -252,7 +252,8 @@ filterConsultationForm.addEventListener('input', (() => {
     };
 })());
 
-
+filterConsultationForm.addEventListener('submit', async (e)=> {
+})
 
 
 
