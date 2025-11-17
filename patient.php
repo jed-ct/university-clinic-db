@@ -47,6 +47,10 @@
 <?php
     if (isset($_POST['search'])) {
         $searchname = htmlspecialchars($_POST['patientsearch']);
+        if (!preg_match("/^[A-Za-z.-]+(?:[ .-][A-Za-z.-]+)*$/", $searchname)) {
+        echo "<p class ='error-search'> Your search contained invalid or null symbols. Please try again.</p>";
+        } else {
+
         $search_term = "%" . $searchname . "%";
         $sql = "SELECT * FROM `PATIENT` WHERE 
             `PatientFirstName` LIKE ? 
@@ -93,7 +97,7 @@
     ?>
 </div>
 <?php
-    }
+    }}
 ?>
 
     <div id="footer">

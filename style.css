@@ -266,6 +266,19 @@ body {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
+.error-search {
+    padding: 38px 38px 38px 38px;
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    color: #555;
+}
+
 #patient-information {
     padding: 6px 38px 38px 38px;
     width: 90%;
