@@ -26,7 +26,7 @@
         </div>
 
         <div class='consultation-modal-actions'>
-            <button class='action confirm-delete-patient'>Delete Patient</button>
+            <button class='action confirm-delete-patient' >Delete Patient</button>
             <button class='action close-btn-patient'>Nevermind</button>
         </div>
 
@@ -65,7 +65,7 @@
         <div id="patient-information">
             <div class="patient-actions">
                 <button type="button" class="action edit-ptnt" ><i class="fa-solid fa-pen-to-square"></i> <span>Edit patient information</span></button>
-                <button type="button" class="action delete-ptnt"  data-toggle="modal" data-target="#staticBackdrop"><i class="fa-solid fa-trash"></i> <span>Delete patient</span></button>
+                <button type="button" class="action delete-ptnt" data-id='<?php echo $patientID; ?>'><i class="fa-solid fa-trash"></i> <span>Delete patient</span></button>
             </div>
 
             <h2 style="text-align: center;">Patient Details</h2>
