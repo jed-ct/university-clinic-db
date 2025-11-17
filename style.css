@@ -373,6 +373,14 @@ body {
 
 }
 
+.ellips-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%; 
+    display: block;   
+}
+
 .no-consults-msg {
     text-align:center; 
     margin-top:20px; 

@@ -28,6 +28,7 @@
         <button id='mobile-menu-btn'><img class='header-img' src='./img/menu.svg'></button>
     </div>
 
+<!-- SEARCH BAR AND FUNCTION -->
  <div class="consultations-table-container">
         <div><h2 class='consultation-history'>Patient Information</h2></div>
         <div class="consultations-actions">
@@ -42,6 +43,7 @@
         </div>  
 </div>
 
+<!-- SEARCH RESULTS -->
 <?php
     if (isset($_POST['search'])) {
         $searchname = htmlspecialchars($_POST['patientsearch']);
@@ -65,7 +67,7 @@
 ?>
 
 <div class = "patient-search-results">
-    <h2>Search Results for <?php echo $searchname; ?></h2>
+    <h2 class="ellips-truncate"> Search Results for <?php echo $searchname; ?></h2>
     <hr/>
     <?php
         $count = 0;
@@ -74,7 +76,7 @@
     ?>
     <div style="word-wrap:break-word;">
         <a href="get_patient.php?id=<?php echo $fetch['PatientID']?>">
-            <h4 class = "link-to-other" ><?php echo htmlspecialchars($fetch['PatientFirstName'])?> <?php echo htmlspecialchars($fetch['PatientLastName'])?></h4>
+            <h4 class = "link-to-other" ><?php echo htmlspecialchars($fetch['PatientFirstName'])?> <?php echo htmlspecialchars($fetch['PatientMiddleInit'])?> <?php echo htmlspecialchars($fetch['PatientLastName'])?></h4>
         </a>
     </div>
     <hr />
@@ -95,7 +97,7 @@
 ?>
 
     <div id="footer">
-        fuckshet fuck
+        hello world
     </div>
 </body>
 </html>
