@@ -125,8 +125,6 @@ body {
     outline: 0;
 }        
 
-/*edit here*/
-
 
 /* CONSULTATION TABLE */
 .consultations-table-container {
@@ -655,10 +653,10 @@ body {
 }
 
 #delete-patient-modal .modal-content {
-    width: 400px;       /* smaller width */
-    max-width: 90%;     /* responsive on small screens */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* subtle shadow */
-    margin: auto;       /* center horizontally */
+    width: 400px;    
+    max-width: 90%;    
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+    margin: auto;      
 }
 
 form {
@@ -736,3 +734,6 @@ legend {
     flex-direction: column;
     gap: 10px;
 }
+
+
+
