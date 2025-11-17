@@ -2,6 +2,8 @@ const deletePatientModal = document.querySelector('#delete-patient-modal');
 const deletePatientButton = document.querySelector('.action.delete-ptnt');
 const confirmDeletionButton = document.querySelector('.action.confirm-delete-patient');
 const modalPatientClose = document.querySelectorAll('.close-btn-patient');
+const editPatientModal = document.querySelector('#edit-patient-modal');
+const editPatientButton = document.querySelector('.action.edit-ptnt');
 const modals = document.querySelectorAll('.modal');
 
 function closeModals() {
@@ -27,3 +29,6 @@ confirmDeletionButton.addEventListener("click", async ()=> {
     }
 });
 
+editPatientButton.addEventListener("click", ()=> {
+    editPatientModal.style.display = 'flex';
+});

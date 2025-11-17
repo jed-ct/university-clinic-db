@@ -33,6 +33,77 @@
     </div>
     </div>
 
+<!--EDIT MODAL-->
+    <div id="edit-patient-modal" class="modal">
+    <div class="modal-content">
+
+        <div class="close-btn-div">
+            <div>Edit Patient Details</div>
+            <button class="close-btn-patient"><img class='btn-img' src="./img/close.svg"></button>
+        </div>
+
+        <div class="modal-message">
+           <form id='edit-patient-form' method='POST'>
+
+           <!--NAME-->
+                <fieldset class='p-name-fieldset'>
+                    <legend>Patient Name</legend>
+                    
+                    <div class="forms-input">
+                        <label for="edit-p-firstname">First Name</label>
+                        <input type="text" name="PFirstName" id="edit-p-firstname" pattern="^[A-Za-z.-]+(?:[ .-][A-Za-z.-]+)*$" maxlength="64">
+                        <span class='error-message' id='add-name-error-message'>Yipeee</span>
+                    </div>     
+
+                    <div class="forms-input">
+                        <label for="edit-p-middleinit">Middle Initial</label>
+                        <input type="text" name="PMiddleInit" id="edit-p-firstname" pattern="^[A-Za-z.-]+(?:[ .-][A-Za-z.-]+)*$" maxlength="2">
+                        <span class='error-message' id='add-name-error-message'>Yipeee</span>
+                    </div> 
+
+                    <div class="forms-input">
+                        <label for="edit-p-lastname">First Name</label>
+                        <input type="text" name="PLastName" id="edit-p-lastname" pattern="^[A-Za-z]+$" maxlength="64">
+                        <span class='error-message' id='add-name-error-message'>Yipeee</span>
+                    </div> 
+                </fieldset>
+
+            <!--SEX-->
+                <fieldset class='sex-fieldset'>
+                    <legend>Sex</legend>
+                    <div class="forms-input">
+                        <label for="edit-sex">Sex</label>
+                        <input type="text" name="Sex" id="edit-sex" pattern="^[A-Za-z]+$" maxlength="1">
+                        <span class='error-message' id='add-sex-error-message'>Yipeee</span>
+                    </div>     
+                </fieldset>
+
+                <fieldset class='bday-fieldset'>
+                    <legend>Birthday</legend>
+                    <div class="forms-input">
+                        <label for="edit-bday">Birthday</label>
+                        <input type="text" name="Birthday" id="edit-bday" type="date" min="1900-01-01">
+                        <span class='error-message' id='add-bdayerror--message'>Yipeee</span>
+                    </div>     
+                </fieldset>
+
+                <fieldset class='contactno-fieldset'>
+                    <legend>Contact</legend>
+                    <div class="forms-input">
+                        <label for="edit-contact">Contact Number</label>
+                        <input type="text" name="ContactNo" id="edit-contact" type="number" maxlength="11">
+                        <span class='error-message' id='add-contact-error-message'>Yipeee</span>
+                    </div>     
+                </fieldset>
+            </form>
+            </div>
+
+        <div class='consultation-modal-actions'>
+            <button class='action add' data-id=''>Edit</button>
+        </div>
+    </div>
+    </div>
+
     <div class="header">
         <a id="hyperlink-logo" href="./index.php">
             <div class='header-img' id='logo'>
@@ -64,7 +135,7 @@
     <div class="patient-information-container">
         <div id="patient-information">
             <div class="patient-actions">
-                <button type="button" class="action edit-ptnt" ><i class="fa-solid fa-pen-to-square"></i> <span>Edit patient information</span></button>
+                <button type="button" class="action edit-ptnt" data-id='<?php echo $patientID; ?>'><i class="fa-solid fa-pen-to-square"></i> <span>Edit patient information</span></button>
                 <button type="button" class="action delete-ptnt" data-id='<?php echo $patientID; ?>'><i class="fa-solid fa-trash"></i> <span>Delete patient</span></button>
             </div>
 
@@ -80,8 +151,7 @@
             <?php }?>
         </div>
 
-<!--CONSULTATION HISTORY-->
-        
+<!--CONSULTATION HISTORY-->       
         <div id="consult-information">
             <h2 style="text-align: center;">Consultation History</h2>
                 <div id="consult-information-table"> 
