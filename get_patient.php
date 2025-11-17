@@ -18,7 +18,7 @@
     <div class='modal-content'>
         <div class="close-btn-div">
             <div></div>
-            <button class="close-btn"><img class='btn-img' src="./img/close.svg"></button>
+            <button class="close-btn-patient"><img class='btn-img' src="./img/close.svg"></button>
         </div>
 
         <div class='modal-message'>
@@ -26,8 +26,8 @@
         </div>
 
         <div class='consultation-modal-actions'>
-            <button class='action confirm-delete'>Yes</button>
-            <button class='close-btn action'>No</button>
+            <button class='action confirm-delete-patient'>Delete Patient</button>
+            <button class='action close-btn-patient'>Nevermind</button>
         </div>
 
     </div>
