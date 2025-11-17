@@ -13,10 +13,11 @@ include("database.php");
 <body>
 
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    header("Location: consultation.php?page=1");
-    exit;
-}
+    $filterPatientName = isset($_GET['PatientName']) ? trim($_GET['PatientName']) : '';
+    $filterDoctorName = isset($_GET['DoctorName']) ? trim($_GET['DoctorName']) : '';
+    $filterDiagnosis = isset($_GET['Diagnosis']) ? trim($_GET['Diagnosis']) : '';
+    $filterPrescription = isset($_GET['Prescription']) ? trim($_GET['Prescription']) : '';
+
 ?>
 
 <!-- ADD CONSULTATION MODAL -->
@@ -345,7 +346,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
                 INNER JOIN DIAGNOSIS ON DIAGNOSIS.DiagnosisID = CONSULTATION.DiagnosisID
                 INNER JOIN PRESCRIPTION ON PRESCRIPTION.PrescriptionID = CONSULTATION.PrescriptionID
-                ORDER BY CONSULTATION.ConsultDateTime DESC;";
+                WHERE 1=1";
+
+                if ($filterPatientName != '') {
+                    $sql .= " AND CONCAT(
+                    PATIENT.PatientFirstName, ' ',
+                    IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
+                    PATIENT.PatientLastName
+                ) LIKE '%$filterPatientName%'";
+                }
+                
+                if ($filterDoctorName != '') {
+                    $sql .= " AND CONCAT(
+                    DOCTOR.DocFirstName, ' ',
+                    IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
+                    DOCTOR.DocLastName
+                ) LIKE '%$filterDoctorName%'";
+                }
+                
+                if ($filterDiagnosis != '') {
+                    $sql .= " AND DIAGNOSIS LIKE '%$filterDiagnosis%'";
+                }
+
+                if ($filterPrescription != '') {
+                    $sql .= " AND PRESCRIPTION LIKE '%$filterPrescription%'";
+                }                
+
+                $sql .= " ORDER BY CONSULTATION.ConsultDateTime DESC";
                 
                 $result = $conn->query($sql); 
                 
