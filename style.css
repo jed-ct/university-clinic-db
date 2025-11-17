@@ -256,7 +256,7 @@ body {
 
 .patient-search-results {
     padding: 6px 38px 38px 38px;
-    width: 90%;
+    width: 80%;
     margin: 0 auto;
     border-collapse: collapse;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -281,6 +281,7 @@ body {
 #patient-information-table {
     width: 50%;
     margin: 0 auto;
+    margin-top: 20px;
     border-radius: 8px;
     overflow: hidden;
     background-color: #fff;
@@ -365,19 +366,14 @@ body {
     align-items: center;
 }
 
-.patient.action {
-    padding: 10px;
-    text-decoration: none;
-    display: inline-block;
-    border-radius: 10px;
-}
-
 .patient-actions {
     width:50%;
     gap: 5px;
     margin: 10px 30px 10px 0px;
 
 }
+
+
 
 /* 📱 When screen is small, turn table rows into cards */
 @media (max-width: 768px) {
@@ -446,9 +442,6 @@ body {
 
 }
 
-
-
-
 .action {
     background-color: var(--color-accent);
     color: var(--color-base-bg);
@@ -475,6 +468,7 @@ body {
     background-color: rgb(40, 121, 40);;
     cursor: pointer;
 }
+
 
 /* FOOTER */
 #footer {
@@ -582,12 +576,40 @@ body {
     background-color: rgb(209, 46, 46);
 }
 
+.action.edit-ptnt:hover {
+    background-color: rgb(40, 84, 206);
+}
+
+.action.delete-ptnt {
+    background-color: rgb(245, 54, 54);
+}
+
+.action.delete-ptnt:hover {
+    background-color: rgb(209, 46, 46);
+}
+
 #delete-confirmation-modal {
     display: none;
 }
 
 #delete-confirmation-modal .modal-message {
     font-size: 1rem;
+}
+
+#delete-patient-modal {
+    display: none;
+}
+
+#delete-patient-modal .modal-message {
+    font-size: 1rem;
+    text-align: center;
+}
+
+#delete-patient-modal .modal-content {
+    width: 400px;       /* smaller width */
+    max-width: 90%;     /* responsive on small screens */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* subtle shadow */
+    margin: auto;       /* center horizontally */
 }
 
 form {
