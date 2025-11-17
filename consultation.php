@@ -19,6 +19,7 @@ include("database.php");
     $filterDoctorName = isset($_GET['DoctorName']) ? trim($_GET['DoctorName']) : '';
     $filterDiagnosis = isset($_GET['Diagnosis']) ? trim($_GET['Diagnosis']) : '';
     $filterPrescription = isset($_GET['Prescription']) ? trim($_GET['Prescription']) : '';
+    $page = isset($_GET['page']) ? intval($_GET['page']) : '';
 
 ?>
 
@@ -318,7 +319,74 @@ include("database.php");
         <button class='consultations action' id='filter-consultation-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
     </div>
 
-    <table id='consultations-table' class="consultations-table">
+    <?php
+    $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime,
+    CONCAT(
+        PATIENT.PatientFirstName, ' ',
+        IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
+        PATIENT.PatientLastName
+    ) AS PatientFullName,
+    CONCAT(
+        DOCTOR.DocFirstName, ' ',
+        IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
+        DOCTOR.DocLastName
+    ) AS DoctorFullName,
+    DIAGNOSIS.Diagnosis, PRESCRIPTION.Prescription
+    FROM PATIENT
+    INNER JOIN CONSULTATION ON PATIENT.PatientID = CONSULTATION.PatientID
+    INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
+    INNER JOIN DIAGNOSIS ON DIAGNOSIS.DiagnosisID = CONSULTATION.DiagnosisID
+    INNER JOIN PRESCRIPTION ON PRESCRIPTION.PrescriptionID = CONSULTATION.PrescriptionID
+    WHERE 1=1";
+    if ($filterStartDate && $filterEndDate) {
+        $sql .= " AND DATE(ConsultDateTime) BETWEEN '$filterStartDate' AND '$filterEndDate'";
+    }
+    else if ($filterStartDate) {
+        $sql .= " AND DATE(ConsultDateTime) >= '$filterStartDate'";
+    }
+    else if ($filterEndDate) {
+        $sql .= " AND DATE(ConsultDateTime) <= '$filterEndDate'";
+    }
+
+    if ($filterPatientName) {
+        $sql .= " AND CONCAT(
+        PATIENT.PatientFirstName, ' ',
+        IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
+        PATIENT.PatientLastName
+    ) LIKE '%$filterPatientName%'";
+    }
+    
+    if ($filterDoctorName) {
+        $sql .= " AND CONCAT(
+        DOCTOR.DocFirstName, ' ',
+        IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
+        DOCTOR.DocLastName
+    ) LIKE '%$filterDoctorName%'";
+    }
+    
+    if ($filterDiagnosis) {
+        $sql .= " AND DIAGNOSIS LIKE '%$filterDiagnosis%'";
+    }
+
+    if ($filterPrescription) {
+        $sql .= " AND PRESCRIPTION LIKE '%$filterPrescription%'";
+    }                
+
+    $sql .= " ORDER BY CONSULTATION.ConsultDateTime DESC LIMIT 10";
+    if ($page) {
+        $offset = ($page - 1) * 10;
+        $sql .= " OFFSET $offset";
+    }
+
+
+    $result = $conn->query($sql); 
+    
+    if ($result->num_rows === 0) {
+        echo "<div style='font-size: 1.5rem'>Query not found</div>";
+    }
+    else {
+        echo "
+    <table id='consultations-table' class='consultations-table'>
         <thead>
             <tr>
                 <th>Date</th>
@@ -329,79 +397,25 @@ include("database.php");
             </tr>
         </thead>
 
-        <tbody>
-            <?php
-                $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime,
-                CONCAT(
-                    PATIENT.PatientFirstName, ' ',
-                    IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
-                    PATIENT.PatientLastName
-                ) AS PatientFullName,
-                CONCAT(
-                    DOCTOR.DocFirstName, ' ',
-                    IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
-                    DOCTOR.DocLastName
-                ) AS DoctorFullName,
-                DIAGNOSIS.Diagnosis, PRESCRIPTION.Prescription
-                FROM PATIENT
-                INNER JOIN CONSULTATION ON PATIENT.PatientID = CONSULTATION.PatientID
-                INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
-                INNER JOIN DIAGNOSIS ON DIAGNOSIS.DiagnosisID = CONSULTATION.DiagnosisID
-                INNER JOIN PRESCRIPTION ON PRESCRIPTION.PrescriptionID = CONSULTATION.PrescriptionID
-                WHERE 1=1";
-                if ($filterStartDate && $filterEndDate) {
-                    $sql .= " AND DATE(ConsultDateTime) BETWEEN '$filterStartDate' AND '$filterEndDate'";
-                }
-                else if ($filterStartDate) {
-                    $sql .= " AND DATE(ConsultDateTime) >= '$filterStartDate'";
-                }
-                else if ($filterEndDate) {
-                    $sql .= " AND DATE(ConsultDateTime) <= '$filterEndDate'";
-                }
+        <tbody>";
+    
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>
+                <td data-label='Date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
+                <td data-label='Time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
+                <td data-label='Patient'>" . $row["PatientFullName"] . "</td>
+                <td data-label='Doctor'>" . $row["DoctorFullName"] . "</td>
+                <td style='width:1%; white-space:nowrap;'>
+                    <button class='action view' data-id='" . $row["ConsultationID"] . "'>View</button>
+                </td>
+            </tr>";
+        }
+        }
 
-                if ($filterPatientName) {
-                    $sql .= " AND CONCAT(
-                    PATIENT.PatientFirstName, ' ',
-                    IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
-                    PATIENT.PatientLastName
-                ) LIKE '%$filterPatientName%'";
-                }
-                
-                if ($filterDoctorName) {
-                    $sql .= " AND CONCAT(
-                    DOCTOR.DocFirstName, ' ',
-                    IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
-                    DOCTOR.DocLastName
-                ) LIKE '%$filterDoctorName%'";
-                }
-                
-                if ($filterDiagnosis) {
-                    $sql .= " AND DIAGNOSIS LIKE '%$filterDiagnosis%'";
-                }
+    echo "</tbody>
 
-                if ($filterPrescription) {
-                    $sql .= " AND PRESCRIPTION LIKE '%$filterPrescription%'";
-                }                
-
-                $sql .= " ORDER BY CONSULTATION.ConsultDateTime DESC";
-                
-                $result = $conn->query($sql); 
-                
-                while ($row = $result->fetch_assoc()) {
-                    echo "<tr>
-                        <td data-label='Date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
-                        <td data-label='Time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
-                        <td data-label='Patient'>" . $row["PatientFullName"] . "</td>
-                        <td data-label='Doctor'>" . $row["DoctorFullName"] . "</td>
-                        <td style='width:1%; white-space:nowrap;'>
-                            <button class='action view' data-id='" . $row["ConsultationID"] . "'>View</button>
-                        </td>
-                    </tr>";
-                }
-            ?>
-        </tbody>
-
-    </table>
+    </table>"
+?>
 
     <div class="pagination">
         <a href="#" class="prev">&laquo;</a>
