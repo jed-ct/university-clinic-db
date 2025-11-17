@@ -14,6 +14,11 @@ const isCurrentDateTimeCheckbox = document.querySelector('#is-current-date-time'
 const addConsultationForm = document.querySelector("#add-consultation-form");
 const filterConsultationForm = document.querySelector('#filter-consultation-form');
 
+const deletePatientModal = document.querySelector('#delete-patient-modal');
+const deletePatientButton = document.querySelector('.action.delete-ptnt');
+
+
+
 viewButton.forEach((viewButton)=> {
     viewButton.addEventListener("click", async ()=> {
         viewConsultationModal.style.display = 'flex';
@@ -46,6 +51,10 @@ confirmDeletionButton.addEventListener("click",async ()=> {
     window.location.reload(); 
     deletionModal.style.display = 'none';
 })
+
+deletePatientButton.addEventListener("click", ()=> {
+    deletePatientModal.style.display = 'flex';
+});
 
 addConsultationButton.addEventListener("click", () => {
     addConsultationModal.style.display = 'flex';
@@ -326,3 +335,5 @@ function convertTo24Hour(timeStr) {
 
     return `${hh}:${mm}`;
 }
+
+
