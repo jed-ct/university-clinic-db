@@ -19,8 +19,23 @@ include("database.php");
     $filterDoctorName = isset($_GET['DoctorName']) ? trim($_GET['DoctorName']) : '';
     $filterDiagnosis = isset($_GET['Diagnosis']) ? trim($_GET['Diagnosis']) : '';
     $filterPrescription = isset($_GET['Prescription']) ? trim($_GET['Prescription']) : '';
-    $page = isset($_GET['page']) ? intval($_GET['page']) : '';
+    $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
     $isTableFiltered = false;
+    function getPaginationURL($previousOrNext) {
+        global $page;
+        $next_page = $page + 1;
+        $previous_page = $page - 1;
+        $current_params = $_GET;
+        if ($previousOrNext == "previous") {
+            $current_params['page'] = $previous_page;
+        }
+        else {
+            $current_params['page'] = $next_page;
+        }
+        $query_string = http_build_query($current_params);
+        return "/university-clinic-db/consultation.php?" . $query_string;
+
+    }
 
 ?>
 
@@ -430,12 +445,11 @@ include("database.php");
     echo "</tbody>
     </table>";
 
-    if (true) {
-    
+    if ($totalCurrentTableRow > 10) {
      echo   '<div class="pagination">
             <a href="#" class="prev"> < </a>
-            <div>Page <span>' . $page . '</span> of <span>' . $totalCurrentTableRow % 10 . '</span></div>
-            <a href="#" class="next"> ></a>
+            <div>Page <span>' . $page . '</span> of <span>' . ($totalCurrentTableRow % 10) + 1 . '</span></div>
+            <a href="'. getPaginationURL("next") . '" class="next"> ></a>
         </div>';
     }
 ?>
