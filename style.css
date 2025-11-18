@@ -765,3 +765,11 @@ legend {
 :focus {
   outline: none;
 }
+
+input:required:invalid, 
+select:required:invalid,
+textarea:required:invalid {
+    border-color: #ccc; 
+    box-shadow: none;     
+    outline: none;        
+}

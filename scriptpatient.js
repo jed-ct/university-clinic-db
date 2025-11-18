@@ -12,6 +12,7 @@ const editPatientForm = document.getElementById('edit-patient-form');
 
 const addPatientButton = document.querySelector('#add-patient-btn');
 const addPatientModal = document.querySelector('#add-patient-modal');
+const addPatientForm = document.querySelector("#add-patient-form");
 
 const modals = document.querySelectorAll('.modal');
 
@@ -22,6 +23,90 @@ function closeModals() {
 document.querySelectorAll('.close-btn-patient').forEach(btn => {
     btn.addEventListener('click', closeModals);
 });
+
+document.querySelectorAll('#add-patient-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        addPatientModal.style.display = 'flex';
+    });
+});
+
+document.querySelectorAll('#add-patient-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        addPatientModal.style.display = 'flex';
+    });
+});
+
+document.querySelectorAll('#add-patient-form').forEach(form => {
+    form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const firstname = document.querySelector('#add-p-firstname').value.trim();
+    if (!firstname) {
+        document.querySelector('#add-fname-error-message').textContent = 'Required.';
+        document.querySelector('#add-fname-error-message').style.display = 'block';
+        document.querySelector('#add-p-firstname').focus();
+        return;
+    }
+
+    const middleinit = document.querySelector('#add-p-middleinit').value.trim();
+
+    const lastname= document.querySelector('#add-p-lastname').value.trim();
+    if (!lastname) {
+        document.querySelector('#add-lname-error-message').textContent = 'Required.';
+        document.querySelector('#add-lname-error-message').style.display = 'block';
+        document.querySelector('#add-p-lastname').focus();
+        return;
+    }
+
+    const sex = document.querySelector('#add-sex').value.trim();
+    if (!sex) {
+        document.querySelector('#add-sex-error-message').textContent = 'Required.';
+        document.querySelector('#add-sex-error-message').focus();
+        document.querySelector('#add-sex').style.display = 'block';
+        return;
+    }
+
+    const bday = document.querySelector('#add-bday').value.trim();
+    if (!bday) {
+        document.querySelector('#add-bdayerror-message').textContent = 'Required.';
+        document.querySelector('#add-bdayerror-message').focus();
+        document.querySelector('#add-bday').style.display = 'block';
+        return;
+    }
+
+    const contact = document.querySelector('#add-contact').value.trim();
+    if (!contact) {
+        document.querySelector('#add-contact-error-message').textContent = 'Required.';
+        document.querySelector('#add-contact-error-message').focus();
+        document.querySelector('#add-contact').style.display = 'block';
+        return;
+    }
+
+
+    const formData = new FormData(addPatientForm);
+
+    const response = await fetch('./add_patient.php', {
+        method: 'POST',
+        body: formData
+    });
+
+    const text = (await response.text()).trim();
+    console.log('PHP response:', text);
+
+    if (text === "New record created successfully") {
+        addPatientModal.style.display = 'none';
+    } else {
+        alert("Error: " + text);
+    }
+
+  const formObject = {};
+  formData.forEach((value, key) => {
+    formObject[key] = value;
+  });
+  console.log("Form Data as Object:", formObject);
+});});
+
+
 
 deletePatientButton.addEventListener("click", ()=> {
     deletePatientModal.style.display = 'flex';
@@ -58,10 +143,6 @@ editPatientButton.addEventListener("click", async () => {
         console.error(error);
     }
 });
-
-addPatientButton.addEventListener("click", () => {
-    addPatientModal.style.display = 'flex';
-})
 
 saveEditsButton.addEventListener('click', function(e) {
     const patientID = this.dataset.id;

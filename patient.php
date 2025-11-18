@@ -25,29 +25,29 @@
            <!--NAME-->
                 <fieldset class='p-name-fieldset'>                   
                     <div class="forms-input">
-                        <label for="add-p-firstname">First Name</label>
-                        <input type="text" name="PFirstName" id="add-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
-                        <span class='error-message' id='add-name-error-message'>Yipeee</span>
+                        <label for="add-p-firstname">First Name *</label>
+                        <input type="text" name="PFirstName" id="add-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64" required>
+                        <span class='error-message' id='add-fname-error-message'>Yipeee</span>
                     </div>     
 
                     <div class="forms-input">
                         <label for="add-p-middleinit">Middle Initial</label>
                         <input type="text" name="PMiddleInit" id="add-p-middleinit" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="2">
-                        <span class='error-message' id='add-name-error-message'>Yipeee</span>
+                        <span class='error-message' id='add-mname-error-message'>Yipeee</span>
                     </div> 
 
                     <div class="forms-input">
-                        <label for="add-p-lastname">Last Name</label>
-                        <input type="text" name="PLastName" id="add-p-lastname" pattern="^[A-Za-z]+$" maxlength="64">
-                        <span class='error-message' id='add-name-error-message'>Yipeee</span>
+                        <label for="add-p-lastname">Last Name *</label>
+                        <input type="text" name="PLastName" id="add-p-lastname" pattern="^[A-Za-z]+$" maxlength="64" required>
+                        <span class='error-message' id='add-lname-error-message'>Yipeee</span>
                     </div> 
                 </fieldset>
 
             <!--SEX-->
                 <fieldset class='sex-fieldset'>
                     <div class="forms-input">
-                        <label for="add-sex">Sex</label>
-                        <input type="text" name="Sex" id="add-sex" pattern="^[A-Za-z]+$" maxlength="1">
+                        <label for="add-sex">Sex *</label>
+                        <input type="text" name="Sex" id="add-sex" pattern="^[A-Za-z]+$" maxlength="1" required>
                         <span class='error-message' id='add-sex-error-message'>Yipeee</span>
                     </div>     
                 </fieldset>
@@ -55,17 +55,17 @@
             <!--BIRTHDAY-->
                 <fieldset class='bday-fieldset'>
                     <div class="forms-input">
-                        <label for="add-bday">Birthday</label>
-                        <input  name="Birthday" id="add-bday" type="date" min="1900-01-01">
-                        <span class='error-message' id='add-bdayerror--message'>Yipeee</span>
+                        <label for="add-bday">Birthday *</label>
+                        <input  name="Birthday" id="add-bday" type="date" min="1900-01-01" required>
+                        <span class='error-message' id='add-bdayerror-message'>Yipeee</span>
                     </div>     
                 </fieldset>
                 
             <!--CONTACT-->
                 <fieldset class='contactno-fieldset'>
                     <div class="forms-input">
-                        <label for="add-contact">Contact Number</label>
-                        <input name="ContactNo" id="add-contact" type="number" maxlength="11">
+                        <label for="add-contact">Contact Number *</label>
+                        <input name="ContactNo" id="add-contact" type="number" maxlength="11" required>
                         <span class='error-message' id='add-contact-error-message'>Yipeee</span>
                     </div>     
                 </fieldset>
