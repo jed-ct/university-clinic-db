@@ -38,7 +38,7 @@
     $remarks = $_POST["Remarks"];
     $doctorID = searchIDFromTable("DOCTOR", "DOCTOR", $_POST["DoctorName"], "DoctorID");
 
-    $sql = "INSERT INTO CONSULTATION (PatientID, DiagnosisID, PrescriptionID, Remarks, ConsultDateTime, DoctorID) VALUES($patientID, '$diagnosis', '$prescription', '$remarks', '$formattedDatetime', $doctorID);";
+    $sql = "INSERT INTO CONSULTATION (PatientID, Diagnosis, Prescription, Remarks, ConsultDateTime, DoctorID) VALUES($patientID, '$diagnosis', '$prescription', '$remarks', '$formattedDatetime', $doctorID);";
 
     if (mysqli_query($conn, $sql)) {
         echo "New record created successfully";

@@ -716,6 +716,7 @@ input:invalid {
 }
 
 .autosuggest-box {
+    display: none;
     position: absolute;
     top: 100%;          
     left: 0;

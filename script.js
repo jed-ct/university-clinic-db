@@ -14,6 +14,7 @@ const isCurrentDateTimeCheckbox = document.querySelector('#is-current-date-time'
 const addConsultationForm = document.querySelector("#add-consultation-form");
 const filterConsultationForm = document.querySelector('#filter-consultation-form');
 const addPatientInput = document.querySelector('#add-patient-name');
+const addDoctorInput = document.querySelector('#add-doctor-name');
 
 
 
@@ -281,7 +282,33 @@ addPatientInput.addEventListener('input', async (e) => {
     container.style.display = 'block';
     }
     
-})
+});
+
+addDoctorInput.addEventListener('input', async (e)=> {
+    const query = addDoctorInput.value.trim();
+    const response = await fetch(`./autosuggestions/autosuggest-doctors.php?name=${encodeURIComponent(query)}`);
+    const autosuggestions = await response.json();
+    const container = document.querySelector('#add-doctor-autosuggest');
+
+    container.innerHTML = '';
+    if (Object.keys(autosuggestions).length == 0 || query == '') {
+        container.style.display = 'none';
+    }
+    else {
+        autosuggestions.forEach(name => {
+        const item = document.createElement('div');
+        item.classList.add('suggestion-item');
+        item.textContent = name;
+        item.addEventListener('click', () => {
+            addDoctorInput.value = name;
+            container.style.display = 'none';
+        });
+        container.appendChild(item);
+    });
+
+    container.style.display = 'block';
+    }
+});
 
 
 

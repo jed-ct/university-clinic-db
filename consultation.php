@@ -74,8 +74,7 @@ include("database.php");
                         <label for="patient-name">Patient Name *</label>
                         <input type="text" name="PatientName" id="add-patient-name" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
                         <span class='error-message' id='add-patient-error-message'>Yipeee</span>
-                        <div id="add-patient-autosuggest" class="autosuggest-box">
-                        </div>
+                        <div id="add-patient-autosuggest" class="autosuggest-box"></div>
                     </div>
                 </fieldset>
 
@@ -106,6 +105,7 @@ include("database.php");
                         <label for="add-doctor-name">Doctor Name *</label>
                         <input type="text" name="DoctorName" id="add-doctor-name" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
                         <span class='error-message' id='add-doctor-error-message'>Yipeee</span>
+                        <div id="add-doctor-autosuggest" class="autosuggest-box"></div>
                     </div>     
                 </fieldset>
 
