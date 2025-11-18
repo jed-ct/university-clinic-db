@@ -359,6 +359,7 @@ body {
     white-space: normal;   
     word-wrap: break-word; 
     overflow-wrap: break-word; 
+    text-align: justify;
 }
 
 .col-doc{
@@ -389,7 +390,7 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%; 
-    display: block;   
+    display: block;
 }
 
 .no-consults-msg {
@@ -735,5 +736,30 @@ legend {
     gap: 10px;
 }
 
+#edit-patient-modal .modal-content {
+    width: 400px;    
+    max-width: 90%;    
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+    margin: auto;      
+}
+
+#edit-patient-confirm-modal .modal-content {
+    width: 400px;    
+    max-width: 90%;    
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+    margin: auto;     
+}
+
+.edit-patient-reminder {
+    text-align: center;
+    font-size: 1rem;
+    color: #777;
+}
+
+.p-name-fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
 
