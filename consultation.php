@@ -20,6 +20,7 @@ include("database.php");
     $filterDiagnosis = isset($_GET['Diagnosis']) ? trim($_GET['Diagnosis']) : '';
     $filterPrescription = isset($_GET['Prescription']) ? trim($_GET['Prescription']) : '';
     $page = isset($_GET['page']) ? intval($_GET['page']) : '';
+    $isTableFiltered = false;
 
 ?>
 
@@ -315,8 +316,8 @@ include("database.php");
     <div><h2 class='consultation-history'>Consultation History</h2></div>
 
     <div class="consultations-actions">
-        <button class="consultations action" id='add-consultation-btn'><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>
         <button class='consultations action' id='filter-consultation-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
+        <button class="consultations action" id='add-consultation-btn'><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>
     </div>
 
     <?php
@@ -331,21 +332,26 @@ include("database.php");
         IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
         DOCTOR.DocLastName
     ) AS DoctorFullName,
-    DIAGNOSIS.Diagnosis, PRESCRIPTION.Prescription
+    CONSULTATION.Diagnosis, CONSULTATION.Prescription
     FROM PATIENT
     INNER JOIN CONSULTATION ON PATIENT.PatientID = CONSULTATION.PatientID
     INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
-    INNER JOIN DIAGNOSIS ON DIAGNOSIS.DiagnosisID = CONSULTATION.DiagnosisID
-    INNER JOIN PRESCRIPTION ON PRESCRIPTION.PrescriptionID = CONSULTATION.PrescriptionID
     WHERE 1=1";
+
+    $result = $conn->query($sql); 
+    $totalUnfilteredTableRow = $result->num_rows;
+
     if ($filterStartDate && $filterEndDate) {
         $sql .= " AND DATE(ConsultDateTime) BETWEEN '$filterStartDate' AND '$filterEndDate'";
+        $isTableFiltered = true;
     }
     else if ($filterStartDate) {
         $sql .= " AND DATE(ConsultDateTime) >= '$filterStartDate'";
+        $isTableFiltered = true;
     }
     else if ($filterEndDate) {
         $sql .= " AND DATE(ConsultDateTime) <= '$filterEndDate'";
+        $isTableFiltered = true;
     }
 
     if ($filterPatientName) {
@@ -354,6 +360,7 @@ include("database.php");
         IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
         PATIENT.PatientLastName
     ) LIKE '%$filterPatientName%'";
+    $isTableFiltered = true;
     }
     
     if ($filterDoctorName) {
@@ -362,16 +369,20 @@ include("database.php");
         IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
         DOCTOR.DocLastName
     ) LIKE '%$filterDoctorName%'";
+    $isTableFiltered = true;
     }
     
     if ($filterDiagnosis) {
-        $sql .= " AND DIAGNOSIS LIKE '%$filterDiagnosis%'";
+        $sql .= " AND CONSULTATION.Diagnosis LIKE '%$filterDiagnosis%'";
+        $isTableFiltered = true;
     }
 
     if ($filterPrescription) {
-        $sql .= " AND PRESCRIPTION LIKE '%$filterPrescription%'";
+        $sql .= " AND CONSULTATION.Prescription LIKE '%$filterPrescription%'";
+        $isTableFiltered = true;
     }                
 
+    
     $sql .= " ORDER BY CONSULTATION.ConsultDateTime DESC LIMIT 10";
     if ($page) {
         $offset = ($page - 1) * 10;
@@ -380,7 +391,8 @@ include("database.php");
 
 
     $result = $conn->query($sql); 
-    
+    $newSqlQuery = false;
+
     if ($result->num_rows === 0) {
         echo "<div style='font-size: 1.5rem'>Query not found</div>";
     }
@@ -413,17 +425,18 @@ include("database.php");
         }
 
     echo "</tbody>
+    </table>";
 
-    </table>"
+    if (true) {
+    
+     echo   '<div class="pagination">
+            <a href="#" class="prev"> < </a>
+            <div>Page <span>1</span> of <span>5</span></div>
+            <a href="#" class="next"> ></a>
+        </div>';
+    }
 ?>
 
-    <div class="pagination">
-        <a href="#" class="prev">&laquo;</a>
-        <a href="consultation.php?page=1" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#" class="next">&raquo;</a>
-    </div>
 
 </div>
 

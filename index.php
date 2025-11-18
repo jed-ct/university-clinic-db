@@ -29,7 +29,7 @@
     
     <div class='main-content-container'>
         <div class='main-content'>
-            [Insert information about HSO]
+            [Insert information about TBAClinic]
         </div>
     </div>
     <div id="footer">

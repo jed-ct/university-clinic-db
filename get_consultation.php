@@ -9,13 +9,11 @@ if (isset($_GET['id'])) {
                DATE_FORMAT(CONSULTATION.ConsultDateTime, '%l:%i %p') AS ConsultTime,
                PATIENT.PatientFirstName, PATIENT.PatientMiddleInit, PATIENT.PatientLastName,
                TIMESTAMPDIFF(YEAR, PATIENT.PatientBirthday, CONSULTATION.ConsultDateTime) AS PatientAge,
-               DIAGNOSIS.Diagnosis, PRESCRIPTION.Prescription, CONSULTATION.Remarks,
+               CONSULTATION.Diagnosis, CONSULTATION.Prescription, CONSULTATION.Remarks,
                DOCTOR.DocFirstName, DOCTOR.DocMiddleInit, DOCTOR.DocLastName
         FROM CONSULTATION
         INNER JOIN PATIENT ON PATIENT.PatientID = CONSULTATION.PatientID
         INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
-        INNER JOIN DIAGNOSIS ON DIAGNOSIS.DiagnosisID = CONSULTATION.DiagnosisID
-        INNER JOIN PRESCRIPTION ON PRESCRIPTION.PrescriptionID = CONSULTATION.PrescriptionID
         WHERE CONSULTATION.ConsultationID = $id
         LIMIT 1";
 
