@@ -11,6 +11,7 @@
      <script src="https://kit.fontawesome.com/ea8c838e77.js" crossorigin="anonymous"></script>
 </head>
 <body>
+
 <!-- ADD MODAL -->
 <div id="add-patient-modal" class="modal">
     <div class="modal-content">
@@ -78,6 +79,7 @@
     </div>
 </div>
 
+<!-- HEADER -->
     <div class="header">
         <a id="hyperlink-logo" href="./index.php">
             <div class='header-img' id='logo'>
@@ -95,6 +97,61 @@
         <button id='mobile-menu-btn'><img class='header-img' src='./img/menu.svg'></button>
     </div>
 
+<!-- FILTER MODAL -->
+<div id="filter-patient-modal" class="modal">
+    <div class="modal-content">
+        <div class="close-btn-div">
+            <div>Filter Patient Results</div>
+            <button class="close-btn-patient"><img class='btn-img' src="./img/close.svg"></button>
+        </div>
+
+        <div class="modal-message">
+            <form id="filter-patient-form" method='POST'>
+
+                <fieldset>
+                    <div class="forms-input">
+                        <label for="filter-first-name">First Name</label>
+                        <input type="text" name="FirstName" id="filter-first-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                    </div>
+
+                    <div class="forms-input">
+                        <label for="filter-middle-init">Middle Initial</label>
+                        <input type="text" name="MiddleInit" id="filter-middle-init" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                    </div>
+
+                    <div class="forms-input">
+                        <label for="filter-last-name">Last Name</label>
+                        <input type="text" name="LastName" id="filter-last-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
+                    </div>                        
+                </fieldset>
+
+                <fieldset>
+                    <div class="forms-input">
+                        <label for="filter-sex">Sex</label>
+                        <input type="text" name="Sex" id="filter-sex" maxlength="64">
+                    </div>
+
+                    <div class="forms-input">
+                        <label for="filter-bday">Birthday</label>
+                        <input type="date" name="Birthday" id="filter-bday" maxlength="64">
+                    </div>
+
+                    <div class="forms-input">
+                        <label for="filter-contact">Contact Number</label>
+                        <input type="number" name="ContactNo" id="filter-contact" maxlength="64">
+                    </div>
+                </fieldset>
+
+            </form>      
+        </div>
+
+        <div class='consultation-modal-actions'>
+            <button type = 'submit' class='action' form="filter-patient-form">Filter</button>
+        </div>
+
+    </div>
+</div>
+
 <!-- SEARCH BAR AND FUNCTION -->
  <div class="consultations-table-container">
         <div><h2 class='consultation-history'>Patient Information</h2></div>
@@ -109,8 +166,6 @@
                 </form>
         </div>  
 </div>
-
-
 
 <!-- SEARCH RESULTS -->
 <?php

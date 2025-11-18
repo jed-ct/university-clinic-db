@@ -14,6 +14,10 @@ const addPatientButton = document.querySelector('#add-patient-btn');
 const addPatientModal = document.querySelector('#add-patient-modal');
 const addPatientForm = document.querySelector("#add-patient-form");
 
+const filterPatientModal = document.querySelector('#filter-patient-modal');
+const filterPatientButton = document.querySelector('#filter-patient-btn');
+const filterPatientForm = document.querySelector('#filter-patient-form');
+
 const modals = document.querySelectorAll('.modal');
 
 function closeModals() {
@@ -106,7 +110,11 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
   console.log("Form Data as Object:", formObject);
 });});
 
-
+document.querySelectorAll('#filter-patient-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+       filterPatientModal.style.display = 'flex';
+    });
+});
 
 deletePatientButton.addEventListener("click", ()=> {
     deletePatientModal.style.display = 'flex';
