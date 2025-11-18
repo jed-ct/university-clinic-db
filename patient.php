@@ -138,11 +138,11 @@ include("database.php");
 </div>
 
 <!-- SEARCH BAR AND ACTIONS -->
-<div class="consultations-table-container">
+<div class="patient-table-container">
     <div><h2 class='consultation-history'>Patient Information</h2></div>
-    <div class="consultations-actions">
-        <button type="button" class="consultations action" id='add-patient-btn'><i class="fa-solid fa-plus"></i> <span>Add new patient</span></button>
-        <button type="button" class='consultations action' id='filter-patient-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
+    <div class="patient-actions">
+        <button type="button" class="patient action" id='add-patient-btn'><i class="fa-solid fa-plus"></i> <span>Add new patient</span></button>
+        <button type="button" class='patient action' id='filter-patient-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
     </div>
     <div class="patient-search">
         <input type="text" id="patient-searchbox" placeholder="Search patient name...">

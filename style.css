@@ -255,7 +255,7 @@ body {
 
 #patient-search-results {
     padding: 20px 38px 38px 38px;
-    width: 50%;
+    width:  min(800px, 70vw);
     margin: 0 auto;
     border-collapse: collapse;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -264,8 +264,6 @@ body {
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
-
-
 
 .error-search {
     color: #555;
@@ -394,6 +392,30 @@ body {
     font-style:italic;
 }
 
+.patient-actions {
+    width: 90%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.patient.action {
+    padding: 10px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 10px;
+}
+
+.patient.action:hover {
+    background-color: var(--color-primary);
+}
+
+.patient-table-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
 
 /* 📱 When screen is small, turn table rows into cards */
 @media (max-width: 768px) {
