@@ -762,4 +762,6 @@ legend {
     gap: 10px;
 }
 
-
+:focus {
+  outline: none;
+}

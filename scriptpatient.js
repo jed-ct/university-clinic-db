@@ -8,6 +8,11 @@ const editPatientConfirmModal = document.querySelector('#edit-patient-confirm-mo
 const editPatientButton = document.querySelector('.action.edit-ptnt');
 const saveEditsButton = document.querySelector('.action.save-edits');
 const editPatientForm = document.getElementById('edit-patient-form');
+
+
+const addPatientButton = document.querySelector('#add-patient-btn');
+const addPatientModal = document.querySelector('#add-patient-modal');
+
 const modals = document.querySelectorAll('.modal');
 
 function closeModals() {
@@ -54,11 +59,15 @@ editPatientButton.addEventListener("click", async () => {
     }
 });
 
+addPatientButton.addEventListener("click", () => {
+    addPatientModal.style.display = 'flex';
+})
+
 saveEditsButton.addEventListener('click', function(e) {
     const patientID = this.dataset.id;
 
     const formData = new FormData(editPatientForm);
-    formData.append('PatientID', patientID); 
+    formData.append('PatientID', patientID); // Add patient ID
 
     fetch('update_patient.php', {
         method: 'POST',
@@ -78,7 +87,7 @@ saveEditsButton.addEventListener('click', function(e) {
             // Sex
             if (formData.get('Sex')) tableRows[2].children[1].innerText = formData.get('Sex');
 
-            // Bday
+            // Birthday
             if (formData.get('Birthday')) tableRows[3].children[1].innerText = formData.get('Birthday');
 
             // Contact Number
@@ -96,5 +105,7 @@ saveEditsButton.addEventListener('click', function(e) {
         alert('An error occurred while updating patient info.');
     });
 });
+
+
 
 

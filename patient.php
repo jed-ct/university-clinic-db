@@ -11,6 +11,73 @@
      <script src="https://kit.fontawesome.com/ea8c838e77.js" crossorigin="anonymous"></script>
 </head>
 <body>
+<!-- ADD MODAL -->
+<div id="add-patient-modal" class="modal">
+    <div class="modal-content">
+        <div class="close-btn-div">
+            <div>Add new patient</div>
+            <button class="close-btn-patient"><img class='btn-img' src="./img/close.svg"></button>
+        </div>
+
+        <div class="modal-message">
+            <form id='add-patient-form' method='POST'>
+
+           <!--NAME-->
+                <fieldset class='p-name-fieldset'>                   
+                    <div class="forms-input">
+                        <label for="add-p-firstname">First Name</label>
+                        <input type="text" name="PFirstName" id="add-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
+                        <span class='error-message' id='add-name-error-message'>Yipeee</span>
+                    </div>     
+
+                    <div class="forms-input">
+                        <label for="add-p-middleinit">Middle Initial</label>
+                        <input type="text" name="PMiddleInit" id="add-p-middleinit" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="2">
+                        <span class='error-message' id='add-name-error-message'>Yipeee</span>
+                    </div> 
+
+                    <div class="forms-input">
+                        <label for="add-p-lastname">Last Name</label>
+                        <input type="text" name="PLastName" id="add-p-lastname" pattern="^[A-Za-z]+$" maxlength="64">
+                        <span class='error-message' id='add-name-error-message'>Yipeee</span>
+                    </div> 
+                </fieldset>
+
+            <!--SEX-->
+                <fieldset class='sex-fieldset'>
+                    <div class="forms-input">
+                        <label for="add-sex">Sex</label>
+                        <input type="text" name="Sex" id="add-sex" pattern="^[A-Za-z]+$" maxlength="1">
+                        <span class='error-message' id='add-sex-error-message'>Yipeee</span>
+                    </div>     
+                </fieldset>
+
+            <!--BIRTHDAY-->
+                <fieldset class='bday-fieldset'>
+                    <div class="forms-input">
+                        <label for="add-bday">Birthday</label>
+                        <input  name="Birthday" id="add-bday" type="date" min="1900-01-01">
+                        <span class='error-message' id='add-bdayerror--message'>Yipeee</span>
+                    </div>     
+                </fieldset>
+                
+            <!--CONTACT-->
+                <fieldset class='contactno-fieldset'>
+                    <div class="forms-input">
+                        <label for="add-contact">Contact Number</label>
+                        <input name="ContactNo" id="add-contact" type="number" maxlength="11">
+                        <span class='error-message' id='add-contact-error-message'>Yipeee</span>
+                    </div>     
+                </fieldset>
+            </form>
+        </div>
+
+        <div class='consultation-modal-actions'>
+            <button class='action add' type='submit' form='add-patient-form'>Add</button>
+        </div>
+    </div>
+</div>
+
     <div class="header">
         <a id="hyperlink-logo" href="./index.php">
             <div class='header-img' id='logo'>
@@ -32,8 +99,8 @@
  <div class="consultations-table-container">
         <div><h2 class='consultation-history'>Patient Information</h2></div>
         <div class="consultations-actions">
-            <button class="consultations action" id='add-consultation-btn'><i class="fa-solid fa-plus"></i> <span>Add new patient</span></button>
-            <button class='consultations action' id='filter-consultation-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
+            <button type="button" class="consultations action" id='add-patient-btn'><i class="fa-solid fa-plus"></i> <span>Add new patient</span></button>
+            <button type="button" class='consultations action' id='filter-patient-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
         </div>
         <div class="patient-search">
                 <form method="POST" value="<?php echo isset($_POST['patientsearch']) ? $_POST['patientsearch'] : '' ?>">
@@ -42,6 +109,8 @@
                 </form>
         </div>  
 </div>
+
+
 
 <!-- SEARCH RESULTS -->
 <?php
@@ -103,5 +172,7 @@
     <div id="footer">
         hello world
     </div>
+
+<script src="./scriptpatient.js"></script>    
 </body>
 </html>
