@@ -20,18 +20,74 @@ const filterPatientForm = document.querySelector('#filter-patient-form');
 
 const modals = document.querySelectorAll('.modal');
 
+const searchBoxes = document.querySelectorAll("#patient-searchbox");
+const resultsContainers = document.querySelectorAll("#patient-search-results");
+
+
+function debounce(func, wait = 300) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
+searchBoxes.forEach((searchBox, index) => {
+    const resultsDiv = resultsContainers[index] || resultsContainers[0]; 
+
+    searchBox.addEventListener("keyup", debounce(() => {
+        const query = searchBox.value.trim();
+
+        if (!query) {
+            resultsDiv.innerHTML = "";
+            return;
+        }
+
+        fetch("livesearch_patient.php?q=" + encodeURIComponent(query))
+            .then(res => res.text())
+            .then(data => {
+                resultsDiv.innerHTML = data;
+            })
+            .catch(err => console.error("Live search error:", err));
+    }, 300)); 
+});
+
 function closeModals() {
     modals.forEach(modal => modal.style.display = 'none');
+}
+function displayFilteredPatients(patients) {
+    const container = document.querySelector('.patient-search-results');
+
+    container.innerHTML = "<h2>Filtered Results</h2><hr>";
+
+    if (patients.length === 0) {
+        container.innerHTML += "<p>No matching patients found.</p>";
+        return;
+    }
+
+    patients.forEach(p => {
+        container.innerHTML += `
+            <div>
+                <a href="get_patient.php?id=${p.PatientID}">
+                    <h4 class="link-to-other">
+                        ${p.PatientFirstName} ${p.PatientMiddleInit ?? ''} ${p.PatientLastName}
+                    </h4>
+                </a>
+            </div>
+            <hr>
+        `;
+    });
+}
+function debounce(func, wait = 300) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
 }
 
 document.querySelectorAll('.close-btn-patient').forEach(btn => {
     btn.addEventListener('click', closeModals);
-});
-
-document.querySelectorAll('#add-patient-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        addPatientModal.style.display = 'flex';
-    });
 });
 
 document.querySelectorAll('#add-patient-btn').forEach(btn => {
@@ -116,6 +172,23 @@ document.querySelectorAll('#filter-patient-btn').forEach(btn => {
     });
 });
 
+document.querySelectorAll('#filter-patient-form').forEach(form => {
+    form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(filterPatientForm);
+
+    const response = await fetch('filter_patient.php', {
+        method: 'POST',
+        body: formData
+    });
+
+    const data = await response.json();
+
+    displayFilteredPatients(data);
+});
+});
+
 deletePatientButton.addEventListener("click", ()=> {
     deletePatientModal.style.display = 'flex';
 });
@@ -194,6 +267,7 @@ saveEditsButton.addEventListener('click', function(e) {
         alert('An error occurred while updating patient info.');
     });
 });
+
 
 
 
