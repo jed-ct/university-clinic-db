@@ -380,8 +380,13 @@ include("database.php");
     if ($filterPrescription) {
         $sql .= " AND CONSULTATION.Prescription LIKE '%$filterPrescription%'";
         $isTableFiltered = true;
-    }                
+    }
+    $result = $conn->query($sql);
 
+    $totalCurrentTableRow = $result->num_rows;
+    if (!$isTableFiltered) {
+        $totalCurrentTableRow = $totalUnfilteredTableRow;
+    }
     
     $sql .= " ORDER BY CONSULTATION.ConsultDateTime DESC LIMIT 10";
     if ($page) {
@@ -389,9 +394,7 @@ include("database.php");
         $sql .= " OFFSET $offset";
     }
 
-
     $result = $conn->query($sql); 
-    $newSqlQuery = false;
 
     if ($result->num_rows === 0) {
         echo "<div style='font-size: 1.5rem'>Query not found</div>";
@@ -431,7 +434,7 @@ include("database.php");
     
      echo   '<div class="pagination">
             <a href="#" class="prev"> < </a>
-            <div>Page <span>1</span> of <span>5</span></div>
+            <div>Page <span>' . $page . '</span> of <span>' . $totalCurrentTableRow % 10 . '</span></div>
             <a href="#" class="next"> ></a>
         </div>';
     }
