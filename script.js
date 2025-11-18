@@ -13,6 +13,8 @@ const addConsultationButton = document.querySelector('#add-consultation-btn');
 const isCurrentDateTimeCheckbox = document.querySelector('#is-current-date-time');
 const addConsultationForm = document.querySelector("#add-consultation-form");
 const filterConsultationForm = document.querySelector('#filter-consultation-form');
+const editConsultationForm = document.querySelector('#edit-consultation-form');
+const confirmEditConsultationButton = document.querySelector('#confirm-edit-btn');
 const addPatientInput = document.querySelector('#add-patient-name');
 const addDoctorInput = document.querySelector('#add-doctor-name');
 
@@ -64,6 +66,7 @@ editConsultationButton.addEventListener("click", async ()=> {
     editConsultationModal.style.display = 'flex';
     viewConsultationModal.style.display = 'none';
     const id = editConsultationButton.dataset.id;
+    confirmEditConsultationButton.dataset.id = id;
     try {
         const response = await fetch(`get_consultation.php?id=${id}`);
         const data = await response.json();
@@ -79,6 +82,108 @@ editConsultationButton.addEventListener("click", async ()=> {
         alert('not work');
     }    
 });
+
+
+
+
+editConsultationForm.addEventListener("submit", async (e) => {
+    const id = confirmEditConsultationButton.dataset.id;
+    e.preventDefault();
+    const dateValue = document.querySelector('#edit-consultation-date').value;
+    const timeValue = document.querySelector('#edit-consultation-time').value;
+    if (!dateValue || !timeValue) {
+        document.querySelector('#edit-datetime-error-message').textContent = 'Please input your desired date and time.';
+        document.querySelector('#edit-datetime-error-message').style.display = 'block';
+        return;
+    }
+
+    if (!document.querySelector('#edit-patient-name').value.trim()) {
+        document.querySelector('#edit-patient-error-message').textContent = 'Required.';
+        document.querySelector('#edit-patient-error-message').style.display = 'block';
+        document.querySelector('#edit-patient-name').focus();
+        return;
+    }
+
+    const diagnosis = document.querySelector('#edit-diagnosis').value.trim();
+    if (!diagnosis) {
+        document.querySelector('#edit-diagnosis-error-message').textContent = 'Required.';
+        document.querySelector('#edit-diagnosis-error-message').style.display = 'block';
+        document.querySelector('#edit-diagnosis').focus();
+        return;
+    }
+
+    const prescription = document.querySelector('#edit-prescription').value.trim();
+    if (!prescription) {
+        document.querySelector('#edit-prescription-error-message').textContent = 'Required.';
+        document.querySelector('#edit-prescription-error-message').style.display = 'block';
+        document.querySelector('#edit-prescription').focus();
+        return;
+    }
+    const doctorName = document.querySelector('#edit-doctor-name').value.trim();
+    if (!doctorName) {
+        document.querySelector('#edit-doctor-error-message').textContent = 'Required.';
+        document.querySelector('#edit-doctor-name').focus();
+        document.querySelector('#edit-doctor-error-message').style.display = 'block';
+        return;
+    }
+
+
+    const formData = new FormData(editConsultationForm);
+    formData.append('id', id);
+
+    for (let [key, value] of formData.entries()) {
+    console.log(key, value);
+}   
+
+    const response = await fetch('./edit_consultation.php', {
+        method: 'POST',
+        body: formData
+    });
+    const text = (await response.text()).trim();
+    console.log('PHP response:', text);
+
+    if (text === "Record edited successfully") {
+        editConsultationModal.style.display = 'none';
+    } else {
+        alert("Error: " + text);
+    }
+});
+
+editConsultationForm.addEventListener('input', (() => {
+    let timeoutId;
+    return (e) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => {
+            const field = e.target;
+            if (field.name == "ConsultationDate" || field.name == "ConsultationTime") {
+                document.querySelector('#edit-datetime-error-message').style.display = 'none';
+            }
+            if (field.name === 'PatientName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#edit-patient-error-message').textContent = 'Please enter a valid name.';
+                    document.querySelector('#edit-patient-error-message').style.display = 'block';
+                    disableButton(document.querySelector('.action.add'));
+                } else {
+                    document.querySelector('#edit-patient-error-message').style.display = 'none';
+                    disableButton(document.querySelector('.action.add'), false);
+
+                }
+            }
+            if (field.name === 'DoctorName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#edit-doctor-error-message').textContent = 'Please enter a valid name.';
+                    document.querySelector('#edit-doctor-error-message').style.display = 'block';
+                    disableButton(document.querySelector('.action.add'));
+                } else {
+                    document.querySelector('#edit-doctor-error-message').style.display = 'none';
+                    disableButton(document.querySelector('.action.add'), false);
+
+                }
+            }
+        }, 500); // 500ms debounce delay
+    };
+})());
+
 
 deleteConsultationButton.addEventListener("click", ()=> {
     deletionModal.style.display = 'flex';
@@ -144,18 +249,6 @@ if (!isCurrentDateTimeCheckbox.checked) {
     } else {
         alert("Error: " + text);
     }
-  // You can iterate over the FormData entries and log them
-  console.log("Form Data:");
-  for (const [key, value] of formData.entries()) {
-    console.log(`${key}: ${value}`);
-  }
-
-  // Alternatively, if you want a plain object representation:
-  const formObject = {};
-  formData.forEach((value, key) => {
-    formObject[key] = value;
-  });
-  console.log("Form Data as Object:", formObject);
 })
 
 // input event listener

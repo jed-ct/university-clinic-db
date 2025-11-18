@@ -227,7 +227,7 @@ include("database.php");
         </div>
 
         <div class="modal-message">
-           <form id='edit-consultation-form' method='POST'>
+           <form id='edit-consultation-form' method='POST' action='./edit_consultation.php'>
                 <fieldset class='date-time-fieldset'>
                     <legend>Date and Time</legend>
                     <div id='set-date-time-container'>
@@ -236,7 +236,8 @@ include("database.php");
 
                         <label>Time</label>
                         <input type="time" name="ConsultationTime" id="edit-consultation-time"> 
-                    </div>  
+                    </div>
+                    <span class='error-message' id='edit-datetime-error-message'></span>    
                 </fieldset>
 
                 <fieldset class='patient-fieldset'>
@@ -244,7 +245,7 @@ include("database.php");
                     <div class="forms-input">
                         <label for="edit-patient-name">Patient Name *</label>
                         <input type="text" name="PatientName" id="edit-patient-name" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
-                        <span class='error-message' id='add-patient-error-message'>Yipeee</span>
+                        <span class='error-message' id='edit-patient-error-message'>Yipeee</span>
                     </div>
                 </fieldset>
 
@@ -254,13 +255,13 @@ include("database.php");
                     <div class="forms-input">
                         <label for="edit-diagnosis">Diagnosis *</label>
                         <input type="text" name="Diagnosis" id="edit-diagnosis" maxlength="64">
-                        <span class='error-message' id='add-diagnosis-error-message'>Yipeee</span>
+                        <span class='error-message' id='edit-diagnosis-error-message'>Yipeee</span>
                     </div>
 
                     <div class="forms-input">
                         <label for="edit-prescription">Prescription *</label>
                         <input type="text" name="Prescription" id="edit-prescription" maxlength="64">
-                        <span class='error-message' id='add-prescription-error-message'>Yipeee</span>
+                        <span class='error-message' id='edit-prescription-error-message'>Yipeee</span>
                     </div>
 
                     <div class="forms-input">
@@ -274,7 +275,7 @@ include("database.php");
                     <div class="forms-input">
                         <label for="edit-doctor-name">Doctor Name *</label>
                         <input type="text" name="DoctorName" id="edit-doctor-name" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
-                        <span class='error-message' id='add-doctor-error-message'>Yipeee</span>
+                        <span class='error-message' id='edit-doctor-error-message'>Yipeee</span>
                     </div>     
                 </fieldset>
 
@@ -282,7 +283,7 @@ include("database.php");
         </div>
 
         <div class='consultation-modal-actions'>
-            <button class='action add' data-id=''>Edit</button>
+            <button id='confirm-edit-btn' class='action add' type='submit' form='edit-consultation-form' data-id=''>Edit</button>
         </div>
 
     </div>
