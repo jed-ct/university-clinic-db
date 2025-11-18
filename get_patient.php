@@ -33,6 +33,17 @@
     </div>
     </div>
 
+<?php
+                if(ISSET($_REQUEST['id'])){
+                    $query = mysqli_query($conn, "SELECT * FROM `Patient` WHERE `PatientID` = '$_REQUEST[id]'") or die(mysqli_error($conn));
+                    $fetch = mysqli_fetch_array($query);
+                    $patientID = $fetch['PatientID'];
+
+                    $consultQuery = mysqli_query(
+                        $conn,
+                        "SELECT * FROM Consultation WHERE PatientID = '$patientID' ORDER BY ConsultDateTime DESC"
+                    ) or die(mysqli_error($conn));
+?>
 <!--EDIT MODAL-->
     <div id="edit-patient-modal" class="modal">
     <div class="modal-content">
@@ -43,26 +54,25 @@
         </div>
 
         <div class="modal-message">
-           <form id='edit-patient-form' method='POST'>
+        
+            <form id='edit-patient-form' method='POST'>
 
            <!--NAME-->
-                <fieldset class='p-name-fieldset'>
-                    <legend>Patient Name</legend>
-                    
+                <fieldset class='p-name-fieldset'>                   
                     <div class="forms-input">
                         <label for="edit-p-firstname">First Name</label>
-                        <input type="text" name="PFirstName" id="edit-p-firstname" pattern="^[A-Za-z.-]+(?:[ .-][A-Za-z.-]+)*$" maxlength="64">
+                        <input type="text" name="PFirstName" id="edit-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
                         <span class='error-message' id='add-name-error-message'>Yipeee</span>
                     </div>     
 
                     <div class="forms-input">
                         <label for="edit-p-middleinit">Middle Initial</label>
-                        <input type="text" name="PMiddleInit" id="edit-p-firstname" pattern="^[A-Za-z.-]+(?:[ .-][A-Za-z.-]+)*$" maxlength="2">
+                        <input type="text" name="PMiddleInit" id="edit-p-middleinit" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="2">
                         <span class='error-message' id='add-name-error-message'>Yipeee</span>
                     </div> 
 
                     <div class="forms-input">
-                        <label for="edit-p-lastname">First Name</label>
+                        <label for="edit-p-lastname">Last Name</label>
                         <input type="text" name="PLastName" id="edit-p-lastname" pattern="^[A-Za-z]+$" maxlength="64">
                         <span class='error-message' id='add-name-error-message'>Yipeee</span>
                     </div> 
@@ -70,7 +80,6 @@
 
             <!--SEX-->
                 <fieldset class='sex-fieldset'>
-                    <legend>Sex</legend>
                     <div class="forms-input">
                         <label for="edit-sex">Sex</label>
                         <input type="text" name="Sex" id="edit-sex" pattern="^[A-Za-z]+$" maxlength="1">
@@ -78,20 +87,20 @@
                     </div>     
                 </fieldset>
 
+            <!--BIRTHDAY-->
                 <fieldset class='bday-fieldset'>
-                    <legend>Birthday</legend>
                     <div class="forms-input">
                         <label for="edit-bday">Birthday</label>
-                        <input type="text" name="Birthday" id="edit-bday" type="date" min="1900-01-01">
+                        <input  name="Birthday" id="edit-bday" type="date" min="1900-01-01">
                         <span class='error-message' id='add-bdayerror--message'>Yipeee</span>
                     </div>     
                 </fieldset>
-
+                
+            <!--CONTACT-->
                 <fieldset class='contactno-fieldset'>
-                    <legend>Contact</legend>
                     <div class="forms-input">
                         <label for="edit-contact">Contact Number</label>
-                        <input type="text" name="ContactNo" id="edit-contact" type="number" maxlength="11">
+                        <input name="ContactNo" id="edit-contact" type="number" maxlength="11">
                         <span class='error-message' id='add-contact-error-message'>Yipeee</span>
                     </div>     
                 </fieldset>
@@ -99,10 +108,25 @@
             </div>
 
         <div class='consultation-modal-actions'>
-            <button class='action add' data-id=''>Edit</button>
+            <button class='action save-edits' data-id='<?php echo $patientID; ?>'>Save</button>
         </div>
     </div>
     </div>
+
+<!--CONFIRMED EDIT MODAL-->
+ <div id="edit-patient-confirm-modal" class="modal">
+    <div class="modal-content">
+        <div class="close-btn-div">
+            <div>Edit Success</div>
+            <button class="close-btn-patient"><img class='btn-img' src="./img/close.svg"></button>
+        </div>
+
+        <div class="modal-message">
+            <h2 class="edit-patient-reminder">Patient Successfully Updated!</h2>
+        </div>
+    </div>
+    </div>
+
 
     <div class="header">
         <a id="hyperlink-logo" href="./index.php">
@@ -122,16 +146,7 @@
     </div>
 
 <!--PATIENT DETAILS-->
-    <?php
-                if(ISSET($_REQUEST['id'])){
-                    $query = mysqli_query($conn, "SELECT * FROM `Patient` WHERE `PatientID` = '$_REQUEST[id]'") or die(mysqli_error($conn));
-                    $fetch = mysqli_fetch_array($query);
-                    $patientID = $fetch['PatientID'];
-                    $consultQuery = mysqli_query(
-                        $conn,
-                        "SELECT * FROM Consultation WHERE PatientID = '$patientID' ORDER BY ConsultDateTime DESC"
-                    ) or die(mysqli_error($conn));
-    ?>
+    
     <div class="patient-information-container">
         <div id="patient-information">
             <div class="patient-actions">
