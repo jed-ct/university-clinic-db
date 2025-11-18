@@ -444,11 +444,13 @@ include("database.php");
 
     echo "</tbody>
     </table>";
+    
+    $maxPage = $totalCurrentTableRow % 10 != 0 ? $totalCurrentTableRow % 10 + 1 : $totalCurrentTableRow / 10;
 
     if ($totalCurrentTableRow > 10) {
      echo   '<div class="pagination">
-            <a href="#" class="prev"> < </a>
-            <div>Page <span>' . $page . '</span> of <span>' . ($totalCurrentTableRow % 10) + 1 . '</span></div>
+            <a href="' . getPaginationURL("previous") . '" class="prev"> < </a>
+            <div>Page <span>' . $page . '</span> of <span>' . $maxPage . '</span></div>
             <a href="'. getPaginationURL("next") . '" class="next"> ></a>
         </div>';
     }
