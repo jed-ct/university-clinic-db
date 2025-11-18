@@ -13,6 +13,7 @@ const addConsultationButton = document.querySelector('#add-consultation-btn');
 const isCurrentDateTimeCheckbox = document.querySelector('#is-current-date-time');
 const addConsultationForm = document.querySelector("#add-consultation-form");
 const filterConsultationForm = document.querySelector('#filter-consultation-form');
+const addPatientInput = document.querySelector('#add-patient-name');
 
 
 
@@ -255,7 +256,31 @@ filterConsultationForm.addEventListener('input', (() => {
     };
 })());
 
-filterConsultationForm.addEventListener('submit', async (e)=> {
+addPatientInput.addEventListener('input', async (e) => {
+    const query = addPatientInput.value.trim();
+    const response = await fetch(`./autosuggestions/autosuggest-patients.php?name=${encodeURIComponent(query)}`);
+    const autosuggestions = await response.json();
+    const container = document.querySelector('#add-patient-autosuggest');
+
+    container.innerHTML = '';
+    if (Object.keys(autosuggestions).length == 0 || query == '') {
+        container.style.display = 'none';
+    }
+    else {
+        autosuggestions.forEach(name => {
+        const item = document.createElement('div');
+        item.classList.add('suggestion-item');
+        item.textContent = name;
+        item.addEventListener('click', () => {
+            addPatientInput.value = name;
+            container.style.display = 'none';
+        });
+        container.appendChild(item);
+    });
+
+    container.style.display = 'block';
+    }
+    
 })
 
 

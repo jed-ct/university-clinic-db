@@ -75,9 +75,6 @@ include("database.php");
                         <input type="text" name="PatientName" id="add-patient-name" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
                         <span class='error-message' id='add-patient-error-message'>Yipeee</span>
                         <div id="add-patient-autosuggest" class="autosuggest-box">
-                            <div class="suggestion-item">Juan Dela Cruz</div>
-                            <div class="suggestion-item">Maria Santos</div>
-                            <div class="suggestion-item">Jose Rizal</div>
                         </div>
                     </div>
                 </fieldset>
