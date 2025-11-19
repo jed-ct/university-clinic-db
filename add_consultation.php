@@ -31,14 +31,14 @@
     else {
         $formattedDatetime = date("Y-m-d H:i:s");
     }
-
+    
     $patientID = searchIDFromTable("PATIENT", "PATIENT", $_POST["PatientName"], "PatientID");
     $diagnosis = $_POST["Diagnosis"];
-    $prescription = $_POST["Prescription}"];
+    $prescription = $_POST["Prescription"]; 
     $remarks = $_POST["Remarks"];
     $doctorID = searchIDFromTable("DOCTOR", "DOCTOR", $_POST["DoctorName"], "DoctorID");
 
-    $sql = "INSERT INTO CONSULTATION (PatientID, Diagnosis, Prescription, Remarks, ConsultDateTime, DoctorID) VALUES($patientID, '$diagnosis', '$prescription', '$remarks', '$formattedDatetime', $doctorID);";
+    $sql = "INSERT INTO CONSULTATION (PatientID, Diagnosis, Prescription, Remarks, ConsultDateTime, DoctorID) VALUES('$patientID', '$diagnosis', '$prescription', '$remarks', '$formattedDatetime', '$doctorID');";
 
     if (mysqli_query($conn, $sql)) {
         echo "New record created successfully";
