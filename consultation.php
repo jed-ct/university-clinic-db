@@ -33,7 +33,7 @@ include("database.php");
             $current_params['page'] = $next_page;
         }
         $query_string = http_build_query($current_params);
-        return "/university-clinic-db/consultation.php?" . $query_string;
+        return "/clinic_db/consultation.php?" . $query_string;
 
     }
 
@@ -227,7 +227,7 @@ include("database.php");
         </div>
 
         <div class="modal-message">
-           <form id='edit-consultation-form' method='POST' action='./edit_consultation.php'>
+           <form id='edit-consultation-form' method='POST' action='./edit_consultation.php' autocomplete='off'>
                 <fieldset class='date-time-fieldset'>
                     <legend>Date and Time</legend>
                     <div id='set-date-time-container'>
@@ -246,6 +246,7 @@ include("database.php");
                         <label for="edit-patient-name">Patient Name *</label>
                         <input type="text" name="PatientName" id="edit-patient-name" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
                         <span class='error-message' id='edit-patient-error-message'>Yipeee</span>
+                        <div id="edit-patient-autosuggest" class="autosuggest-box"></div>
                     </div>
                 </fieldset>
 
@@ -276,6 +277,7 @@ include("database.php");
                         <label for="edit-doctor-name">Doctor Name *</label>
                         <input type="text" name="DoctorName" id="edit-doctor-name" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
                         <span class='error-message' id='edit-doctor-error-message'>Yipeee</span>
+                        <div id="edit-doctor-autosuggest" class="autosuggest-box"></div>
                     </div>     
                 </fieldset>
 
@@ -318,7 +320,7 @@ include("database.php");
             TBAClinic
         </div>
     </a>
-    <ul class="links">
+    <ul class="links" id='header-links'>
         <li><a href="./index.php">Home</a></li>
         <li><a href="./consultation.php">Consultations</a></li>
         <li><a href="./patient.php">Patients</a></li>

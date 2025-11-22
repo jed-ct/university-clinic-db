@@ -1,5 +1,8 @@
 <?php
  include("database.php");
+ ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +45,7 @@
 
                     $consultQuery = mysqli_query(
                         $conn,
-                        "SELECT * FROM Consultation WHERE PatientID = '$patientID' ORDER BY ConsultDateTime DESC"
+                        "SELECT * FROM CONSULTATION WHERE PatientID = '$patientID' ORDER BY ConsultDateTime DESC"
                     ) or die(mysqli_error($conn));
 ?>
 <!--EDIT MODAL-->
@@ -173,8 +176,8 @@
                 <div id="consult-information-table"> 
                     <?php $sql = " SELECT c.ConsultationID, c.ConsultDateTime,c.Diagnosis,c.Prescription,c.Remarks,
                         CONCAT(d.DocFirstName, ' ', IFNULL(CONCAT(d.DocMiddleInit, '. '), ''),d.DocLastName) AS DoctorFullName
-                        FROM Consultation c
-                        INNER JOIN Doctor d ON d.DoctorID = c.DoctorID
+                        FROM CONSULTATION c
+                        INNER JOIN DOCTOR d ON d.DoctorID = c.DoctorID
                         WHERE c.PatientID = '$patientID'
                         ORDER BY c.ConsultDateTime DESC";
                         $result = $conn->query($sql); 

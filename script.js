@@ -17,6 +17,8 @@ const editConsultationForm = document.querySelector('#edit-consultation-form');
 const confirmEditConsultationButton = document.querySelector('#confirm-edit-btn');
 const addPatientInput = document.querySelector('#add-patient-name');
 const addDoctorInput = document.querySelector('#add-doctor-name');
+const editPatientInput = document.querySelector('#edit-patient-name');
+const editDoctorInput = document.querySelector('#edit-doctor-name');
 
 
 
@@ -149,40 +151,66 @@ editConsultationForm.addEventListener("submit", async (e) => {
     }
 });
 
-editConsultationForm.addEventListener('input', (() => {
-    let timeoutId;
-    return (e) => {
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
-            const field = e.target;
-            if (field.name == "ConsultationDate" || field.name == "ConsultationTime") {
-                document.querySelector('#edit-datetime-error-message').style.display = 'none';
-            }
-            if (field.name === 'PatientName') {
-                if (!field.checkValidity()) {
-                    document.querySelector('#edit-patient-error-message').textContent = 'Please enter a valid name.';
-                    document.querySelector('#edit-patient-error-message').style.display = 'block';
-                    disableButton(document.querySelector('.action.add'));
-                } else {
-                    document.querySelector('#edit-patient-error-message').style.display = 'none';
-                    disableButton(document.querySelector('.action.add'), false);
+let timeoutId;
+editConsultationForm.addEventListener('input', (e) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(async () => {
+        const field = e.target;
 
-                }
-            }
-            if (field.name === 'DoctorName') {
-                if (!field.checkValidity()) {
-                    document.querySelector('#edit-doctor-error-message').textContent = 'Please enter a valid name.';
-                    document.querySelector('#edit-doctor-error-message').style.display = 'block';
-                    disableButton(document.querySelector('.action.add'));
-                } else {
-                    document.querySelector('#edit-doctor-error-message').style.display = 'none';
-                    disableButton(document.querySelector('.action.add'), false);
+        if (field.name === "ConsultationDate" || field.name === "ConsultationTime") {
+            document.querySelector('#edit-datetime-error-message').style.display = 'none';
+        }
 
-                }
+        console.log(field.value);
+
+        if (field.name === 'PatientName') {
+            let isInDatabase = true;
+            let autosuggestions = [];
+
+            try {
+                const response = await fetch(`./autosuggestions/autosuggest-patients.php?name=${encodeURIComponent(field.value)}`);
+                autosuggestions = await response.json();
+            } catch (err) {
+                console.error('Autosuggest fetch failed', err);
+                isInDatabase = false;
             }
-        }, 500); // 500ms debounce delay
-    };
-})());
+
+            if (autosuggestions.length === 0) {
+                isInDatabase = false;
+            }
+
+            const patientError = document.querySelector('#edit-patient-error-message');
+            const addButton = document.querySelector('.action.add');
+
+            if (!field.checkValidity()) {
+                patientError.textContent = 'Please enter a valid name.';
+                patientError.style.display = 'block';
+                disableButton(addButton);
+            } else if (!isInDatabase) {
+                patientError.textContent = 'Patient not found in database.';
+                patientError.style.display = 'block';
+                disableButton(addButton);
+            } else {
+                patientError.style.display = 'none';
+                disableButton(addButton, false);
+            }
+        }
+
+        if (field.name === 'DoctorName') {
+            const doctorError = document.querySelector('#edit-doctor-error-message');
+            const addButton = document.querySelector('.action.add');
+
+            if (!field.checkValidity()) {
+                doctorError.textContent = 'Please enter a valid name.';
+                doctorError.style.display = 'block';
+                disableButton(addButton);
+            } else {
+                doctorError.style.display = 'none';
+                disableButton(addButton, false);
+            }
+        }
+    }, 500);
+});
 
 
 deleteConsultationButton.addEventListener("click", ()=> {
@@ -403,9 +431,59 @@ addDoctorInput.addEventListener('input', async (e)=> {
     }
 });
 
+editPatientInput.addEventListener('input', async (e) => {
+    const query = editPatientInput.value.trim();
+    const response = await fetch(`./autosuggestions/autosuggest-patients.php?name=${encodeURIComponent(query)}`);
+    const autosuggestions = await response.json();
+    const container = document.querySelector('#edit-patient-autosuggest');
 
+    container.innerHTML = '';
+    if (Object.keys(autosuggestions).length == 0 || query == '') {
+        container.style.display = 'none';
+    }
+    else {
+        autosuggestions.forEach(name => {
+        const item = document.createElement('div');
+        item.classList.add('suggestion-item');
+        item.textContent = name;
+        item.addEventListener('click', () => {
+            editPatientInput.value = name;
+            container.style.display = 'none';
+        });
+        container.appendChild(item);
+    });
 
+    container.style.display = 'block';
+    }
+    
+});
 
+editDoctorInput.addEventListener('input', async (e) => {
+    const query = editDoctorInput.value.trim();
+    const response = await fetch(`./autosuggestions/autosuggest-doctors.php?name=${encodeURIComponent(query)}`);
+    const autosuggestions = await response.json();
+    const container = document.querySelector('#edit-doctor-autosuggest');
+
+    container.innerHTML = '';
+    if (Object.keys(autosuggestions).length == 0 || query == '') {
+        container.style.display = 'none';
+    }
+    else {
+        autosuggestions.forEach(name => {
+        const item = document.createElement('div');
+        item.classList.add('suggestion-item');
+        item.textContent = name;
+        item.addEventListener('click', () => {
+            editDoctorInput.value = name;
+            container.style.display = 'none';
+        });
+        container.appendChild(item);
+    });
+
+    container.style.display = 'block';
+    }
+    
+});
 
 
 modalCloseButton.forEach((btn) => {
