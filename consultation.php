@@ -427,6 +427,7 @@ include("database.php");
                 <th>Date</th>
                 <th>Time</th>
                 <th>Patient</th>
+                <th>Diagnosis</th>
                 <th>Doctor</th>
                 <th></th>
             </tr>
@@ -439,6 +440,7 @@ include("database.php");
                 <td data-label='Date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
                 <td data-label='Time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
                 <td data-label='Patient'>" . $row["PatientFullName"] . "</td>
+                <td data-label='Diagnosis'>" . $row["Diagnosis"] . "</td>
                 <td data-label='Doctor'>" . $row["DoctorFullName"] . "</td>
                 <td style='width:1%; white-space:nowrap;'>
                     <button class='action view' data-id='" . $row["ConsultationID"] . "'>View</button>
