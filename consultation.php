@@ -208,12 +208,6 @@ include("database.php");
             <h4>Prescription: <span id="view-prescription"></span></h4>
             <h4>Doctor: <span id="view-doctor-name"></span></h4>
         </div>
-
-        <div class='consultation-modal-actions'>
-            <button class='action edit' data-id=''>Edit</button>
-            <button class='action delete' data-id=''>Delete</button>
-        </div>
-
     </div>
 </div>
 
@@ -442,6 +436,8 @@ include("database.php");
                 <td data-label='Doctor'>" . $row["DoctorFullName"] . "</td>
                 <td style='width:1%; white-space:nowrap;'>
                     <button class='action view' data-id='" . $row["ConsultationID"] . "'>View</button>
+                    <button class='action edit' data-id='" . $row["ConsultationID"]  . "'>Edit</button>
+                    <button class='action delete' data-id='" . $row["ConsultationID"]  . "'>Delete</button>
                 </td>
             </tr>";
         }
@@ -469,7 +465,7 @@ include("database.php");
 </div>
 
 <div id="footer">
-    basta contact info
+     © 2025 TBA Clinic · tbaclinic@univ.edu.ph
 </div>
 
 <script src="./script.js"></script>
