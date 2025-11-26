@@ -539,11 +539,13 @@ body {
 .modal-content {
     background-color: var(--color-base-bg);
     border-radius: 20px 20px 10px 10px;
+    align-items: center;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     min-width: 200px;
     margin: 20px;
     animation: modalFadeIn 0.3s;
+    font-size: 0.9rem;
 }
 
 .close-btn-div {
@@ -881,18 +883,6 @@ body {
     color: var(--color-text);
 }
 
-.header {
-    display: flex;
-    position: sticky;
-    top: 0;
-    background-color: var(--color-primary);
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 20px;
-    height: 60px;
-    z-index: 100;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
 /* .header-img { height: 40px; width: 40px; margin-right: 10px; }
 #logo { display: flex; align-items: center; font-size: 1.5rem; font-weight: 600; color: white; }
 .links { list-style: none; display: flex; gap: 20px; margin: 0; padding: 0; }
