@@ -102,10 +102,9 @@ body {
     padding: 30px;
 }
 #consultation-searchbox {
-    width: min(800px, 70vw);
     padding: 6px 14px 6px 38px;
-    font-size: 1.2rem;
     font-weight: 400;
+    height: 38px;
     line-height: 1.5;
     background-color: var(--color-base-bg);
     background-clip: padding-box;
@@ -137,7 +136,7 @@ body {
     width: 90%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content:space-between;
     gap: 5px;
 }
 
@@ -488,7 +487,7 @@ body {
     color: var(--color-base-bg);
     font-weight: bold;
     font-size: 1rem;
-    padding: 5px 10px;
+    padding: 0;
     text-decoration: none;
     display: inline-block;
     border-radius: 5px;
@@ -497,12 +496,16 @@ body {
     margin: 0;
 }
 
+.action-icon {
+    height: 15px;
+}
 .action:disabled {
     background-color: #89bbbb;
 }
 
 .action.view {
     background-color: rgb(51, 151, 51);
+    
 }
 
 .action.view:hover {

@@ -329,6 +329,8 @@ include("database.php");
     <div><h2 class='consultation-history'>Consultation History</h2></div>
     <div class="consultations-actions">
         <button class='consultations action' id='filter-consultation-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
+        <input type="text" id="consultation-searchbox" placeholder="Search patient name...">
+        
         <button class="consultations action" id='add-consultation-btn'><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>
     </div>
 
@@ -435,9 +437,9 @@ include("database.php");
                 <td data-label='Diagnosis'>" . $row["Diagnosis"] . "</td>
                 <td data-label='Doctor'>" . $row["DoctorFullName"] . "</td>
                 <td style='width:1%; white-space:nowrap;'>
-                    <button class='action view' data-id='" . $row["ConsultationID"] . "'>View</button>
-                    <button class='action edit' data-id='" . $row["ConsultationID"]  . "'>Edit</button>
-                    <button class='action delete' data-id='" . $row["ConsultationID"]  . "'>Delete</button>
+                    <button class='action view' data-id='" . $row["ConsultationID"] . "'><img src='./img/view.svg' class='action-icon'></button>
+                    <button class='action edit' data-id='" . $row["ConsultationID"]  . "'><img src='./img/edit.svg' class='action-icon'></button>
+                    <button class='action delete' data-id='" . $row["ConsultationID"]  . "'><img src='./img/delete.svg' class='action-icon'></button>
                 </td>
             </tr>";
         }
