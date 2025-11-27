@@ -146,22 +146,6 @@ include("database.php");
                 </fieldset>
 
                 <fieldset>
-                    <legend>By Person</legend>
-
-                    <div class="forms-input">
-                        <label for="filter-patient">Patient</label>
-                        <input type="text" name="PatientName" id="filter-patient" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
-                        <span class='error-message' id='filter-patient-error-message'></span>
-                    </div>
-
-                    <div class="forms-input">
-                        <label for="filter-doctor">Doctor</label>
-                        <input type="text" name="DoctorName" id="filter-doctor" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
-                        <span class='error-message' id='filter-doctor-error-message'></span>
-                    </div>                        
-                </fieldset>
-
-                <fieldset>
                     <legend>By Treatment</legend>
 
                     <div class="forms-input">
@@ -328,9 +312,10 @@ include("database.php");
 <div class="consultations-table-container">
     <div><h2 class='consultation-history'>Consultation History</h2></div>
     <div class="consultations-actions">
-        <button class='consultations action' id='filter-consultation-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
-        <input type="text" id="consultation-searchbox" placeholder="Search patient name...">
-        
+        <div>
+            <button class='consultations action' id='filter-consultation-btn'><i class="fa-solid fa-filter"></i> <span>Filter</span></button>
+            <input type="text" id="consultation-searchbox" placeholder="Filter by patient or doctor">
+        </div>
         <button class="consultations action" id='add-consultation-btn'><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>
     </div>
 
