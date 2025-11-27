@@ -166,7 +166,6 @@ editConsultationForm.addEventListener('input', (e) => {
         console.log(field.value);
 
         if (field.name === 'PatientName') {
-            let isInDatabase = true;
             let autosuggestions = [];
 
             try {
@@ -174,13 +173,7 @@ editConsultationForm.addEventListener('input', (e) => {
                 autosuggestions = await response.json();
             } catch (err) {
                 console.error('Autosuggest fetch failed', err);
-                isInDatabase = false;
             }
-
-            if (autosuggestions.length === 0) {
-                isInDatabase = false;
-            }
-
             const patientError = document.querySelector('#edit-patient-error-message');
             const addButton = document.querySelector('.action.add');
 
@@ -188,7 +181,7 @@ editConsultationForm.addEventListener('input', (e) => {
                 patientError.textContent = 'Please enter a valid name.';
                 patientError.style.display = 'block';
                 disableButton(addButton);
-            } else if (!isInDatabase) {
+            } else if (autosuggestions.length === 0) {
                 patientError.textContent = 'Patient not found in database.';
                 patientError.style.display = 'block';
                 disableButton(addButton);
@@ -296,23 +289,19 @@ addConsultationForm.addEventListener('input', (() => {
             }
             if (field.name === 'PatientName') {
                 let autosuggestions = [];
-                let isInDatabase = true;
                 try {
                     const response = await fetch(`./autosuggestions/autosuggest-patients.php?name=${encodeURIComponent(field.value)}`);
                     autosuggestions = await response.json();
                 } catch (err) {
                     console.error('Autosuggest fetch failed', err);
-                    isInDatabase = false;
                 }
-                if (autosuggestions.length === 0) {
-                    isInDatabase = false;
-                }
+
                 if (!field.checkValidity()) {
                     document.querySelector('#add-patient-error-message').textContent = 'Please enter a valid name.';
                     document.querySelector('#add-patient-error-message').style.display = 'block';
                     disableButton(document.querySelector('.action.add'));
                 } 
-                else if (!isInDatabase) {
+                else if (autosuggestions.length === 0) {
                     document.querySelector('#add-patient-error-message').textContent = 'Patient not found in database.';
                     document.querySelector('#add-patient-error-message').style.display = 'block';
                     disableButton(document.querySelector('.action.add'));                    
