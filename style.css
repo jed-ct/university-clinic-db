@@ -781,8 +781,7 @@ legend {
     gap: 10px;
 }
 
-#edit-patient-modal .modal-content {
-    width: 400px;    
+#edit-patient-modal .modal-content { 
     max-width: 90%;    
     box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
     margin: auto;      
@@ -805,6 +804,18 @@ legend {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.modal-contentP {
+    background-color: var(--color-base-bg);
+    border-radius: 20px 20px 10px 10px;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    min-width: 200px;
+    margin: 20px;
+    animation: modalFadeIn 0.3s;
+    font-size: 0.9rem;
 }
 
 :focus {

@@ -18,7 +18,7 @@ error_reporting(E_ALL);
 
 <!-- DELETE CONFIRMATION MODAL -->
     <div id="delete-patient-modal" class='modal'>
-    <div class='modal-content'>
+    <div class='modal-contentP'>
         <div class="close-btn-div">
             <div></div>
             <button class="close-btn-patient"><img class='btn-img' src="./img/close.svg"></button>
@@ -50,7 +50,7 @@ error_reporting(E_ALL);
 ?>
 <!--EDIT MODAL-->
     <div id="edit-patient-modal" class="modal">
-    <div class="modal-content">
+    <div class="modal-contentP">
 
         <div class="close-btn-div">
             <div>Edit Patient Details</div>
@@ -119,7 +119,7 @@ error_reporting(E_ALL);
 
 <!--CONFIRMED EDIT MODAL-->
  <div id="edit-patient-confirm-modal" class="modal">
-    <div class="modal-content">
+    <div class="modal-contentP">
         <div class="close-btn-div">
             <div>Edit Success</div>
             <button class="close-btn-patient"><img class='btn-img' src="./img/close.svg"></button>
