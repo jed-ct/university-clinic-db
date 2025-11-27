@@ -23,7 +23,8 @@ const editPatientInput = document.querySelector('#edit-patient-name');
 const editDiagnosisInput = document.querySelector('#edit-diagnosis');
 const editPrescriptionInput = document.querySelector('#edit-prescription');
 const editDoctorInput = document.querySelector('#edit-doctor-name');
-
+const filterDiagnosisInput = document.querySelector('#filter-diagnosis');
+const filterPrescriptionInput = document.querySelector('#filter-prescription');
 
 
 
@@ -640,6 +641,62 @@ editDoctorInput.addEventListener('input', async (e) => {
     }
     
 });
+
+filterDiagnosisInput.addEventListener('input', async (e) => {
+    const query = filterDiagnosisInput.value.trim();
+    const response = await fetch(`./autosuggestions/autosuggest-diagnosis.php?diagnosis=${encodeURIComponent(query)}`);
+    const autosuggestions = await response.json();
+    const container = document.querySelector('#filter-diagnosis-autosuggest');
+
+    container.innerHTML = '';
+    if (Object.keys(autosuggestions).length == 0 || query == '') {
+        container.style.display = 'none';
+    }
+    else {
+        autosuggestions.forEach(name => {
+        const item = document.createElement('div');
+        item.classList.add('suggestion-item');
+        item.textContent = name;
+        item.addEventListener('click', () => {
+            filterDiagnosisInput.value = name;
+            container.style.display = 'none';
+        });
+        container.appendChild(item);
+    });
+    container.style.display = 'block';
+    }
+    
+});
+
+filterPrescriptionInput.addEventListener('input', async (e) => {
+    const query = filterPrescriptionInput.value.trim();
+    const response = await fetch(`./autosuggestions/autosuggest-prescription.php?prescription=${encodeURIComponent(query)}`);
+    const autosuggestions = await response.json();
+    const container = document.querySelector('#filter-prescription-autosuggest');
+
+    container.innerHTML = '';
+    if (Object.keys(autosuggestions).length == 0 || query == '') {
+        container.style.display = 'none';
+    }
+    else {
+        autosuggestions.forEach(name => {
+        const item = document.createElement('div');
+        item.classList.add('suggestion-item');
+        item.textContent = name;
+        item.addEventListener('click', () => {
+            filterPrescriptionInput.value = name;
+            container.style.display = 'none';
+        });
+        container.appendChild(item);
+    });
+
+    container.style.display = 'block';
+    }
+    
+});
+
+
+
 
 
 modalCloseButton.forEach((btn) => {

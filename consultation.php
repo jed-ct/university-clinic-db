@@ -154,12 +154,14 @@ include("database.php");
                         <label for="filter-diagnosis">Diagnosis</label>
                         <input type="text" name="Diagnosis" id="filter-diagnosis" maxlength="64">
                         <span class='error-message' id='filter-diagnosis-error-message'></span>
+                        <div id="filter-diagnosis-autosuggest" class="autosuggest-box"></div>
                     </div>
 
                     <div class="forms-input">
                         <label for="filter-prescription">Prescription</label>
                         <input type="text" name="Prescription" id="filter-prescription" maxlength="64">
                         <span class='error-message' id='filter-prescription-error-message'></span>
+                        <div id="filter-prescription-autosuggest" class="autosuggest-box"></div>
                     </div>                                 
                 </fieldset>
 
@@ -237,7 +239,7 @@ include("database.php");
                         <label for="edit-diagnosis">Diagnosis *</label>
                         <input type="text" name="Diagnosis" id="edit-diagnosis" maxlength="64">
                         <span class='error-message' id='edit-diagnosis-error-message'>Yipeee</span>
-                        <div id="edit-diagnosis-autosuggest" class="autosuggest-box"></div>
+                        <div id="edit-prescription-autosuggest" class="autosuggest-box"></div>
                     </div>
 
                     <div class="forms-input">
@@ -456,7 +458,7 @@ include("database.php");
 </div>
 
 <div id="footer">
-     © 2025 TBA Clinic · tbaclinic@univ.edu.ph
+     © 2025 TBA Clinic · tbaclinic@univ.edu.ph · (074) 442 1983
 </div>
 
 <script src="./script.js"></script>
