@@ -237,12 +237,14 @@ include("database.php");
                         <label for="edit-diagnosis">Diagnosis *</label>
                         <input type="text" name="Diagnosis" id="edit-diagnosis" maxlength="64">
                         <span class='error-message' id='edit-diagnosis-error-message'>Yipeee</span>
+                        <div id="edit-diagnosis-autosuggest" class="autosuggest-box"></div>
                     </div>
 
                     <div class="forms-input">
                         <label for="edit-prescription">Prescription *</label>
                         <input type="text" name="Prescription" id="edit-prescription" maxlength="64">
                         <span class='error-message' id='edit-prescription-error-message'>Yipeee</span>
+                        <div id="edit-prescription-autosuggest" class="autosuggest-box"></div>
                     </div>
 
                     <div class="forms-input">

@@ -20,6 +20,8 @@ const addDoctorInput = document.querySelector('#add-doctor-name');
 const addDiagnosisInput = document.querySelector('#add-diagnosis');
 const addPrescriptionInput = document.querySelector('#add-prescription');
 const editPatientInput = document.querySelector('#edit-patient-name');
+const editDiagnosisInput = document.querySelector('#edit-diagnosis');
+const editPrescriptionInput = document.querySelector('#edit-prescription');
 const editDoctorInput = document.querySelector('#edit-doctor-name');
 
 
@@ -549,6 +551,59 @@ editPatientInput.addEventListener('input', async (e) => {
         item.textContent = name;
         item.addEventListener('click', () => {
             editPatientInput.value = name;
+            container.style.display = 'none';
+        });
+        container.appendChild(item);
+    });
+
+    container.style.display = 'block';
+    }
+    
+});
+
+editDiagnosisInput.addEventListener('input', async (e) => {
+    const query = editDiagnosisInput.value.trim();
+    const response = await fetch(`./autosuggestions/autosuggest-diagnosis.php?diagnosis=${encodeURIComponent(query)}`);
+    const autosuggestions = await response.json();
+    const container = document.querySelector('#edit-diagnosis-autosuggest');
+
+    container.innerHTML = '';
+    if (Object.keys(autosuggestions).length == 0 || query == '') {
+        container.style.display = 'none';
+    }
+    else {
+        autosuggestions.forEach(name => {
+        const item = document.createElement('div');
+        item.classList.add('suggestion-item');
+        item.textContent = name;
+        item.addEventListener('click', () => {
+            editDiagnosisInput.value = name;
+            container.style.display = 'none';
+        });
+        container.appendChild(item);
+    });
+    container.style.display = 'block';
+    }
+    
+});
+
+editPrescriptionInput.addEventListener('input', async (e) => {
+    const query = editPrescriptionInput.value.trim();
+    const response = await fetch(`./autosuggestions/autosuggest-prescription.php?prescription=${encodeURIComponent(query)}`);
+    const autosuggestions = await response.json();
+    const container = document.querySelector('#edit-prescription-autosuggest');
+
+    container.innerHTML = '';
+    if (Object.keys(autosuggestions).length == 0 || query == '') {
+        container.style.display = 'none';
+    }
+    else {
+        autosuggestions.forEach(name => {
+        const item = document.createElement('div');
+        item.classList.add('suggestion-item');
+        item.textContent = name;
+        item.addEventListener('click', () => {
+            editPrescriptionInput.value = name;
             container.style.display = 'none';
         });
         container.appendChild(item);
