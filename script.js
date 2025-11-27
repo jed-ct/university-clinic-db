@@ -5,9 +5,9 @@ const deletionModal = document.querySelector('#delete-confirmation-modal');
 const filterConsultationModal = document.querySelector('#filter-consultation-modal');
 const editConsultationModal = document.querySelector('#edit-consultation-modal');
 const modalCloseButton = document.querySelectorAll('.close-btn');
-const deleteConsultationButton = document.querySelector('.action.delete');
+const deleteConsultationButton = document.querySelectorAll('.action.delete');
 const filterConsultationButton = document.querySelector('#filter-consultation-btn');
-const editConsultationButton = document.querySelector('.action.edit');
+const editConsultationButton = document.querySelectorAll('.action.edit');
 const confirmDeletionButton = document.querySelector('.action.confirm-delete');
 const addConsultationButton = document.querySelector('#add-consultation-btn');
 const isCurrentDateTimeCheckbox = document.querySelector('#is-current-date-time');
@@ -27,8 +27,6 @@ viewButton.forEach((viewButton)=> {
     viewButton.addEventListener("click", async ()=> {
         viewConsultationModal.style.display = 'flex';
         const id = viewButton.dataset.id;
-        deleteConsultationButton.dataset.id = id;
-        editConsultationButton.dataset.id = id;
         try {
             const response = await fetch(`get_consultation.php?id=${id}`);
             const data = await response.json();
@@ -64,26 +62,30 @@ filterConsultationButton.addEventListener("click", () => {
     filterConsultationModal.style.display = 'flex';
 });
 
-editConsultationButton.addEventListener("click", async ()=> {
-    editConsultationModal.style.display = 'flex';
-    viewConsultationModal.style.display = 'none';
-    const id = editConsultationButton.dataset.id;
-    confirmEditConsultationButton.dataset.id = id;
-    try {
-        const response = await fetch(`get_consultation.php?id=${id}`);
-        const data = await response.json();
-        document.querySelector('#edit-consultation-date').value = convertToISO(data.ConsultDate); 
-        document.querySelector('#edit-consultation-time').value = convertTo24Hour(data.ConsultTime);
-        document.querySelector('#edit-patient-name').value = `${data.PatientFirstName} ${data.PatientMiddleInit}. ${data.PatientLastName}`;
-        document.querySelector('#edit-diagnosis').value = data.Diagnosis;
-        document.querySelector('#edit-prescription').value = data.Prescription;
-        document.querySelector('#edit-remarks').value = data.Remarks;
-        document.querySelector('#edit-doctor-name').value = `${data.DocFirstName} ${data.DocMiddleInit}. ${data.DocLastName}`;
-    }
-    catch(error) {
-        alert('not work');
-    }    
-});
+editConsultationButton.forEach((editConsultationButton)=> {
+    editConsultationButton.addEventListener("click", async ()=> {
+        editConsultationModal.style.display = 'flex';
+        viewConsultationModal.style.display = 'none';
+        const id = editConsultationButton.dataset.id;
+        confirmEditConsultationButton.dataset.id = id;
+        try {
+            const response = await fetch(`get_consultation.php?id=${id}`);
+            const data = await response.json();
+            document.querySelector('#edit-consultation-date').value = convertToISO(data.ConsultDate); 
+            document.querySelector('#edit-consultation-time').value = convertTo24Hour(data.ConsultTime);
+            document.querySelector('#edit-patient-name').value = `${data.PatientFirstName} ${data.PatientMiddleInit}. ${data.PatientLastName}`;
+            document.querySelector('#edit-diagnosis').value = data.Diagnosis;
+            document.querySelector('#edit-prescription').value = data.Prescription;
+            document.querySelector('#edit-remarks').value = data.Remarks;
+            document.querySelector('#edit-doctor-name').value = `${data.DocFirstName} ${data.DocMiddleInit}. ${data.DocLastName}`;
+        }
+        catch(error) {
+            alert('not work');
+        }    
+    });
+})
+
+
 
 
 
@@ -213,10 +215,13 @@ editConsultationForm.addEventListener('input', (e) => {
 });
 
 
-deleteConsultationButton.addEventListener("click", ()=> {
-    deletionModal.style.display = 'flex';
-    viewConsultationModal.style.display = 'none';
+deleteConsultationButton.forEach((deleteConsultationButton)=>{
+    deleteConsultationButton.addEventListener("click", ()=> {
+        deletionModal.style.display = 'flex';
+        viewConsultationModal.style.display = 'none';
+    })
 });
+
 
 
 addConsultationForm.addEventListener("submit", async (e) => {
@@ -284,16 +289,33 @@ addConsultationForm.addEventListener('input', (() => {
     let timeoutId;
     return (e) => {
         clearTimeout(timeoutId);
-        timeoutId = setTimeout(() => {
+        timeoutId = setTimeout(async () => {
             const field = e.target;
             if (field.name == "ConsultationDate" || field.name == "ConsultationTime") {
                 document.querySelector('#add-datetime-error-message').style.display = 'none';
             }
             if (field.name === 'PatientName') {
+                let autosuggestions = [];
+                let isInDatabase = true;
+                try {
+                    const response = await fetch(`./autosuggestions/autosuggest-patients.php?name=${encodeURIComponent(field.value)}`);
+                    autosuggestions = await response.json();
+                } catch (err) {
+                    console.error('Autosuggest fetch failed', err);
+                    isInDatabase = false;
+                }
+                if (autosuggestions.length === 0) {
+                    isInDatabase = false;
+                }
                 if (!field.checkValidity()) {
                     document.querySelector('#add-patient-error-message').textContent = 'Please enter a valid name.';
                     document.querySelector('#add-patient-error-message').style.display = 'block';
                     disableButton(document.querySelector('.action.add'));
+                } 
+                else if (!isInDatabase) {
+                    document.querySelector('#add-patient-error-message').textContent = 'Patient not found in database.';
+                    document.querySelector('#add-patient-error-message').style.display = 'block';
+                    disableButton(document.querySelector('.action.add'));                    
                 } else {
                     document.querySelector('#add-patient-error-message').style.display = 'none';
                     disableButton(document.querySelector('.action.add'), false);

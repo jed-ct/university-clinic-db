@@ -20,7 +20,7 @@ LIMIT 3;";
     $result = $conn->query($sql);
 
     if (!$result) {
-        die("SQL Error: " . $conn->error . "\nQuery: " . $sql);
+        echo "not found";
     }
 
     $patients = [];
