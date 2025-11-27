@@ -448,7 +448,7 @@ include("database.php");
     echo "</tbody>
     </table>";
     
-    $maxPage = $totalCurrentTableRow % 10 != 0 ? $totalCurrentTableRow % 10 + 1 : $totalCurrentTableRow / 10;
+    $maxPage = ceil($totalCurrentTableRow / 10);
 
     if ($totalCurrentTableRow > 10) {
      echo   '<div class="pagination">';
