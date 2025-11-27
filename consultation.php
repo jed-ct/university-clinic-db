@@ -274,7 +274,7 @@ include("database.php");
     <div class='modal-content'>
 
         <div class="close-btn-div">
-            <div></div>
+            <div>Delete Consultation</div>
             <button class="close-btn"><img class='btn-img' src="./img/close.svg"></button>
         </div>
 

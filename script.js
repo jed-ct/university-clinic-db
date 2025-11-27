@@ -156,6 +156,9 @@ editConsultationForm.addEventListener("submit", async (e) => {
 let timeoutId;
 editConsultationForm.addEventListener('input', (e) => {
     clearTimeout(timeoutId);
+    const patientError = document.querySelector('#edit-patient-error-message');
+    const editButton = document.querySelector('#confirm-edit-btn');
+    const doctorError = document.querySelector('#edit-doctor-error-message');
     timeoutId = setTimeout(async () => {
         const field = e.target;
 
@@ -174,34 +177,41 @@ editConsultationForm.addEventListener('input', (e) => {
             } catch (err) {
                 console.error('Autosuggest fetch failed', err);
             }
-            const patientError = document.querySelector('#edit-patient-error-message');
-            const addButton = document.querySelector('.action.add');
 
             if (!field.checkValidity()) {
                 patientError.textContent = 'Please enter a valid name.';
                 patientError.style.display = 'block';
-                disableButton(addButton);
+                disableButton(editButton);
             } else if (autosuggestions.length === 0) {
                 patientError.textContent = 'Patient not found in database.';
                 patientError.style.display = 'block';
-                disableButton(addButton);
+                disableButton(editButton);
             } else {
                 patientError.style.display = 'none';
-                disableButton(addButton, false);
+                disableButton(editButton, false);
             }
         }
 
         if (field.name === 'DoctorName') {
-            const doctorError = document.querySelector('#edit-doctor-error-message');
-            const addButton = document.querySelector('.action.add');
-
+            let autosuggestions = [];
+            try {
+                const response = await fetch(`./autosuggestions/autosuggest-doctors.php?name=${encodeURIComponent(field.value)}`);
+                autosuggestions = await response.json();
+            } catch (err) {
+                console.error('Autosuggest fetch failed', err);
+            }
             if (!field.checkValidity()) {
                 doctorError.textContent = 'Please enter a valid name.';
                 doctorError.style.display = 'block';
-                disableButton(addButton);
-            } else {
+                disableButton(editButton);
+            } else if (autosuggestions.length === 0) {
+                doctorError.textContent = 'Doctor not found in database.';
+                doctorError.style.display = 'block';
+                disableButton(editButton)                
+            }
+            else {
                 doctorError.style.display = 'none';
-                disableButton(addButton, false);
+                disableButton(editButton, false);
             }
         }
     }, 500);
@@ -312,11 +322,24 @@ addConsultationForm.addEventListener('input', (() => {
                 }
             }
             if (field.name === 'DoctorName') {
+                let autosuggestions = [];
+
+                try {
+                    const response = await fetch(`./autosuggestions/autosuggest-doctors.php?name=${encodeURIComponent(field.value)}`);
+                    autosuggestions = await response.json();
+                } catch (err) {
+                    console.error('Autosuggest fetch failed', err);
+                }
                 if (!field.checkValidity()) {
                     document.querySelector('#add-doctor-error-message').textContent = 'Please enter a valid name.';
                     document.querySelector('#add-doctor-error-message').style.display = 'block';
                     disableButton(document.querySelector('.action.add'));
-                } else {
+                } else if (autosuggestions.length === 0) {
+                    document.querySelector('#add-doctor-error-message').textContent = 'Doctor not found in database.';
+                    document.querySelector('#add-doctor-error-message').style.display = 'block';
+                    disableButton(document.querySelector('.action.add'));                    
+                }
+                else {
                     document.querySelector('#add-doctor-error-message').style.display = 'none';
                     disableButton(document.querySelector('.action.add'), false);
 
