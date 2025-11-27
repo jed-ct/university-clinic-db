@@ -85,12 +85,14 @@ include("database.php");
                         <label for="add-diagnosis">Diagnosis *</label>
                         <input type="text" name="Diagnosis" id="add-diagnosis" maxlength="64">
                         <span class='error-message' id='add-diagnosis-error-message'>Yipeee</span>
+                        <div id="add-diagnosis-autosuggest" class="autosuggest-box"></div>
                     </div>
 
                     <div class="forms-input">
                         <label for="add-prescription">Prescription *</label>
                         <input type="text" name="Prescription" id="add-prescription" maxlength="64">
                         <span class='error-message' id='add-prescription-error-message'>Yipeee</span>
+                        <div id="add-prescription-autosuggest" class="autosuggest-box"></div>
                     </div>
 
                     <div class="forms-input">

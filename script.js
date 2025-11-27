@@ -17,6 +17,8 @@ const editConsultationForm = document.querySelector('#edit-consultation-form');
 const confirmEditConsultationButton = document.querySelector('#confirm-edit-btn');
 const addPatientInput = document.querySelector('#add-patient-name');
 const addDoctorInput = document.querySelector('#add-doctor-name');
+const addDiagnosisInput = document.querySelector('#add-diagnosis');
+const addPrescriptionInput = document.querySelector('#add-prescription');
 const editPatientInput = document.querySelector('#edit-patient-name');
 const editDoctorInput = document.querySelector('#edit-doctor-name');
 
@@ -440,6 +442,60 @@ addPatientInput.addEventListener('input', async (e) => {
         item.textContent = name;
         item.addEventListener('click', () => {
             addPatientInput.value = name;
+            container.style.display = 'none';
+        });
+        container.appendChild(item);
+    });
+
+    container.style.display = 'block';
+    }
+    
+});
+
+addDiagnosisInput.addEventListener('input', async (e) => {
+    const query = addDiagnosisInput.value.trim();
+    const response = await fetch(`./autosuggestions/autosuggest-diagnosis.php?diagnosis=${encodeURIComponent(query)}`);
+    const autosuggestions = await response.json();
+    const container = document.querySelector('#add-diagnosis-autosuggest');
+
+    container.innerHTML = '';
+    if (Object.keys(autosuggestions).length == 0 || query == '') {
+        container.style.display = 'none';
+    }
+    else {
+        autosuggestions.forEach(name => {
+        const item = document.createElement('div');
+        item.classList.add('suggestion-item');
+        item.textContent = name;
+        item.addEventListener('click', () => {
+            addDiagnosisInput.value = name;
+            container.style.display = 'none';
+        });
+        container.appendChild(item);
+    });
+
+    container.style.display = 'block';
+    }
+    
+});
+
+addPrescriptionInput.addEventListener('input', async (e) => {
+    const query = addPrescriptionInput.value.trim();
+    const response = await fetch(`./autosuggestions/autosuggest-prescription.php?prescription=${encodeURIComponent(query)}`);
+    const autosuggestions = await response.json();
+    const container = document.querySelector('#add-prescription-autosuggest');
+
+    container.innerHTML = '';
+    if (Object.keys(autosuggestions).length == 0 || query == '') {
+        container.style.display = 'none';
+    }
+    else {
+        autosuggestions.forEach(name => {
+        const item = document.createElement('div');
+        item.classList.add('suggestion-item');
+        item.textContent = name;
+        item.addEventListener('click', () => {
+            addPrescriptionInput.value = name;
             container.style.display = 'none';
         });
         container.appendChild(item);
