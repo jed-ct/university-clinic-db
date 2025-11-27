@@ -149,7 +149,6 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
         return;
     }
 
-
     const formData = new FormData(addPatientForm);
 
     const response = await fetch('./add_patient.php', {
@@ -165,12 +164,13 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     } else {
         alert("Error: " + text);
     }
-
+    
   const formObject = {};
   formData.forEach((value, key) => {
     formObject[key] = value;
   });
   console.log("Form Data as Object:", formObject);
+  addPatientForm.reset();
 });});
 
 document.querySelectorAll('#filter-patient-btn').forEach(btn => {
