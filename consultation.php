@@ -183,18 +183,55 @@ include("database.php");
             <div>Consultation Details</div>
             <button class="close-btn"><img class='btn-img' src="./img/close.svg"></button>
         </div>
-
         <div class="modal-message">
-            <h4>Date: <span id="view-consultation-date"></span></h4>
-            <h4>Time: <span id="view-consultation-time"></span></h4>
-            <h4>Patient First Name: <span id="view-patient-first-name"></span></h4>
-            <h4>Patient MI: <span id="view-patient-middle-initial"></span></h4>
-            <h4>Patient Last Name: <span id="view-patient-last-name"></span></h4>
-            <h4>Patient Age: <span id="view-patient-age"></span></h4>
-            <h4>Diagnosis: <span id="view-diagnosis"></span></h4>
-            <h4>Remarks: <span id="view-remarks"></span></h4>
-            <h4>Prescription: <span id="view-prescription"></span></h4>
-            <h4>Doctor: <span id="view-doctor-name"></span></h4>
+           <form id='edit-consultation-form' method='POST' action='./edit_consultation.php' autocomplete='off'>
+                <fieldset class='date-time-fieldset'>
+                    <legend>Date and Time</legend>
+                    <div id='set-date-time-container'>
+                        <label>Date:</label>
+                        <div class='view-data' id='view-consultation-date'>Oct 5, 2025</div>
+
+                        <label>Time:</label>
+                        <div class='view-data' id='view-consultation-time'>9:35 PM</div>
+                    </div> 
+                </fieldset>
+
+                <fieldset class='patient-fieldset'>
+                    <legend>Patient</legend>
+                    <div class="forms-input">
+                        <label for="edit-patient-name">Patient Name:</label>
+                        <div class='view-data' id='view-patient-name'>Jedric C. Tuquero <span class='view-id' id='view-patient-id'>a</span></div>
+                    </div>
+                </fieldset>
+
+                <fieldset class='consultation-fieldset'>
+                    <legend>Consultation</legend>
+
+                    <div class="forms-input">
+                        <label for="edit-diagnosis">Diagnosis:</label>
+                        <div class='view-data' id='view-diagnosis'>Diarrhea</div>
+                    </div>
+
+                    <div class="forms-input">
+                        <label for="edit-prescription">Prescription:</label>
+                        <div class='view-data' id='view-prescription'>Diarrhea</div>
+                    </div>
+
+                    <div class="forms-input">
+                        <label for="edit-remarks">Remarks:</label>
+                        <div class='view-data' id='view-remarks'>Diarrhea</div>
+                    </div>
+                </fieldset>
+            
+                <fieldset class='doctor-fieldset'>
+                    <legend>Doctor</legend>
+                    <div class="forms-input">
+                        <label for="edit-doctor-name">Doctor Name:</label>
+                        <div class='view-data' id='view-doctor-name'>Gregory A. House <span class='view-id' id='view-doctor-id'>a</span></div>
+                    </div>     
+                </fieldset>
+
+            </form>
         </div>
     </div>
 </div>

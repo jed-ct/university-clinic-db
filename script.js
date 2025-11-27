@@ -30,6 +30,7 @@ const filterPrescriptionInput = document.querySelector('#filter-prescription');
 
 viewButton.forEach((viewButton)=> {
     viewButton.addEventListener("click", async ()=> {
+        console.log(document.querySelector('#view-patient-id'));
         viewConsultationModal.style.display = 'flex';
         const id = viewButton.dataset.id;
         try {
@@ -38,16 +39,19 @@ viewButton.forEach((viewButton)=> {
             console.log(data);
             document.querySelector('#view-consultation-date').textContent = data.ConsultDate;
             document.querySelector('#view-consultation-time').textContent = data.ConsultTime;
-            document.querySelector('#view-patient-first-name').textContent = data.PatientFirstName;
-            document.querySelector('#view-patient-middle-initial').textContent = data.PatientMiddleInit;
-            document.querySelector('#view-patient-last-name').textContent = data.PatientLastName;
-            document.querySelector('#view-patient-age').textContent = data.PatientAge;
+            document.querySelector('#view-patient-name').innerHTML = `
+                ${data.PatientFullName} <span class="view-id" id="view-patient-id"></span>
+            `;
             document.querySelector('#view-diagnosis').textContent = data.Diagnosis;
             document.querySelector('#view-prescription').textContent = data.Prescription;
-            document.querySelector('#view-doctor-name').textContent = `${data.DocFirstName} ${data.DocMiddleInit}. ${data.DocLastName}`;
             document.querySelector('#view-remarks').textContent = data.Remarks;
+            document.querySelector('#view-doctor-name').innerHTML = `
+                ${data.DoctorFullName} <span class="view-id" id="view-doctor-id"></span>
+            `;
+            document.querySelector('#view-patient-id').textContent = `(${data.PatientID})`;
+            document.querySelector('#view-doctor-id').textContent = `(${data.DoctorID})`;
         } catch(error) {
-            alert('not work')
+            console.log(error);
         }
     });
 });
@@ -78,11 +82,11 @@ editConsultationButton.forEach((editConsultationButton)=> {
             const data = await response.json();
             document.querySelector('#edit-consultation-date').value = convertToISO(data.ConsultDate); 
             document.querySelector('#edit-consultation-time').value = convertTo24Hour(data.ConsultTime);
-            document.querySelector('#edit-patient-name').value = `${data.PatientFirstName} ${data.PatientMiddleInit}. ${data.PatientLastName}`;
+            document.querySelector('#edit-patient-name').value = data.PatientFullName;
             document.querySelector('#edit-diagnosis').value = data.Diagnosis;
             document.querySelector('#edit-prescription').value = data.Prescription;
             document.querySelector('#edit-remarks').value = data.Remarks;
-            document.querySelector('#edit-doctor-name').value = `${data.DocFirstName} ${data.DocMiddleInit}. ${data.DocLastName}`;
+            document.querySelector('#edit-doctor-name').value = data.DoctorFullName;
         }
         catch(error) {
             alert('not work');

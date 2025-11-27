@@ -5,12 +5,19 @@ if (isset($_GET['id'])) {
     
     $id = intval($_GET['id']); // sanitize input
     $sql = "SELECT CONSULTATION.ConsultationID, 
-               DATE_FORMAT(CONSULTATION.ConsultDateTime, '%M %e, %Y') AS ConsultDate, 
-               DATE_FORMAT(CONSULTATION.ConsultDateTime, '%l:%i %p') AS ConsultTime,
-               PATIENT.PatientFirstName, PATIENT.PatientMiddleInit, PATIENT.PatientLastName,
+               DATE_FORMAT(CONSULTATION.ConsultDateTime, '%b %e, %Y') AS ConsultDate, 
+               DATE_FORMAT(CONSULTATION.ConsultDateTime, '%l:%i %p') AS ConsultTime, PATIENT.PatientID, CONCAT(
+                PATIENT.PatientFirstName, ' ',
+                IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
+                PATIENT.PatientLastName
+                ) AS PatientFullName,
                TIMESTAMPDIFF(YEAR, PATIENT.PatientBirthday, CONSULTATION.ConsultDateTime) AS PatientAge,
-               CONSULTATION.Diagnosis, CONSULTATION.Prescription, CONSULTATION.Remarks,
-               DOCTOR.DocFirstName, DOCTOR.DocMiddleInit, DOCTOR.DocLastName
+               CONSULTATION.Diagnosis, CONSULTATION.Prescription, CONSULTATION.Remarks, DOCTOR.DoctorID,
+                CONCAT(
+                    DOCTOR.DocFirstName, ' ',
+                    IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
+                    DOCTOR.DocLastName
+                ) AS DoctorFullName
         FROM CONSULTATION
         INNER JOIN PATIENT ON PATIENT.PatientID = CONSULTATION.PatientID
         INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
