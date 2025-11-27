@@ -1,7 +1,6 @@
 const deletePatientModal = document.querySelector('#delete-patient-modal');
 const deletePatientButton = document.querySelector('.action.delete-ptnt');
 const confirmDeletionButton = document.querySelector('.action.confirm-delete-patient');
-const modalPatientClose = document.querySelectorAll('.close-btn-patient');
 
 const editPatientModal = document.querySelector('#edit-patient-modal');
 const editPatientConfirmModal = document.querySelector('#edit-patient-confirm-modal');
@@ -22,7 +21,6 @@ const modals = document.querySelectorAll('.modal');
 
 const searchBoxes = document.querySelectorAll("#patient-searchbox");
 const resultsContainers = document.querySelectorAll("#patient-search-results");
-
 
 function debounce(func, wait = 300) {
     let timeout;
@@ -53,8 +51,17 @@ searchBoxes.forEach((searchBox, index) => {
 });
 
 function closeModals() {
-    modals.forEach(modal => modal.style.display = 'none');
+    modals.forEach(modal => {
+        modal.style.display = 'none';
+        if (modal.id === 'add-patient-modal') {
+            const formToReset = modal.querySelector('form');
+            if (formToReset) {
+                formToReset.reset();
+            }
+        }
+    });
 }
+
 function displayFilteredPatients(patients) {
     const container = document.querySelector('.patient-search-results');
 
