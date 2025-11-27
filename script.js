@@ -31,7 +31,7 @@ const filterPrescriptionInput = document.querySelector('#filter-prescription');
 viewButton.forEach((viewButton)=> {
     viewButton.addEventListener("click", async ()=> {
         console.log(document.querySelector('#view-patient-id'));
-        viewConsultationModal.style.display = 'flex';
+        openModal(viewConsultationModal);
         const id = viewButton.dataset.id;
         try {
             const response = await fetch(`get_consultation.php?id=${id}`);
@@ -64,17 +64,16 @@ confirmDeletionButton.addEventListener("click",async ()=> {
 })
 
 addConsultationButton.addEventListener("click", () => {
-    addConsultationModal.style.display = 'flex';
+    openModal(addConsultationModal);
 })
 
 filterConsultationButton.addEventListener("click", () => {
-    filterConsultationModal.style.display = 'flex';
+    openModal(filterConsultationModal);
 });
 
 editConsultationButton.forEach((editConsultationButton)=> {
     editConsultationButton.addEventListener("click", async ()=> {
-        editConsultationModal.style.display = 'flex';
-        viewConsultationModal.style.display = 'none';
+        openModal(editConsultationModal);
         const id = editConsultationButton.dataset.id;
         confirmEditConsultationButton.dataset.id = id;
         try {
@@ -234,7 +233,7 @@ editConsultationForm.addEventListener('input', (e) => {
 
 deleteConsultationButton.forEach((deleteConsultationButton)=>{
     deleteConsultationButton.addEventListener("click", ()=> {
-        deletionModal.style.display = 'flex';
+        openModal(deletionModal);
         viewConsultationModal.style.display = 'none';
     })
 });
@@ -710,26 +709,13 @@ modalCloseButton.forEach((btn) => {
         addConsultationModal.style.display = 'none';
         editConsultationModal.style.display = 'none';
         filterConsultationModal.style.display = 'none';
+        document.body.classList.remove("body-no-scroll");
     })
 });
 
-
-function updateConsultationTable(tableData) {
-    const table = document.querySelector('#consultations-table tbody');
-    let row = table.insertRow();
-}
-
-function clearTableBody(tableId) {
-    const table = document.querySelector(tableId);
-    if (!table) return;
-
-    let tbody = table.querySelector('tbody');
-    if (tbody) {
-    table.removeChild(tbody);
-    }
-
-    tbody = document.createElement('tbody');
-    table.appendChild(tbody);
+function openModal(modal) {
+    modal.style.display = "flex";
+    document.body.classList.add("body-no-scroll");
 }
 
 function disableButton(button, isButtonDisabled=true) {

@@ -14,7 +14,12 @@ body {
     display: flex;
     flex-direction: column;
     margin: 0;
+    
 }
+.body-no-scroll {
+    overflow: hidden;
+}
+
 
 /* HEADER */
 .header {
@@ -111,7 +116,7 @@ body {
     background-clip: padding-box;
     border: 1px solid gray;
     appearance: none;
-    border-radius: 12px;
+    border-radius: 8px;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;    
     background-image: url(./img/search.svg);
     background-position: 8px 6px; 
