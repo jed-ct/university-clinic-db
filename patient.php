@@ -17,7 +17,7 @@ include("database.php");
     <div class="modal-content">
         <div class="close-btn-div">
             <div>Add new patient</div>
-            <button class="close-btn-patient"><img class='btn-img' src="./img/close.svg"></button>
+            <button class="close-btn-patient" id="close-add-modal"><img class='btn-img' src="./img/close.svg"></button>
         </div>
         <div class="modal-message">
             <form id='add-patient-form' method='POST'>

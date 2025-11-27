@@ -261,6 +261,12 @@ body {
     overflow: hidden;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    display: none;
+}
+
+#patient-search-results a {
+    text-decoration: none;
+    color:black;
 }
 
 .error-search {
@@ -355,10 +361,6 @@ body {
 .col-doc{
     width: 250px !important;
     
-}
-
-.link-to-other {
-    color:black;
 }
 
 .patient-information-container {

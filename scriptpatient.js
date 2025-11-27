@@ -36,6 +36,12 @@ searchBoxes.forEach((searchBox, index) => {
     searchBox.addEventListener("keyup", debounce(() => {
         const query = searchBox.value.trim();
 
+        if (query.length > 0) {
+            resultsDiv.style.display = 'block'; 
+        } else {
+            resultsDiv.style.display = 'none'; 
+        }
+
         if (!query) {
             resultsDiv.innerHTML = "";
             return;
@@ -62,29 +68,6 @@ function closeModals() {
     });
 }
 
-function displayFilteredPatients(patients) {
-    const container = document.querySelector('.patient-search-results');
-
-    container.innerHTML = "<h2>Filtered Results</h2><hr>";
-
-    if (patients.length === 0) {
-        container.innerHTML += "<p>No matching patients found.</p>";
-        return;
-    }
-
-    patients.forEach(p => {
-        container.innerHTML += `
-            <div>
-                <a href="get_patient.php?id=${p.PatientID}">
-                    <h4 class="link-to-other">
-                        ${p.PatientFirstName} ${p.PatientMiddleInit ?? ''} ${p.PatientLastName}
-                    </h4>
-                </a>
-            </div>
-            <hr>
-        `;
-    });
-}
 function debounce(func, wait = 300) {
     let timeout;
     return function(...args) {
