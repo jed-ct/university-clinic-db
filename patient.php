@@ -30,12 +30,12 @@ include("database.php");
                     </div>     
                     <div class="forms-input">
                         <label for="add-p-middleinit">Middle Initial</label>
-                        <input type="text" name="PMiddleInit" id="add-p-middleinit" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="2">
+                        <input type="text" name="PMiddleInit" id="add-p-middleinit" pattern="^[A-Za-z]+$" maxlength="2">
                         <span class='error-message' id='add-mname-error-message'>Yipeee</span>
                     </div> 
                     <div class="forms-input">
                         <label for="add-p-lastname">Last Name *</label>
-                        <input type="text" name="PLastName" id="add-p-lastname" pattern="^[A-Za-z]+$" maxlength="64" required>
+                        <input type="text" name="PLastName" id="add-p-lastname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64" required>
                         <span class='error-message' id='add-lname-error-message'>Yipeee</span>
                     </div> 
                 </fieldset>
