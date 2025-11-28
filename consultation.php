@@ -184,7 +184,7 @@ include("database.php");
             <button class="close-btn"><img class='btn-img' src="./img/close.svg"></button>
         </div>
         <div class="modal-message">
-           <form id='edit-consultation-form' method='POST' action='./edit_consultation.php' autocomplete='off'>
+           <form id='view-consultation-form' method='POST' autocomplete='off'>
                 <fieldset class='date-time-fieldset'>
                     <legend>Date and Time</legend>
                     <div id='set-date-time-container'>
@@ -199,7 +199,7 @@ include("database.php");
                 <fieldset class='patient-fieldset'>
                     <legend>Patient</legend>
                     <div class="forms-input">
-                        <label for="edit-patient-name">Patient Name:</label>
+                        <label for="view-patient-name">Patient Name:</label>
                         <div class='view-data' id='view-patient-name'>Jedric C. Tuquero <span class='view-id' id='view-patient-id'>a</span></div>
                     </div>
                 </fieldset>
@@ -208,17 +208,17 @@ include("database.php");
                     <legend>Consultation</legend>
 
                     <div class="forms-input">
-                        <label for="edit-diagnosis">Diagnosis:</label>
+                        <label for="view-diagnosis">Diagnosis:</label>
                         <div class='view-data' id='view-diagnosis'>Diarrhea</div>
                     </div>
 
                     <div class="forms-input">
-                        <label for="edit-prescription">Prescription:</label>
+                        <label for="view-prescription">Prescription:</label>
                         <div class='view-data' id='view-prescription'>Diarrhea</div>
                     </div>
 
                     <div class="forms-input">
-                        <label for="edit-remarks">Remarks:</label>
+                        <label for="view-remarks">Remarks:</label>
                         <div class='view-data' id='view-remarks'>Diarrhea</div>
                     </div>
                 </fieldset>
@@ -226,7 +226,7 @@ include("database.php");
                 <fieldset class='doctor-fieldset'>
                     <legend>Doctor</legend>
                     <div class="forms-input">
-                        <label for="edit-doctor-name">Doctor Name:</label>
+                        <label for="view-doctor-name">Doctor Name:</label>
                         <div class='view-data' id='view-doctor-name'>Gregory A. House <span class='view-id' id='view-doctor-id'>a</span></div>
                     </div>     
                 </fieldset>

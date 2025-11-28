@@ -183,6 +183,7 @@ editConsultationForm.addEventListener('input', (e) => {
             try {
                 const response = await fetch(`./autosuggestions/autosuggest-patients.php?name=${encodeURIComponent(field.value)}`);
                 autosuggestions = await response.json();
+                console.log(autosuggestions);
             } catch (err) {
                 console.error('Autosuggest fetch failed', err);
             }
@@ -205,6 +206,7 @@ editConsultationForm.addEventListener('input', (e) => {
             try {
                 const response = await fetch(`./autosuggestions/autosuggest-doctors.php?name=${encodeURIComponent(field.value)}`);
                 autosuggestions = await response.json();
+                console.log(autosuggestions);
             } catch (err) {
                 console.error('Autosuggest fetch failed', err);
             }
