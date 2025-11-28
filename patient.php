@@ -25,17 +25,17 @@ include("database.php");
                 <fieldset class='p-name-fieldset'>                   
                     <div class="forms-input">
                         <label for="add-p-firstname">First Name *</label>
-                        <input type="text" name="PFirstName" id="add-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64" required>
+                        <input type="text" name="PFirstName" id="add-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" title="Name must contain only letters and periods." maxlength="64" required>
                         <span class='error-message' id='add-fname-error-message'>Yipeee</span>
                     </div>     
                     <div class="forms-input">
                         <label for="add-p-middleinit">Middle Initial</label>
-                        <input type="text" name="PMiddleInit" id="add-p-middleinit" pattern="^[A-Za-z]+$" maxlength="2">
+                        <input type="text" name="PMiddleInit" id="add-p-middleinit" pattern="^[A-Za-z]+$" maxlength="2" title="Initials must only be letters.">
                         <span class='error-message' id='add-mname-error-message'>Yipeee</span>
                     </div> 
                     <div class="forms-input">
                         <label for="add-p-lastname">Last Name *</label>
-                        <input type="text" name="PLastName" id="add-p-lastname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64" required>
+                        <input type="text" name="PLastName" id="add-p-lastname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64" title="Name must contain only letters and periods." required>
                         <span class='error-message' id='add-lname-error-message'>Yipeee</span>
                     </div> 
                 </fieldset>
@@ -44,8 +44,12 @@ include("database.php");
                 <fieldset class='sex-fieldset'>
                     <div class="forms-input">
                         <label for="add-sex">Sex *</label>
-                        <input type="text" name="Sex" id="add-sex" pattern="^[A-Za-z]+$" maxlength="1" required>
-                        <span class='error-message' id='add-sex-error-message'>Yipeee</span>
+                        <select name="Sex" id="add-sex" required>
+                            <option value="" selected disabled> </option>
+                            <option value="F">Female</option>
+                            <option value="M">Male</option>
+                            <option value="O">Other</option>
+                        </select>
                     </div>     
                 </fieldset>
 
@@ -53,7 +57,7 @@ include("database.php");
                 <fieldset class='bday-fieldset'>
                     <div class="forms-input">
                         <label for="add-bday">Birthday *</label>
-                        <input name="Birthday" id="add-bday" type="date" min="1900-01-01" required>
+                        <input name="Birthday" id="add-bday" type="date" min="1900-01-01" max="<?php echo date("Y-m-d"); ?>" required>
                         <span class='error-message' id='add-bdayerror-message'>Yipeee</span>
                     </div>     
                 </fieldset>
@@ -62,7 +66,11 @@ include("database.php");
                 <fieldset class='contactno-fieldset'>
                     <div class="forms-input">
                         <label for="add-contact">Contact Number *</label>
-                        <input name="ContactNo" id="add-contact" type="number" maxlength="11" required>
+                        <div style="flex">
+                        <input type="text" value="+639" readonly id="contactprefix">
+                        <input type="tel" id="partcontact" name="PartContactNo" placeholder="123456789" pattern="[0-9]{9}" maxlength="9" title="Input must contain numbers only." required>
+                        </div>
+                        <input type="hidden" name="ContactNo" id="add-contact">
                         <span class='error-message' id='add-contact-error-message'>Yipeee</span>
                     </div>     
                 </fieldset>

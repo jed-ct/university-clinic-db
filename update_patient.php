@@ -1,5 +1,6 @@
 <?php
 include("database.php");
+header('Content-Type: application/json');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['PatientID'])) {
     $patientID = mysqli_real_escape_string($conn, $_POST['PatientID']);
@@ -31,5 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['PatientID'])) {
     } else {
         echo json_encode(['success' => false, 'message' => 'No fields to update']);
     }
-    } 
+    
+    mysqli_close($conn); 
+
+} else {
+    echo json_encode(['success' => false, 'message' => 'Invalid request or missing PatientID.']);
+}
 ?>
