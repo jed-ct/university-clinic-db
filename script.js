@@ -145,6 +145,8 @@ editConsultationForm.addEventListener("submit", async (e) => {
 
     for (let [key, value] of formData.entries()) {
     console.log(key, value);
+
+    location.reload();
 }   
 
     const response = await fetch('./edit_consultation.php', {
