@@ -326,7 +326,7 @@ include("database.php");
         </div>
 
         <div class='consultation-modal-actions'>
-            <button class='action confirm-delete'>Yes</button>
+            <button class='action confirm-delete' data-id=''>Yes</button>
             <button class='close-btn action'>No</button>
         </div>
 
@@ -378,116 +378,6 @@ include("database.php");
     <tbody id='consultations-table-body'>
     </tbody>
 </table>    
-    <?php
-    // $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime,
-    // CONCAT(
-    //     PATIENT.PatientFirstName, ' ',
-    //     IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
-    //     PATIENT.PatientLastName
-    // ) AS PatientFullName,
-    // CONCAT(
-    //     DOCTOR.DocFirstName, ' ',
-    //     IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
-    //     DOCTOR.DocLastName
-    // ) AS DoctorFullName,
-    // CONSULTATION.Diagnosis, CONSULTATION.Prescription
-    // FROM PATIENT
-    // INNER JOIN CONSULTATION ON PATIENT.PatientID = CONSULTATION.PatientID
-    // INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
-    // WHERE 1=1";
-
-    // $result = $conn->query($sql); 
-    // $totalUnfilteredTableRow = $result->num_rows;
-
-    // if ($filterStartDate && $filterEndDate) {
-    //     $sql .= " AND DATE(ConsultDateTime) BETWEEN '$filterStartDate' AND '$filterEndDate'";
-    //     $isTableFiltered = true;
-    // }
-    // else if ($filterStartDate) {
-    //     $sql .= " AND DATE(ConsultDateTime) >= '$filterStartDate'";
-    //     $isTableFiltered = true;
-    // }
-    // else if ($filterEndDate) {
-    //     $sql .= " AND DATE(ConsultDateTime) <= '$filterEndDate'";
-    //     $isTableFiltered = true;
-    // }
-    
-    // if ($filterDiagnosis) {
-    //     $sql .= " AND CONSULTATION.Diagnosis LIKE '%$filterDiagnosis%'";
-    //     $isTableFiltered = true;
-    // }
-
-    // if ($filterPrescription) {
-    //     $sql .= " AND CONSULTATION.Prescription LIKE '%$filterPrescription%'";
-    //     $isTableFiltered = true;
-    // }
-    // $result = $conn->query($sql);
-
-    // $totalCurrentTableRow = $result->num_rows;
-    // if (!$isTableFiltered) {
-    //     $totalCurrentTableRow = $totalUnfilteredTableRow;
-    // }
-    
-    // $sql .= " ORDER BY CONSULTATION.ConsultDateTime DESC LIMIT 10";
-    // if ($page) {
-    //     $offset = ($page - 1) * 10;
-    //     $sql .= " OFFSET $offset";
-    // }
-
-    // $result = $conn->query($sql); 
-
-    // if ($result->num_rows === 0) {
-    //     echo "<div style='font-size: 1.5rem'>Query not found</div>";
-    // }
-    // else {
-    //     echo "
-    // <table id='consultations-table' class='consultations-table'>
-    //     <thead>
-    //         <tr>
-    //             <th>Date</th>
-    //             <th>Time</th>
-    //             <th>Patient</th>
-    //             <th>Diagnosis</th>
-    //             <th>Doctor</th>
-    //             <th></th>
-    //         </tr>
-    //     </thead>
-
-    //     <tbody>";
-    
-    //     while ($row = $result->fetch_assoc()) {
-    //         echo "<tr>
-    //             <td data-label='Date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
-    //             <td data-label='Time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
-    //             <td data-label='Patient'>" . $row["PatientFullName"] . "</td>
-    //             <td data-label='Diagnosis'>" . $row["Diagnosis"] . "</td>
-    //             <td data-label='Doctor'>" . $row["DoctorFullName"] . "</td>
-    //             <td style='width:1%; white-space:nowrap;'>
-    //                 <button class='action view' data-id='" . $row["ConsultationID"] . "'><img src='./img/view.svg' class='action-icon'></button>
-    //                 <button class='action edit' data-id='" . $row["ConsultationID"]  . "'><img src='./img/edit.svg' class='action-icon'></button>
-    //                 <button class='action delete' data-id='" . $row["ConsultationID"]  . "'><img src='./img/delete.svg' class='action-icon'></button>
-    //             </td>
-    //         </tr>";
-    //     }
-    //     }
-
-    // echo "</tbody>
-    // </table>";
-    
-    // $maxPage = ceil($totalCurrentTableRow / 10);
-
-    // if ($totalCurrentTableRow > 10) {
-    //  echo   '<div class="pagination">';
-    //     if ($page > 1) {
-    //         echo '<a href="' . getPaginationURL("previous") . '" class="prev"> < </a>';
-    //     }
-    //         echo '<div>Page <span>' . $page . '</span> of <span>' . $maxPage . '</span></div>';
-    //     if ($page < $maxPage) {
-    //         echo '<a href="'. getPaginationURL("next") . '" class="next"> ></a>';
-    //     }
-    //     echo '</div>';
-    // }
-?>
 <div class="pagination">
     <button class="prev" data-page=''> &lt; </button>
     <div>

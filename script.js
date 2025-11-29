@@ -29,7 +29,6 @@ const consultationSearchBox = document.querySelector('#consultation-searchbox');
 const prevButton = document.querySelector('.prev');
 const nextButton = document.querySelector('.next');
 
-
 //order,sorting,pagination shit
 let livesearchQuery = "";
 let diagnosisFilter = "";
@@ -140,10 +139,10 @@ viewButton.forEach((viewButton)=> {
     });
 });
 
-confirmDeletionButton.addEventListener("click",async ()=> {
-    const id = deleteConsultationButton.dataset.id;
+confirmDeletionButton.addEventListener("click", async ()=> {
+    const id = confirmDeletionButton.dataset.id;
     const response = await fetch(`delete_consultation.php?id=${id}`);
-    window.location.reload(); 
+    loadTable();
     deletionModal.style.display = 'none';
 })
 
@@ -155,25 +154,28 @@ filterConsultationButton.addEventListener("click", () => {
     openModal(filterConsultationModal);
 });
 
+async function editConsultation(id) {
+    openModal(editConsultationModal);
+    confirmEditConsultationButton.dataset.id = id;
+    try {
+        const response = await fetch(`get_consultation.php?id=${id}`);
+        const data = await response.json();
+        document.querySelector('#edit-consultation-date').value = convertToISO(data.ConsultDate); 
+        document.querySelector('#edit-consultation-time').value = convertTo24Hour(data.ConsultTime);
+        document.querySelector('#edit-patient-name').value = data.PatientFullName;
+        document.querySelector('#edit-diagnosis').value = data.Diagnosis;
+        document.querySelector('#edit-prescription').value = data.Prescription;
+        document.querySelector('#edit-remarks').value = data.Remarks;
+        document.querySelector('#edit-doctor-name').value = data.DoctorFullName;
+    }
+    catch(error) {
+        alert('not work');
+    }
+}
+
 editConsultationButton.forEach((editConsultationButton)=> {
     editConsultationButton.addEventListener("click", async ()=> {
-        openModal(editConsultationModal);
-        const id = editConsultationButton.dataset.id;
-        confirmEditConsultationButton.dataset.id = id;
-        try {
-            const response = await fetch(`get_consultation.php?id=${id}`);
-            const data = await response.json();
-            document.querySelector('#edit-consultation-date').value = convertToISO(data.ConsultDate); 
-            document.querySelector('#edit-consultation-time').value = convertTo24Hour(data.ConsultTime);
-            document.querySelector('#edit-patient-name').value = data.PatientFullName;
-            document.querySelector('#edit-diagnosis').value = data.Diagnosis;
-            document.querySelector('#edit-prescription').value = data.Prescription;
-            document.querySelector('#edit-remarks').value = data.Remarks;
-            document.querySelector('#edit-doctor-name').value = data.DoctorFullName;
-        }
-        catch(error) {
-            alert('not work');
-        }    
+    
     });
 })
 
@@ -230,7 +232,7 @@ editConsultationForm.addEventListener("submit", async (e) => {
     for (let [key, value] of formData.entries()) {
     console.log(key, value);
 
-    location.reload();
+    loadTable();
 }   
 
     const response = await fetch('./edit_consultation.php', {
@@ -321,13 +323,10 @@ editConsultationForm.addEventListener('input', (e) => {
     }, 500);
 });
 
-
-deleteConsultationButton.forEach((deleteConsultationButton)=>{
-    deleteConsultationButton.addEventListener("click", ()=> {
-        openModal(deletionModal);
-        viewConsultationModal.style.display = 'none';
-    })
-});
+function deleteConsultation(id) {
+    openModal(deletionModal);
+    confirmDeletionButton.dataset.id = id;
+}
 
 
 

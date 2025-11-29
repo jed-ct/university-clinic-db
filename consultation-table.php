@@ -86,8 +86,8 @@ while ($row = $result->fetch_assoc()) {
                 <td data-label='Doctor'>" . $row["DoctorFullName"] . "</td>
                 <td style='width:1%; white-space:nowrap;'>
                     <button class='action view' onclick=viewConsultation(" . $row["ConsultationID"] . ")><img src='./img/view.svg' class='action-icon'></button>
-                    <button class='action edit' data-id='" . $row["ConsultationID"]  . "'><img src='./img/edit.svg' class='action-icon'></button>
-                    <button class='action delete' data-id='" . $row["ConsultationID"]  . "'><img src='./img/delete.svg' class='action-icon'></button>
+                    <button class='action edit'  onclick=editConsultation(" . $row["ConsultationID"] . ") data-id='" . $row["ConsultationID"]  . "'><img src='./img/edit.svg' class='action-icon'></button>
+                    <button class='action delete' onclick='deleteConsultation(" . $row["ConsultationID"]  .")' data-id='" . $row["ConsultationID"]  . "'><img src='./img/delete.svg' class='action-icon'></button>
                 </td>
             </tr>";
 }
