@@ -13,7 +13,7 @@
         $sql = "INSERT INTO PATIENT (PatientFirstName, PatientLastName, PatientMiddleInit, PatientSex, PatientBirthday, PatientContactNo) VALUES(?, ?, ?, ?, ?, ?)";
         
         $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "sssssi", $firstname, $lastname, $middleinit, $sex, $birthday, $contactno);
+        mysqli_stmt_bind_param($stmt, "ssssss", $firstname, $lastname, $middleinit, $sex, $birthday, $contactno);
 
         if (mysqli_stmt_execute($stmt)) {
             echo "New record created successfully";

@@ -65,29 +65,33 @@ error_reporting(E_ALL);
                 <fieldset class='p-name-fieldset'>                   
                     <div class="forms-input">
                         <label for="edit-p-firstname">First Name</label>
-                        <input type="text" name="PFirstName" id="edit-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64">
-                        <span class='error-message' id='add-name-error-message'>Yipeee</span>
+                        <input type="text" name="PFirstName" id="edit-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" title="Name must contain only letters and periods." maxlength="64" required>
+                        <span class='error-message' id='edit-name-error-message'>Yipeee</span>
                     </div>     
 
                     <div class="forms-input">
                         <label for="edit-p-middleinit">Middle Initial</label>
-                        <input type="text" name="PMiddleInit" id="edit-p-middleinit" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="2">
-                        <span class='error-message' id='add-name-error-message'>Yipeee</span>
+                        <input type="text" name="PMiddleInit" id="edit-p-middleinit" pattern="^[A-Za-z]+$" maxlength="2" title="Initials must only be letters.">
+                        <span class='error-message' id='edit-name-error-message'>Yipeee</span>
                     </div> 
 
                     <div class="forms-input">
                         <label for="edit-p-lastname">Last Name</label>
-                        <input type="text" name="PLastName" id="edit-p-lastname" pattern="^[A-Za-z]+$" maxlength="64">
-                        <span class='error-message' id='add-name-error-message'>Yipeee</span>
+                        <input type="text" name="PLastName" id="edit-p-lastname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" title="Name must contain only letters and periods." maxlength="64" required>
+                        <span class='error-message' id='edit-name-error-message'>Yipeee</span>
                     </div> 
                 </fieldset>
 
-            <!--SEX-->
+            <!-- SEX -->
                 <fieldset class='sex-fieldset'>
                     <div class="forms-input">
-                        <label for="edit-sex">Sex</label>
-                        <input type="text" name="Sex" id="edit-sex" pattern="^[A-Za-z]+$" maxlength="1">
-                        <span class='error-message' id='add-sex-error-message'>Yipeee</span>
+                        <label for="edit-sex">Sex *</label>
+                        <select name="Sex" id="edit-sex" required>
+                            <option value="" selected disabled> </option>
+                            <option value="F">Female</option>
+                            <option value="M">Male</option>
+                            <option value="O">Other</option>
+                        </select>
                     </div>     
                 </fieldset>
 
@@ -95,24 +99,28 @@ error_reporting(E_ALL);
                 <fieldset class='bday-fieldset'>
                     <div class="forms-input">
                         <label for="edit-bday">Birthday</label>
-                        <input  name="Birthday" id="edit-bday" type="date" min="1900-01-01">
-                        <span class='error-message' id='add-bdayerror--message'>Yipeee</span>
+                        <input  name="Birthday" id="edit-bday" type="date" min="1900-01-01" max="<?php echo date("Y-m-d"); ?>">
+                        <span class='error-message' id='edit-bdayerror-message'>Yipeee</span>
                     </div>     
                 </fieldset>
                 
             <!--CONTACT-->
-                <fieldset class='contactno-fieldset'>
+               <fieldset class='contactno-fieldset'>
                     <div class="forms-input">
-                        <label for="edit-contact">Contact Number</label>
-                        <input name="ContactNo" id="edit-contact" type="number" maxlength="11">
-                        <span class='error-message' id='add-contact-error-message'>Yipeee</span>
+                        <label for="edit-contact">Contact Number *</label>
+                        <div style="flex">
+                        <input type="text" value="+639" readonly id="contactprefix">
+                        <input type="tel" id="edit-partcontact" name="PartContactNo" placeholder="123456789" pattern="[0-9]{9}" maxlength="9" title="Input must contain 9 digit numbers." required>
+                        </div>
+                        <input type="hidden" name="ContactNo" id="edit-contact">
+                        <span class='error-message' id='edit-contact-error-message'>Yipeee</span>
                     </div>     
                 </fieldset>
             </form>
             </div>
 
         <div class='consultation-modal-actions'>
-            <button class='action save-edits' data-id='<?php echo $patientID; ?>'>Save</button>
+            <button class='action save-edits' type='submit' form='edit-patient-form' data-id='<?php echo $patientID; ?>'>Save</button>
         </div>
     </div>
     </div>
@@ -161,7 +169,9 @@ error_reporting(E_ALL);
             <h2 style="text-align: center;">Patient Details</h2>
                 <div id="patient-information-table"><table class = "table table-striped">
                     <tr><th>Patient ID</th> <td><?php echo $fetch['PatientID']?></td> </tr>
-                    <tr><th>Name</th> <td><?php echo $fetch['PatientFirstName']?> <?php echo $fetch['PatientMiddleInit']?>. <?php echo $fetch['PatientLastName']?></td> </tr>
+                    <tr><th>Name</th> <td><?php echo $fetch['PatientFirstName']?> 
+                    <?php echo !empty($fetch['PatientMiddleInit']) ? $fetch['PatientMiddleInit'] . ". " : "";?> 
+                    <?php echo $fetch['PatientLastName']?></td> </tr>
                     <tr><th>Sex</th> <td><?php echo $fetch['PatientSex']?></td> </tr>
                     <tr><th>Birthday</th> <td><?php echo $fetch['PatientBirthday']?></td> </tr>
                     <tr><th>Contact Number</th> <td><?php echo $fetch['PatientContactNo']?></td> </tr>

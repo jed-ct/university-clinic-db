@@ -109,7 +109,6 @@ body {
 #consultation-searchbox {
     padding: 6px 14px 6px 38px;
     font-weight: 400;
-    width: 300px;
     height: 38px;
     line-height: 1.5;
     background-color: var(--color-base-bg);
@@ -119,7 +118,7 @@ body {
     border-radius: 8px;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;    
     background-image: url(./img/search.svg);
-    background-position: 8px 6px; 
+    background-position: 8px 8px; 
     background-repeat: no-repeat;   
 }
 
@@ -554,33 +553,9 @@ body {
     text-align: center;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     min-width: 200px;
-    max-width: 400px;
     margin: 20px;
     animation: modalFadeIn 0.3s;
     font-size: 0.9rem;
-}
-
-#consultation-modal > .modal-content {
-    max-width: 350px;
-}
-
-.view-data {
-    font-weight: 600;
-    color: #212529;
-    max-width: 100%;  
-    max-height: 3.5rem; 
-    overflow-x: auto;    
-    overflow-y: auto;    
-    word-break: break-all;   
-}
-
-#view-patient-name, #view-diagnosis, #view-prescription, #view-remarks, #view-doctor-name {
-    font-size: 1rem;
-}
-
-.view-id {
-    font-size: 0.8rem;
-    color:#555;
 }
 
 .close-btn-div {
@@ -713,6 +688,16 @@ body {
     margin: auto;      
 }
 
+#add-patient-modal input:invalid {
+    border-color: #c7c7c7; 
+}
+
+#contactprefix {
+    width: 50px; 
+    border-right: none;
+    color: #555;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -724,6 +709,15 @@ form {
     color: rgb(70, 70, 70);
     margin: 0;
     position: relative;
+}
+
+.forms-input option{
+    flex: 1;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 5px;
+    font-size: 1rem;
 }
 
 label {

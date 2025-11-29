@@ -110,9 +110,8 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
 
     const sex = document.querySelector('#add-sex').value.trim();
     if (!sex) {
-        document.querySelector('#add-sex-error-message').textContent = 'Required.';
-        document.querySelector('#add-sex-error-message').focus();
-        document.querySelector('#add-sex').style.display = 'block';
+        document.querySelector('#add-sex-error-message').textContent = 'Please select a sex.';
+        document.querySelector('#add-sex-error-message').style.display = 'block';
         return;
     }
 
@@ -124,13 +123,28 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
         return;
     }
 
-    const contact = document.querySelector('#add-contact').value.trim();
-    if (!contact) {
-        document.querySelector('#add-contact-error-message').textContent = 'Required.';
-        document.querySelector('#add-contact-error-message').focus();
-        document.querySelector('#add-contact').style.display = 'block';
+    const prefix = document.querySelector('#contactprefix').value.trim();
+    const partContact = document.querySelector('#partcontact').value.trim();
+    const fullContactHidden = document.querySelector('#add-contact');
+
+    if (!partContact || partContact.length !== 9 || !/^\d{9}$/.test(partContact)) {
+        document.querySelector('#add-contact-error-message').textContent = 'Contact Number must be the required 9 digits.';
+        document.querySelector('#add-contact-error-message').style.display = 'block';
+        const errorMsgDiv = document.querySelector('#add-contact-error-message');
+        errorMsgDiv.style.display = 'block';
+        
+        partContactInput.focus();
         return;
     }
+
+   const fullContact = prefix + partContact;
+
+    if (fullContactHidden) {
+            fullContactHidden.value = fullContact;
+        } else {
+            console.error("Hidden contact field not found!");
+            return; 
+        }
 
     const formData = new FormData(addPatientForm);
 
@@ -207,29 +221,55 @@ editPatientButton.addEventListener("click", async () => {
         document.querySelector('#edit-p-lastname').value = data.PatientLastName;
         document.querySelector('#edit-sex').value = data.PatientSex;
         document.querySelector('#edit-bday').value = data.PatientBirthday;  
-        document.querySelector('#edit-contact').value = data.PatientContactNo;
+        
+        const fullContact = data.PatientContactNo; 
 
+        if (fullContact && fullContact.startsWith('+639') && fullContact.length >= 13) {
+            const partContactNo = fullContact.slice(-9); 
+            document.querySelector('#edit-partcontact').value = partContactNo;
+            document.querySelector('#edit-contact').value = fullContact;
+        } else {
+            document.querySelector('#edit-partcontact').value = '';
+            document.querySelector('#edit-contact').value = '';
+            console.warn("Patient contact number is missing or invalid format.");
+        }
+
+        saveEditsButton.dataset.id = id;
     } catch (error) {
         alert("Error loading patient.");
         console.error(error);
     }
 });
 
-saveEditsButton.addEventListener('click', function(e) {
+/*saveEditsButton.addEventListener('click', function(e) {
+    e.preventDefault(); 
     const patientID = this.dataset.id;
-
+    const tableRows = document.querySelectorAll("#patient-information-table tr");
+    
+    // Contact splicing
+    const partContactInput = document.querySelector('#edit-partcontact'); 
+    const partContact = partContactInput.value.trim();
+    const prefix = document.querySelector('#contactprefix').value.trim();
+    
     const formData = new FormData(editPatientForm);
-    formData.append('PatientID', patientID); // Add patient ID
+    formData.append('PatientID', patientID); 
 
+    let finalFullContact = '';
+    
+    if (partContact.length === 9) {
+        finalFullContact = prefix + partContact; 
+        formData.set('ContactNo', finalFullContact); 
+        document.querySelector('#edit-contact').value = finalFullContact; 
+    } 
+  
     fetch('update_patient.php', {
         method: 'POST',
-        body: formData
+        body: formData 
     })
     .then(res => res.json())
     .then(data => {
         if (data.success) {
-            const tableRows = document.querySelectorAll("#patient-information-table tr");
-            
+
             // Name
             const firstName = formData.get('PFirstName') || tableRows[1].children[1].innerText.split(' ')[0];
             const middleInit = formData.get('PMiddleInit') || tableRows[1].children[1].innerText.split(' ')[1] || '';
@@ -243,7 +283,10 @@ saveEditsButton.addEventListener('click', function(e) {
             if (formData.get('Birthday')) tableRows[3].children[1].innerText = formData.get('Birthday');
 
             // Contact Number
-            if (formData.get('ContactNo')) tableRows[4].children[1].innerText = formData.get('ContactNo');
+            const newContactValue = finalFullContact || formData.get('ContactNo'); 
+            if (newContactValue) {
+                tableRows[4].children[1].innerText = newContactValue;
+            }
 
             editPatientModal.style.display = 'none';
             editPatientConfirmModal.style.display = 'flex';
@@ -257,8 +300,102 @@ saveEditsButton.addEventListener('click', function(e) {
         alert('An error occurred while updating patient info.');
     });
 });
+*/
 
+// FOr trimming name inputs sa edit
+const editFirstNameInput = document.querySelector('#edit-p-firstname');
+const editMiddleInitInput = document.querySelector('#edit-p-middleinit');
+const editLastNameInput = document.querySelector('#edit-p-lastname');
+if (editFirstNameInput) {
+    editFirstNameInput.addEventListener('blur', function() {
+        this.value = this.value.trim();
+    });
+}
+if (editMiddleInitInput) {
+    editMiddleInitInput.addEventListener('blur', function() {
+        this.value = this.value.trim();
+    });
+}
+if (editLastNameInput) {
+    editLastNameInput.addEventListener('blur', function() {
+        this.value = this.value.trim();
+    });
+}
 
+document.querySelectorAll('#edit-patient-form').forEach(form => {
+    form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
+    const patientID = saveEditsButton.dataset.id;
+    const tableRows = document.querySelectorAll("#patient-information-table tr");
+
+    // Contact splicing
+    const partContactInput = document.querySelector('#edit-partcontact'); 
+    const partContact = partContactInput.value.trim();
+    const prefix = document.querySelector('#contactprefix').value.trim();
+    
+    const formData = new FormData(editPatientForm);
+    formData.append('PatientID', patientID); 
+
+    let finalFullContact = '';
+    
+    if (partContact.length > 0) {
+            if (partContact.length !== 9 || !/^\d{9}$/.test(partContact)) {
+                contactErrorElement.textContent = 'Contact Number must be exactly 9 digits.';
+                contactErrorElement.style.display = 'block';
+                partContactInput.focus();
+                return; 
+            }
+            finalFullContact = prefix + partContact; 
+            formData.set('ContactNo', finalFullContact); 
+            document.querySelector('#edit-contact').value = finalFullContact; 
+    }
+
+    try {
+        const response = await fetch('update_patient.php', {
+            method: 'POST',
+            body: formData 
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            // Name
+            const newFirstName = formData.get('PFirstName');
+            const newMiddleInit = formData.get('PMiddleInit');
+            const newLastName = formData.get('PLastName');
+            let newFullName = newFirstName;
+
+            if (newMiddleInit && newMiddleInit.trim() !== "") {
+                newFullName += ` ${newMiddleInit.trim()}.`;
+            }
+            newFullName += ` ${newLastName}`
+            tableRows[1].children[1].innerText = newFullName.trim();
+
+            // Sex
+            if (formData.get('Sex')) tableRows[2].children[1].innerText = formData.get('Sex');
+
+            // Birthday
+            if (formData.get('Birthday')) tableRows[3].children[1].innerText = formData.get('Birthday');
+
+            // Contact Number
+            const newContactValue = finalFullContact || formData.get('ContactNo'); 
+            if (newContactValue) {
+                tableRows[4].children[1].innerText = newContactValue;
+            }
+
+            editPatientModal.style.display = 'none';
+            editPatientConfirmModal.style.display = 'flex';
+            editPatientForm.reset();
+        } else {
+            alert(`Update failed: ${data.message}`);
+        }
+    } catch(err) {
+        console.error(err);
+        alert('An error occurred while updating patient info.');
+    }
+
+    });
+});
 
 
