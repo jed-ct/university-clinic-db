@@ -31,7 +31,7 @@ const filterPrescriptionInput = document.querySelector('#filter-prescription');
 viewButton.forEach((viewButton)=> {
     viewButton.addEventListener("click", async ()=> {
         console.log(document.querySelector('#view-patient-id'));
-        viewConsultationModal.style.display = 'flex';
+        openModal(viewConsultationModal);
         const id = viewButton.dataset.id;
         try {
             const response = await fetch(`get_consultation.php?id=${id}`);
@@ -64,17 +64,16 @@ confirmDeletionButton.addEventListener("click",async ()=> {
 })
 
 addConsultationButton.addEventListener("click", () => {
-    addConsultationModal.style.display = 'flex';
+    openModal(addConsultationModal);
 })
 
 filterConsultationButton.addEventListener("click", () => {
-    filterConsultationModal.style.display = 'flex';
+    openModal(filterConsultationModal);
 });
 
 editConsultationButton.forEach((editConsultationButton)=> {
     editConsultationButton.addEventListener("click", async ()=> {
-        editConsultationModal.style.display = 'flex';
-        viewConsultationModal.style.display = 'none';
+        openModal(editConsultationModal);
         const id = editConsultationButton.dataset.id;
         confirmEditConsultationButton.dataset.id = id;
         try {
@@ -146,6 +145,8 @@ editConsultationForm.addEventListener("submit", async (e) => {
 
     for (let [key, value] of formData.entries()) {
     console.log(key, value);
+
+    location.reload();
 }   
 
     const response = await fetch('./edit_consultation.php', {
@@ -162,13 +163,14 @@ editConsultationForm.addEventListener("submit", async (e) => {
     }
 });
 
-let timeoutId;
+let hasPatientInputError = false;
+let hasDoctorInputError = false;
 editConsultationForm.addEventListener('input', (e) => {
+    let timeoutId;
     clearTimeout(timeoutId);
     const patientError = document.querySelector('#edit-patient-error-message');
     const editButton = document.querySelector('#confirm-edit-btn');
     const doctorError = document.querySelector('#edit-doctor-error-message');
-    let hasInputError = false;
     timeoutId = setTimeout(async () => {
         const field = e.target;
 
@@ -184,6 +186,7 @@ editConsultationForm.addEventListener('input', (e) => {
             try {
                 const response = await fetch(`./autosuggestions/autosuggest-patients.php?name=${encodeURIComponent(field.value)}`);
                 autosuggestions = await response.json();
+                console.log(autosuggestions);
             } catch (err) {
                 console.error('Autosuggest fetch failed', err);
             }
@@ -191,13 +194,14 @@ editConsultationForm.addEventListener('input', (e) => {
             if (!field.checkValidity()) {
                 patientError.textContent = 'Please enter a valid name.';
                 patientError.style.display = 'block';
-                hasInputError = true; 
+                hasPatientInputError = true;
             } else if (autosuggestions.length === 0) {
                 patientError.textContent = 'Patient not found in database.';
                 patientError.style.display = 'block';
-                hasInputError = true; 
+                hasPatientInputError = true;
             } else {
                 patientError.style.display = 'none';
+                hasPatientInputError = false;
             }
         }
 
@@ -206,23 +210,25 @@ editConsultationForm.addEventListener('input', (e) => {
             try {
                 const response = await fetch(`./autosuggestions/autosuggest-doctors.php?name=${encodeURIComponent(field.value)}`);
                 autosuggestions = await response.json();
+                console.log(autosuggestions);
             } catch (err) {
                 console.error('Autosuggest fetch failed', err);
             }
             if (!field.checkValidity()) {
                 doctorError.textContent = 'Please enter a valid name.';
                 doctorError.style.display = 'block';
-                hasInputError = true; 
+                hasDoctorInputError = true;
             } else if (autosuggestions.length === 0) {
                 doctorError.textContent = 'Doctor not found in database.';
                 doctorError.style.display = 'block';
-                hasInputError = true;           
+                hasDoctorInputError = true;          
             }
             else {
                 doctorError.style.display = 'none';
+                hasDoctorInputError = false;
             }
         }
-        if (hasInputError) {
+        if (hasDoctorInputError || hasPatientInputError) {
             disableButton(editButton);
         }
         else {
@@ -234,7 +240,7 @@ editConsultationForm.addEventListener('input', (e) => {
 
 deleteConsultationButton.forEach((deleteConsultationButton)=>{
     deleteConsultationButton.addEventListener("click", ()=> {
-        deletionModal.style.display = 'flex';
+        openModal(deletionModal);
         viewConsultationModal.style.display = 'none';
     })
 });
@@ -305,7 +311,8 @@ if (!isCurrentDateTimeCheckbox.checked) {
 addConsultationForm.addEventListener('input', (() => {
     const addButton = document.querySelector('.action.add');
     let timeoutId;
-    let hasInputError = false;
+    let hasPatientInputError = false;
+    let hasDoctorInputError = false;
     return (e) => {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(async () => {
@@ -325,14 +332,15 @@ addConsultationForm.addEventListener('input', (() => {
                 if (!field.checkValidity()) {
                     document.querySelector('#add-patient-error-message').textContent = 'Please enter a valid name.';
                     document.querySelector('#add-patient-error-message').style.display = 'block';
-                    hasInputError = true;
+                    hasPatientInputError = true;
                 } 
                 else if (autosuggestions.length === 0) {
                     document.querySelector('#add-patient-error-message').textContent = 'Patient not found in database.';
                     document.querySelector('#add-patient-error-message').style.display = 'block';
-                    hasInputError = true;                
+                    hasPatientInputError = true;            
                 } else {
                     document.querySelector('#add-patient-error-message').style.display = 'none';
+                    hasPatientInputError = false;
 
                 }
             }
@@ -348,18 +356,18 @@ addConsultationForm.addEventListener('input', (() => {
                 if (!field.checkValidity()) {
                     document.querySelector('#add-doctor-error-message').textContent = 'Please enter a valid name.';
                     document.querySelector('#add-doctor-error-message').style.display = 'block';
-                    hasInputError = true;
+                    hasDoctorInputError = true;
                 } else if (autosuggestions.length === 0) {
                     document.querySelector('#add-doctor-error-message').textContent = 'Doctor not found in database.';
                     document.querySelector('#add-doctor-error-message').style.display = 'block';
-                    hasInputError = true;                   
+                    hasDoctorInputError = true;                   
                 }
                 else {
                     document.querySelector('#add-doctor-error-message').style.display = 'none';
-
+                    hasDoctorInputError = false;
                 }
             }
-            if (hasInputError) {
+            if (hasDoctorInputError || hasPatientInputError) {
                 disableButton(addButton);
             }
             else {
@@ -710,26 +718,13 @@ modalCloseButton.forEach((btn) => {
         addConsultationModal.style.display = 'none';
         editConsultationModal.style.display = 'none';
         filterConsultationModal.style.display = 'none';
+        document.body.classList.remove("body-no-scroll");
     })
 });
 
-
-function updateConsultationTable(tableData) {
-    const table = document.querySelector('#consultations-table tbody');
-    let row = table.insertRow();
-}
-
-function clearTableBody(tableId) {
-    const table = document.querySelector(tableId);
-    if (!table) return;
-
-    let tbody = table.querySelector('tbody');
-    if (tbody) {
-    table.removeChild(tbody);
-    }
-
-    tbody = document.createElement('tbody');
-    table.appendChild(tbody);
+function openModal(modal) {
+    modal.style.display = "flex";
+    document.body.classList.add("body-no-scroll");
 }
 
 function disableButton(button, isButtonDisabled=true) {
