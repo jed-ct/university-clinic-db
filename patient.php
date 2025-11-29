@@ -104,34 +104,29 @@ include("database.php");
 <div id="filter-patient-modal" class="modal">
     <div class="modal-content">
         <div class="close-btn-div">
-            <div>Filter Patient Results</div>
+            <div>Filter Patients</div>
             <button class="close-btn-patient"><img class='btn-img' src="./img/close.svg"></button>
         </div>
         <div class="modal-message">
             <form id="filter-patient-form" method='POST'>
-                <fieldset>
+                <fieldset class='sex-fieldset'>
                     <div class="forms-input">
-                        <label for="filter-first-name">First Name</label>
-                        <input type="text" name="FirstName" id="filter-first-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
-                    </div>
-                    <div class="forms-input">
-                        <label for="filter-middle-init">Middle Initial</label>
-                        <input type="text" name="MiddleInit" id="filter-middle-init" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
-                    </div>
-                    <div class="forms-input">
-                        <label for="filter-last-name">Last Name</label>
-                        <input type="text" name="LastName" id="filter-last-name" pattern="^[A-Za-z]+( [A-Za-z]+)*$" maxlength="64">
-                    </div>                        
+                        <label for="filter-sex">Sex *</label>
+                        <select name="Sex" id="filter-sex">
+                            <option value="" selected disabled> </option>
+                            <option value="F">Female</option>
+                            <option value="M">Male</option>
+                            <option value="O">Other</option>
+                        </select>
+                    </div>     
                 </fieldset>
-                <fieldset>
-                    <div class="forms-input">
-                        <label for="filter-sex">Sex</label>
-                        <input type="text" name="Sex" id="filter-sex" maxlength="64">
-                    </div>
+                <fieldset class='sex-fieldset'>
                     <div class="forms-input">
                         <label for="filter-bday">Birthday</label>
-                        <input type="date" name="Birthday" id="filter-bday" maxlength="64">
+                        <input  name="Birthday" id="filter-bday" type="date" min="1900-01-01" max="<?php echo date("Y-m-d"); ?>">
                     </div>
+                </fieldset>
+                <fieldset class='sex-fieldset'>
                     <div class="forms-input">
                         <label for="filter-contact">Contact Number</label>
                         <input type="number" name="ContactNo" id="filter-contact" maxlength="64">
@@ -140,7 +135,8 @@ include("database.php");
             </form>      
         </div>
         <div class='consultation-modal-actions'>
-            <button type='submit' class='action' form="filter-patient-form">Filter</button>
+            <button type='submit' class='action filter' form="filter-patient-form">Filter</button>
+            <button type='submit' class='action filter-reset' form="filter-patient-form">Reset</button>
         </div>
     </div>
 </div>
