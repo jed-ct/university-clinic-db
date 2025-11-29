@@ -161,7 +161,7 @@ include("database.php");
 <div id="patient-search-results"></div>
 
 <div id="footer">
-    hello world
+    © 2025 TBA Clinic · tbaclinic@univ.edu.ph · (074) 442 1983
 </div>
 
 <!-- SCRIPT -->

@@ -14,21 +14,24 @@ if (!preg_match("/^[A-Za-z.-]+(?:[ .-][A-Za-z.-]+)*$/", $searchname)) {
 }
 
 $search_term = "%".$searchname."%";
+$active_status = "1";
 
 $sql = "SELECT * FROM `PATIENT` WHERE 
-        `PatientFirstName` LIKE ? 
+        (`PatientFirstName` LIKE ? 
         OR `PatientLastName` LIKE ? 
         OR CONCAT(PatientFirstName, ' ', PatientLastName) LIKE ? 
         OR CONCAT(PatientFirstName, ' ', PatientMiddleInit, ' ', PatientLastName) LIKE ? 
         OR CONCAT(PatientFirstName, ' ', PatientMiddleInit) LIKE ? 
         OR CONCAT(PatientMiddleInit, ' ', PatientLastName) LIKE ? 
         OR CONCAT(PatientLastName,' ', PatientFirstName) LIKE ?
+        )
+        AND `PatientIsActive` = ?
         ORDER BY `PatientID`";
 
 $stmt = mysqli_prepare($conn, $sql);
-mysqli_stmt_bind_param($stmt, "sssssss", 
+mysqli_stmt_bind_param($stmt, "ssssssss", 
     $search_term, $search_term, $search_term, $search_term,
-    $search_term, $search_term, $search_term
+    $search_term, $search_term, $search_term, $active_status
 );
 mysqli_stmt_execute($stmt);
 $res = mysqli_stmt_get_result($stmt);

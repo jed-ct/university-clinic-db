@@ -238,7 +238,7 @@ $result = $stmt->get_result();
         </div>
     </div>
 
-    <div id="footer">basta contact info</div>
+    <div id="footer">© 2025 TBA Clinic · tbaclinic@univ.edu.ph · (074) 442 1983</div>
     
     <?php 
     if ($stmt) $stmt->close();

@@ -241,7 +241,7 @@ error_reporting(E_ALL);
 
 
     <div id="footer">
-        basta contact info
+        © 2025 TBA Clinic · tbaclinic@univ.edu.ph · (074) 442 1983
     </div>
 
 
