@@ -365,12 +365,12 @@ include("database.php");
 <table id='consultations-table' class='consultations-table'>
     <thead>
         <tr>
-            <th data-col="date" class="sortable active desc">Date</th>
+            <th data-col="ConsultDateTime" class="sortable active desc">Date</th>
             <th>Time</th>
 
-            <th data-col="patient" class="sortable">Patient</th>
-            <th data-col="diagnosis" class="sortable">Diagnosis</th>
-            <th data-col="doctor" class="sortable">Doctor</th>
+            <th data-col="CONCAT(PATIENT.PatientFirstName, ' ', IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''), PATIENT.PatientLastName)" class="sortable">Patient</th>
+            <th data-col="Diagnosis" class="sortable">Diagnosis</th>
+            <th data-col="CONCAT(DOCTOR.DocFirstName, ' ', IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''), DOCTOR.DocLastName)" class="sortable">Doctor</th>
 
             <th></th>
         </tr>

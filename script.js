@@ -29,23 +29,26 @@ const consultationSearchBox = document.querySelector('#consultation-searchbox');
 
 //order,sorting,pagination shit
 let livesearchQuery = "";
-let orderBy = "";
+let diagnosisFilter = "";
+let prescriptionFilter = "";
+let startingDateFilter = "";
+let endingDateFilter = "";
+let orderBy = "ConsultDateTime";
 let orderDir = "ASC";
+let currentPage = 1;
 
+async function loadTable() {
+    const response = await fetch(`consultation-table.php?query=${encodeURIComponent(livesearchQuery)}&orderBy=${encodeURIComponent(orderBy)}&orderDir=${orderDir}`);
+    let tableData = await response.text();
+    document.querySelector('#consultations-table-body').innerHTML = tableData;
+}
 
+loadTable();
 //Livesearch
 consultationSearchBox.addEventListener('input', async ()=> {
-    const query = consultationSearchBox.value;
-    try {
-        const response = await fetch(`consultation-table.php?query=${query}`);
-        const tableData = await response.text();
-        document.querySelector('#consultations-table-body').innerHTML = tableData;
-        console.log(tableData);
-    }
-    catch(error) {
-        console.log(error);
-    }
-})
+    livesearchQuery = consultationSearchBox.value;
+    loadTable();
+});
 
 async function viewConsultation(id) {
     console.log(document.querySelector('#view-patient-id'));
@@ -91,9 +94,7 @@ document.querySelectorAll(".sortable").forEach(th => {
         th.classList.add(orderDir.toLowerCase());
 
         console.log("Sorting by:", orderBy, orderDir);
-
-        // Call backend reload here
-        // loadTable();
+        loadTable();
     });
 });
 

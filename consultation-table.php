@@ -2,6 +2,11 @@
 include('database.php');
 
 $query = isset($_GET['query']) ? $_GET['query'] : '';
+$orderBy = $_GET['orderBy'];
+$orderDir = $_GET['orderDir'];
+
+
+
 $tableData = '';
 $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime,
     CONCAT(
@@ -18,7 +23,10 @@ $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime,
     FROM PATIENT
     INNER JOIN CONSULTATION ON PATIENT.PatientID = CONSULTATION.PatientID
     INNER JOIN DOCTOR ON DOCTOR.DoctorID = CONSULTATION.DoctorID
-    WHERE 1=1 AND (CONCAT(
+    WHERE 1=1"; 
+
+if ($query) {
+    $sql .= " AND (CONCAT(
         PATIENT.PatientFirstName, ' ',
         IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
         PATIENT.PatientLastName
@@ -27,6 +35,11 @@ $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime,
         IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
         DOCTOR.DocLastName
     ) LIKE '%$query%')";
+}
+
+if ($orderBy && $orderDir) {
+    $sql .= " ORDER BY $orderBy $orderDir";
+}
 
 $result = $conn->query($sql);
 
