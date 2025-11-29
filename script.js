@@ -34,11 +34,11 @@ let prescriptionFilter = "";
 let startingDateFilter = "";
 let endingDateFilter = "";
 let orderBy = "ConsultDateTime";
-let orderDir = "ASC";
+let orderDir = "DESC";
 let currentPage = 1;
 
 async function loadTable() {
-    const response = await fetch(`consultation-table.php?query=${encodeURIComponent(livesearchQuery)}&orderBy=${encodeURIComponent(orderBy)}&orderDir=${orderDir}`);
+    const response = await fetch(`consultation-table.php?query=${encodeURIComponent(livesearchQuery)}&orderBy=${encodeURIComponent(orderBy)}&orderDir=${orderDir}&startDate=${encodeURIComponent(startingDateFilter)}&endDate=${encodeURIComponent(endingDateFilter)}&diagnosis=${encodeURIComponent(diagnosisFilter)}&prescription=${encodeURIComponent(prescriptionFilter)}`);
     let tableData = await response.text();
     document.querySelector('#consultations-table-body').innerHTML = tableData;
 }
@@ -437,7 +437,7 @@ isCurrentDateTimeCheckbox.addEventListener("change", ()=> {
     }
 })
 
-filterConsultationForm.addEventListener('input', (() => {
+filterConsultationForm.addEventListener('input', ((e) => {
     let timeoutId;
     const startDateInput = document.querySelector('#filter-start-date');
     const endDateInput = document.querySelector('#filter-end-date');
@@ -445,6 +445,7 @@ filterConsultationForm.addEventListener('input', (() => {
     startDateInput.setAttribute('max', new Date().toISOString().slice(0, 10));
     endDateInput.setAttribute('max', new Date().toISOString().slice(0, 10));
     return (e) => {
+        e.preventDefault();
         clearTimeout(timeoutId);
         const field = e.target;
         timeoutId = setTimeout(() => {
@@ -461,32 +462,24 @@ filterConsultationForm.addEventListener('input', (() => {
                     disableButton(document.querySelector('.action.filter'), false);
                 }
             }
-
-            else if (field.name === "PatientName") {
-                if (!field.checkValidity()) {
-                    document.querySelector('#filter-patient-error-message').textContent = 'Please enter a valid name.';
-                    document.querySelector('#filter-patient-error-message').style.display = 'block';
-                    disableButton(document.querySelector('.action.filter'));
-                } else {
-                    document.querySelector('#filter-patient-error-message').style.display = 'none';
-                    disableButton(document.querySelector('.action.filter'), false);
-                }
-            }
-
-            else if (field.name === "DoctorName") {
-                if (!field.checkValidity()) {
-                    document.querySelector('#filter-doctor-error-message').textContent = 'Please enter a valid name.';
-                    document.querySelector('#filter-doctor-error-message').style.display = 'block';
-                    disableButton(document.querySelector('.action.filter'));
-                } else {
-                    document.querySelector('#filter-doctor-error-message').style.display = 'none';
-                    disableButton(document.querySelector('.action.filter'), false);
-                }
-            }
-
         }, 500);
     };
 })());
+
+filterConsultationForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const startDateInput = document.querySelector('#filter-start-date');
+    const endDateInput = document.querySelector('#filter-end-date');
+    const diagnosisInput = document.querySelector('#filter-diagnosis');
+    const prescriptionInput = document.querySelector('#filter-prescription');
+    startingDateFilter = startDateInput.value;
+    endingDateFilter = endDateInput.value;
+    diagnosisFilter = diagnosisInput.value;
+    prescriptionFilter = prescriptionInput.value;
+    loadTable();
+    filterConsultationModal.style.display = 'none';
+    document.body.classList.remove("body-no-scroll");
+})
 
 addPatientInput.addEventListener('input', async (e) => {
     const query = addPatientInput.value.trim();

@@ -1,10 +1,18 @@
 <?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 include('database.php');
 
 $query = isset($_GET['query']) ? $_GET['query'] : '';
 $orderBy = $_GET['orderBy'];
 $orderDir = $_GET['orderDir'];
-
+$startDate = isset($_GET['startDate']) ? $_GET['startDate'] : '';
+$endDate = isset($_GET['endDate']) ? $_GET['endDate'] : '';
+$diagnosis = isset($_GET['diagnosis']) ? $_GET['diagnosis'] : '';
+$prescription = isset($_GET['prescription']) ? $_GET['prescription'] : '';
 
 
 $tableData = '';
@@ -36,6 +44,25 @@ if ($query) {
         DOCTOR.DocLastName
     ) LIKE '%$query%')";
 }
+
+
+if ($startDate && $endDate) {
+    $sql .= " AND DATE(ConsultDateTime) BETWEEN '$startDate' AND '$endDate'";
+}
+else if ($startDate) {
+    $sql .= " AND DATE(ConsultDateTime) >= '$startDate'";
+}
+else if ($endDate) {
+    $sql .= " AND DATE(ConsultDateTime) <= '$endDate'";
+}
+
+if ($diagnosis) {
+    $sql .= " AND CONSULTATION.Diagnosis LIKE '%$diagnosis%'";
+}
+if ($prescription) {
+    $sql .= " AND CONSULTATION.Prescription LIKE '%$prescription%'";
+}
+
 
 if ($orderBy && $orderDir) {
     $sql .= " ORDER BY $orderBy $orderDir";

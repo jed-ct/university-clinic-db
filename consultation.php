@@ -130,7 +130,7 @@ include("database.php");
         </div>
 
         <div class="modal-message">
-            <form id='filter-consultation-form' method='GET' action='consultation.php' autocomplete='off'>
+            <form id='filter-consultation-form' autocomplete='off'>
 
                 <fieldset>
                     <legend>By Date</legend>
