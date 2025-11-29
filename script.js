@@ -26,6 +26,9 @@ const editDoctorInput = document.querySelector('#edit-doctor-name');
 const filterDiagnosisInput = document.querySelector('#filter-diagnosis');
 const filterPrescriptionInput = document.querySelector('#filter-prescription');
 const consultationSearchBox = document.querySelector('#consultation-searchbox');
+const prevButton = document.querySelector('.prev');
+const nextButton = document.querySelector('.next');
+
 
 //order,sorting,pagination shit
 let livesearchQuery = "";
@@ -38,10 +41,43 @@ let orderDir = "DESC";
 let currentPage = 1;
 
 async function loadTable() {
-    const response = await fetch(`consultation-table.php?query=${encodeURIComponent(livesearchQuery)}&orderBy=${encodeURIComponent(orderBy)}&orderDir=${orderDir}&startDate=${encodeURIComponent(startingDateFilter)}&endDate=${encodeURIComponent(endingDateFilter)}&diagnosis=${encodeURIComponent(diagnosisFilter)}&prescription=${encodeURIComponent(prescriptionFilter)}`);
-    let tableData = await response.text();
-    document.querySelector('#consultations-table-body').innerHTML = tableData;
+    const response = await fetch(`consultation-table.php?query=${encodeURIComponent(livesearchQuery)}&orderBy=${encodeURIComponent(orderBy)}&orderDir=${orderDir}&startDate=${encodeURIComponent(startingDateFilter)}&endDate=${encodeURIComponent(endingDateFilter)}&diagnosis=${encodeURIComponent(diagnosisFilter)}&prescription=${encodeURIComponent(prescriptionFilter)}&page=${currentPage}`);
+    let result = await response.json();
+    prevButton.dataset.page = currentPage - 1;
+    nextButton.dataset.page = currentPage + 1;
+
+    if (result.totalRows <= 10) {
+        document.querySelector('.pagination').style.display = 'none';
+    }
+    else {
+        document.querySelector('.pagination').style.display = 'flex';
+    }
+
+    if (currentPage == 1) {
+        prevButton.style.display = 'none';
+    }
+    else if (currentPage == result.totalPages) {
+        nextButton.style.display = 'none';
+    }
+    else {
+        prevButton.style.display = 'inline-block';
+        nextButton.style.display = 'inline-block';
+    }
+
+    document.querySelector('#current-page').textContent = currentPage;
+    document.querySelector('#max-page').textContent = result.totalPages;
+    document.querySelector('#consultations-table-body').innerHTML = result.tableData;
 }
+
+prevButton.addEventListener('click', ()=> {
+    currentPage -= 1;
+    loadTable();
+})
+
+nextButton.addEventListener('click', ()=> {
+    currentPage += 1;
+    loadTable();
+})
 
 loadTable();
 //Livesearch

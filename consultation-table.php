@@ -13,6 +13,7 @@ $startDate = isset($_GET['startDate']) ? $_GET['startDate'] : '';
 $endDate = isset($_GET['endDate']) ? $_GET['endDate'] : '';
 $diagnosis = isset($_GET['diagnosis']) ? $_GET['diagnosis'] : '';
 $prescription = isset($_GET['prescription']) ? $_GET['prescription'] : '';
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 
 $tableData = '';
@@ -63,10 +64,16 @@ if ($prescription) {
     $sql .= " AND CONSULTATION.Prescription LIKE '%$prescription%'";
 }
 
-
 if ($orderBy && $orderDir) {
     $sql .= " ORDER BY $orderBy $orderDir";
 }
+$result = $conn->query($sql);
+$totalRows = $result->num_rows;
+
+$offset = ($page-1) * 10;
+$sql .= " LIMIT 10 OFFSET $offset";
+
+$totalPages = ceil($totalRows / 10);
 
 $result = $conn->query($sql);
 
@@ -85,5 +92,11 @@ while ($row = $result->fetch_assoc()) {
             </tr>";
 }
 
-echo $tableData;
+echo json_encode([
+    "tableData" => $tableData,
+    "page" => $page,
+    "totalPages" => $totalPages,
+    "totalRows" => $totalRows
+]);
+
 ?>

@@ -488,7 +488,13 @@ include("database.php");
     //     echo '</div>';
     // }
 ?>
-
+<div class="pagination">
+    <button class="prev" data-page=''> &lt; </button>
+    <div>
+        Page <span id='current-page'>1</span> of <span id='max-page'>2</span>
+    </div>
+    <button class="next" data-page=''> &gt; </button>
+</div>
 
 </div>
 
