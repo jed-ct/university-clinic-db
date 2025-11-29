@@ -365,11 +365,13 @@ include("database.php");
 <table id='consultations-table' class='consultations-table'>
     <thead>
         <tr>
-            <th>Date</th>
+            <th data-col="date" class="sortable active desc">Date</th>
             <th>Time</th>
-            <th>Patient</th>
-            <th>Diagnosis</th>
-            <th>Doctor</th>
+
+            <th data-col="patient" class="sortable">Patient</th>
+            <th data-col="diagnosis" class="sortable">Diagnosis</th>
+            <th data-col="doctor" class="sortable">Doctor</th>
+
             <th></th>
         </tr>
     </thead>
@@ -408,24 +410,6 @@ include("database.php");
     // else if ($filterEndDate) {
     //     $sql .= " AND DATE(ConsultDateTime) <= '$filterEndDate'";
     //     $isTableFiltered = true;
-    // }
-
-    // if ($filterPatientName) {
-    //     $sql .= " AND CONCAT(
-    //     PATIENT.PatientFirstName, ' ',
-    //     IFNULL(CONCAT(PATIENT.PatientMiddleInit, '. '), ''),
-    //     PATIENT.PatientLastName
-    // ) LIKE '%$filterPatientName%'";
-    // $isTableFiltered = true;
-    // }
-    
-    // if ($filterDoctorName) {
-    //     $sql .= " AND CONCAT(
-    //     DOCTOR.DocFirstName, ' ',
-    //     IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
-    //     DOCTOR.DocLastName
-    // ) LIKE '%$filterDoctorName%'";
-    // $isTableFiltered = true;
     // }
     
     // if ($filterDiagnosis) {

@@ -27,6 +27,13 @@ const filterDiagnosisInput = document.querySelector('#filter-diagnosis');
 const filterPrescriptionInput = document.querySelector('#filter-prescription');
 const consultationSearchBox = document.querySelector('#consultation-searchbox');
 
+//order,sorting,pagination shit
+let livesearchQuery = "";
+let orderBy = "";
+let orderDir = "ASC";
+
+
+//Livesearch
 consultationSearchBox.addEventListener('input', async ()=> {
     const query = consultationSearchBox.value;
     try {
@@ -64,6 +71,32 @@ async function viewConsultation(id) {
         console.log(error);
     }
 }
+
+//Order
+document.querySelectorAll(".sortable").forEach(th => {
+    th.addEventListener("click", () => {
+        const col = th.dataset.col;
+
+        if (orderBy === col) {
+            orderDir = orderDir === "ASC" ? "DESC" : "ASC";
+        } else {
+            orderBy = col;
+            orderDir = "ASC";
+        }
+
+        document.querySelectorAll(".sortable").forEach(h => {
+            h.classList.remove("asc", "desc", "active");
+        });
+        th.classList.add("active");
+        th.classList.add(orderDir.toLowerCase());
+
+        console.log("Sorting by:", orderBy, orderDir);
+
+        // Call backend reload here
+        // loadTable();
+    });
+});
+
 viewButton.forEach((viewButton)=> {
     viewButton.addEventListener("click", async ()=> {
 
