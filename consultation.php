@@ -334,22 +334,7 @@ include("database.php");
 </div>
 
 <!-- HEADER -->
-<div class="header">
-    <a id="hyperlink-logo" href="./index.php">
-        <div class='header-img' id='logo'>
-            <img id='logo-img' src='./img/logo.svg'>
-            TBAClinic
-        </div>
-    </a>
-    <ul class="links" id='header-links'>
-        <li><a href="./index.php">Home</a></li>
-        <li><a href="./consultation.php">Consultations</a></li>
-        <li><a href="./patient.php">Patients</a></li>
-        <li><a href="./staff.php">Staff</a></li>
-        <li><a href="#footer">Contact</a></li>
-    </ul>
-    <button id='mobile-menu-btn'><img class='header-img' src='./img/menu.svg'></button>
-</div>
+<?php include('header.php') ?>
 
 <!-- CONSULTATION TABLE -->
 <div class="consultations-table-container">
@@ -388,9 +373,7 @@ include("database.php");
 
 </div>
 
-<div id="footer">
-     © 2025 TBA Clinic · tbaclinic@univ.edu.ph · (074) 442 1983
-</div>
+<?php include('footer.php') ?>
 
 <script src="./script.js"></script>
 
