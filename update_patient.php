@@ -15,13 +15,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['PatientID'])) {
     ];
 
     $updateParts = [];
-    foreach ($fields as $column => $value) {
-        if (isset($value) && $value !== '') {
-            $value = mysqli_real_escape_string($conn, $value);
-            $updateParts[] = "`$column` = '$value'";
-        }
+    foreach ($fields as $column => $value) {        
+        $value = mysqli_real_escape_string($conn, $value);
+        $updateParts[] = "`$column` = '$value'";
     }
-
     if (!empty($updateParts)) {
         $sql = "UPDATE `Patient` SET " . implode(", ", $updateParts) . " WHERE `PatientID` = '$patientID'";
         if (mysqli_query($conn, $sql)) {

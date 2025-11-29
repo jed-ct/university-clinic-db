@@ -233,13 +233,15 @@ editPatientButton.addEventListener("click", async () => {
             document.querySelector('#edit-contact').value = '';
             console.warn("Patient contact number is missing or invalid format.");
         }
+
+        saveEditsButton.dataset.id = id;
     } catch (error) {
         alert("Error loading patient.");
         console.error(error);
     }
 });
 
-saveEditsButton.addEventListener('click', function(e) {
+/*saveEditsButton.addEventListener('click', function(e) {
     e.preventDefault(); 
     const patientID = this.dataset.id;
     const tableRows = document.querySelectorAll("#patient-information-table tr");
@@ -298,8 +300,102 @@ saveEditsButton.addEventListener('click', function(e) {
         alert('An error occurred while updating patient info.');
     });
 });
+*/
 
+// FOr trimming name inputs sa edit
+const editFirstNameInput = document.querySelector('#edit-p-firstname');
+const editMiddleInitInput = document.querySelector('#edit-p-middleinit');
+const editLastNameInput = document.querySelector('#edit-p-lastname');
+if (editFirstNameInput) {
+    editFirstNameInput.addEventListener('blur', function() {
+        this.value = this.value.trim();
+    });
+}
+if (editMiddleInitInput) {
+    editMiddleInitInput.addEventListener('blur', function() {
+        this.value = this.value.trim();
+    });
+}
+if (editLastNameInput) {
+    editLastNameInput.addEventListener('blur', function() {
+        this.value = this.value.trim();
+    });
+}
 
+document.querySelectorAll('#edit-patient-form').forEach(form => {
+    form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
+    const patientID = saveEditsButton.dataset.id;
+    const tableRows = document.querySelectorAll("#patient-information-table tr");
+
+    // Contact splicing
+    const partContactInput = document.querySelector('#edit-partcontact'); 
+    const partContact = partContactInput.value.trim();
+    const prefix = document.querySelector('#contactprefix').value.trim();
+    
+    const formData = new FormData(editPatientForm);
+    formData.append('PatientID', patientID); 
+
+    let finalFullContact = '';
+    
+    if (partContact.length > 0) {
+            if (partContact.length !== 9 || !/^\d{9}$/.test(partContact)) {
+                contactErrorElement.textContent = 'Contact Number must be exactly 9 digits.';
+                contactErrorElement.style.display = 'block';
+                partContactInput.focus();
+                return; 
+            }
+            finalFullContact = prefix + partContact; 
+            formData.set('ContactNo', finalFullContact); 
+            document.querySelector('#edit-contact').value = finalFullContact; 
+    }
+
+    try {
+        const response = await fetch('update_patient.php', {
+            method: 'POST',
+            body: formData 
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            // Name
+            const newFirstName = formData.get('PFirstName');
+            const newMiddleInit = formData.get('PMiddleInit');
+            const newLastName = formData.get('PLastName');
+            let newFullName = newFirstName;
+
+            if (newMiddleInit && newMiddleInit.trim() !== "") {
+                newFullName += ` ${newMiddleInit.trim()}.`;
+            }
+            newFullName += ` ${newLastName}`
+            tableRows[1].children[1].innerText = newFullName.trim();
+
+            // Sex
+            if (formData.get('Sex')) tableRows[2].children[1].innerText = formData.get('Sex');
+
+            // Birthday
+            if (formData.get('Birthday')) tableRows[3].children[1].innerText = formData.get('Birthday');
+
+            // Contact Number
+            const newContactValue = finalFullContact || formData.get('ContactNo'); 
+            if (newContactValue) {
+                tableRows[4].children[1].innerText = newContactValue;
+            }
+
+            editPatientModal.style.display = 'none';
+            editPatientConfirmModal.style.display = 'flex';
+            editPatientForm.reset();
+        } else {
+            alert(`Update failed: ${data.message}`);
+        }
+    } catch(err) {
+        console.error(err);
+        alert('An error occurred while updating patient info.');
+    }
+
+    });
+});
 
 

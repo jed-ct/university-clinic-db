@@ -110,7 +110,7 @@ error_reporting(E_ALL);
                         <label for="edit-contact">Contact Number *</label>
                         <div style="flex">
                         <input type="text" value="+639" readonly id="contactprefix">
-                        <input type="tel" id="edit-partcontact" name="PartContactNo" placeholder="123456789" pattern="[0-9]{9}" maxlength="9" title="Input must contain numbers only." required>
+                        <input type="tel" id="edit-partcontact" name="PartContactNo" placeholder="123456789" pattern="[0-9]{9}" maxlength="9" title="Input must contain 9 digit numbers." required>
                         </div>
                         <input type="hidden" name="ContactNo" id="edit-contact">
                         <span class='error-message' id='edit-contact-error-message'>Yipeee</span>
@@ -120,7 +120,7 @@ error_reporting(E_ALL);
             </div>
 
         <div class='consultation-modal-actions'>
-            <button class='action save-edits' data-id='<?php echo $patientID; ?>'>Save</button>
+            <button class='action save-edits' type='submit' form='edit-patient-form' data-id='<?php echo $patientID; ?>'>Save</button>
         </div>
     </div>
     </div>
@@ -169,7 +169,9 @@ error_reporting(E_ALL);
             <h2 style="text-align: center;">Patient Details</h2>
                 <div id="patient-information-table"><table class = "table table-striped">
                     <tr><th>Patient ID</th> <td><?php echo $fetch['PatientID']?></td> </tr>
-                    <tr><th>Name</th> <td><?php echo $fetch['PatientFirstName']?> <?php echo $fetch['PatientMiddleInit']?>. <?php echo $fetch['PatientLastName']?></td> </tr>
+                    <tr><th>Name</th> <td><?php echo $fetch['PatientFirstName']?> 
+                    <?php echo !empty($fetch['PatientMiddleInit']) ? $fetch['PatientMiddleInit'] . ". " : "";?> 
+                    <?php echo $fetch['PatientLastName']?></td> </tr>
                     <tr><th>Sex</th> <td><?php echo $fetch['PatientSex']?></td> </tr>
                     <tr><th>Birthday</th> <td><?php echo $fetch['PatientBirthday']?></td> </tr>
                     <tr><th>Contact Number</th> <td><?php echo $fetch['PatientContactNo']?></td> </tr>
