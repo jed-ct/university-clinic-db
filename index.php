@@ -22,15 +22,15 @@
     <div class="section-title" style="margin-top: 40px;">Clinic Statistics</div>
     <div class="stats">
         <div class="stat-card">
-            <div class="stat-number">0</div>
+            <div class="stat-number" id='total-consultations'>0</div>
             <div class="stat-label">Total Consultations</div>
         </div>
         <div class="stat-card">
-            <div class="stat-number">0</div>
+            <div class="stat-number" id='total-doctors'>0</div>
             <div class="stat-label">Total Doctors</div>
         </div>
         <div class="stat-card">
-            <div class="stat-number">0</div>
+            <div class="stat-number" id='total-patients'>0</div>
             <div class="stat-label">Total Patients</div>
         </div>
     </div>
