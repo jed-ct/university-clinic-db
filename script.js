@@ -25,41 +25,124 @@ const editPrescriptionInput = document.querySelector('#edit-prescription');
 const editDoctorInput = document.querySelector('#edit-doctor-name');
 const filterDiagnosisInput = document.querySelector('#filter-diagnosis');
 const filterPrescriptionInput = document.querySelector('#filter-prescription');
+const consultationSearchBox = document.querySelector('#consultation-searchbox');
+const prevButton = document.querySelector('.prev');
+const nextButton = document.querySelector('.next');
 
+//order,sorting,pagination shit
+let livesearchQuery = "";
+let diagnosisFilter = "";
+let prescriptionFilter = "";
+let startingDateFilter = "";
+let endingDateFilter = "";
+let orderBy = "ConsultDateTime";
+let orderDir = "DESC";
+let currentPage = 1;
 
+async function loadTable() {
+    const response = await fetch(`consultation-table.php?query=${encodeURIComponent(livesearchQuery)}&orderBy=${encodeURIComponent(orderBy)}&orderDir=${orderDir}&startDate=${encodeURIComponent(startingDateFilter)}&endDate=${encodeURIComponent(endingDateFilter)}&diagnosis=${encodeURIComponent(diagnosisFilter)}&prescription=${encodeURIComponent(prescriptionFilter)}&page=${currentPage}`);
+    let result = await response.json();
+    prevButton.dataset.page = currentPage - 1;
+    nextButton.dataset.page = currentPage + 1;
 
-viewButton.forEach((viewButton)=> {
-    viewButton.addEventListener("click", async ()=> {
-        console.log(document.querySelector('#view-patient-id'));
-        openModal(viewConsultationModal);
-        const id = viewButton.dataset.id;
-        try {
-            const response = await fetch(`get_consultation.php?id=${id}`);
-            const data = await response.json();
-            console.log(data);
-            document.querySelector('#view-consultation-date').textContent = data.ConsultDate;
-            document.querySelector('#view-consultation-time').textContent = data.ConsultTime;
-            document.querySelector('#view-patient-name').innerHTML = `
-                ${data.PatientFullName} <span class="view-id" id="view-patient-id"></span>
-            `;
-            document.querySelector('#view-diagnosis').textContent = data.Diagnosis;
-            document.querySelector('#view-prescription').textContent = data.Prescription;
-            document.querySelector('#view-remarks').textContent = data.Remarks;
-            document.querySelector('#view-doctor-name').innerHTML = `
-                ${data.DoctorFullName} <span class="view-id" id="view-doctor-id"></span>
-            `;
-            document.querySelector('#view-patient-id').textContent = `(${data.PatientID})`;
-            document.querySelector('#view-doctor-id').textContent = `(${data.DoctorID})`;
-        } catch(error) {
-            console.log(error);
+    if (result.totalRows <= 10) {
+        document.querySelector('.pagination').style.display = 'none';
+    }
+    else {
+        document.querySelector('.pagination').style.display = 'flex';
+    }
+
+    if (currentPage == 1) {
+        prevButton.style.display = 'none';
+    }
+    else if (currentPage == result.totalPages) {
+        nextButton.style.display = 'none';
+    }
+    else {
+        prevButton.style.display = 'inline-block';
+        nextButton.style.display = 'inline-block';
+    }
+
+    document.querySelector('#current-page').textContent = currentPage;
+    document.querySelector('#max-page').textContent = result.totalPages;
+    document.querySelector('#consultations-table-body').innerHTML = result.tableData;
+}
+
+prevButton.addEventListener('click', ()=> {
+    currentPage -= 1;
+    loadTable();
+})
+
+nextButton.addEventListener('click', ()=> {
+    currentPage += 1;
+    loadTable();
+})
+
+loadTable();
+//Livesearch
+consultationSearchBox.addEventListener('input', async ()=> {
+    livesearchQuery = consultationSearchBox.value;
+    loadTable();
+});
+
+async function viewConsultation(id) {
+    console.log(document.querySelector('#view-patient-id'));
+    openModal(viewConsultationModal);
+    try {
+        const response = await fetch(`get_consultation.php?id=${id}`);
+        const data = await response.json();
+        console.log(data);
+        document.querySelector('#view-consultation-date').textContent = data.ConsultDate;
+        document.querySelector('#view-consultation-time').textContent = data.ConsultTime;
+        document.querySelector('#view-patient-name').innerHTML = `
+            ${data.PatientFullName} <span class="view-id" id="view-patient-id"></span>
+        `;
+        document.querySelector('#view-diagnosis').textContent = data.Diagnosis;
+        document.querySelector('#view-prescription').textContent = data.Prescription;
+        document.querySelector('#view-remarks').textContent = data.Remarks;
+        document.querySelector('#view-doctor-name').innerHTML = `
+            ${data.DoctorFullName} <span class="view-id" id="view-doctor-id"></span>
+        `;
+        document.querySelector('#view-patient-id').textContent = `(${data.PatientID})`;
+        document.querySelector('#view-doctor-id').textContent = `(${data.DoctorID})`;
+    } catch(error) {
+        console.log(error);
+    }
+}
+
+//Order
+document.querySelectorAll(".sortable").forEach(th => {
+    th.addEventListener("click", () => {
+        const col = th.dataset.col;
+
+        if (orderBy === col) {
+            orderDir = orderDir === "ASC" ? "DESC" : "ASC";
+        } else {
+            orderBy = col;
+            orderDir = "ASC";
         }
+
+        document.querySelectorAll(".sortable").forEach(h => {
+            h.classList.remove("asc", "desc", "active");
+        });
+        th.classList.add("active");
+        th.classList.add(orderDir.toLowerCase());
+
+        console.log("Sorting by:", orderBy, orderDir);
+        loadTable();
     });
 });
 
-confirmDeletionButton.addEventListener("click",async ()=> {
-    const id = deleteConsultationButton.dataset.id;
+viewButton.forEach((viewButton)=> {
+    viewButton.addEventListener("click", async ()=> {
+
+    });
+});
+
+confirmDeletionButton.addEventListener("click", async ()=> {
+    const id = confirmDeletionButton.dataset.id;
     const response = await fetch(`delete_consultation.php?id=${id}`);
-    window.location.reload(); 
+    loadTable();
     deletionModal.style.display = 'none';
 })
 
@@ -71,25 +154,28 @@ filterConsultationButton.addEventListener("click", () => {
     openModal(filterConsultationModal);
 });
 
+async function editConsultation(id) {
+    openModal(editConsultationModal);
+    confirmEditConsultationButton.dataset.id = id;
+    try {
+        const response = await fetch(`get_consultation.php?id=${id}`);
+        const data = await response.json();
+        document.querySelector('#edit-consultation-date').value = convertToISO(data.ConsultDate); 
+        document.querySelector('#edit-consultation-time').value = convertTo24Hour(data.ConsultTime);
+        document.querySelector('#edit-patient-name').value = data.PatientFullName;
+        document.querySelector('#edit-diagnosis').value = data.Diagnosis;
+        document.querySelector('#edit-prescription').value = data.Prescription;
+        document.querySelector('#edit-remarks').value = data.Remarks;
+        document.querySelector('#edit-doctor-name').value = data.DoctorFullName;
+    }
+    catch(error) {
+        alert('not work');
+    }
+}
+
 editConsultationButton.forEach((editConsultationButton)=> {
     editConsultationButton.addEventListener("click", async ()=> {
-        openModal(editConsultationModal);
-        const id = editConsultationButton.dataset.id;
-        confirmEditConsultationButton.dataset.id = id;
-        try {
-            const response = await fetch(`get_consultation.php?id=${id}`);
-            const data = await response.json();
-            document.querySelector('#edit-consultation-date').value = convertToISO(data.ConsultDate); 
-            document.querySelector('#edit-consultation-time').value = convertTo24Hour(data.ConsultTime);
-            document.querySelector('#edit-patient-name').value = data.PatientFullName;
-            document.querySelector('#edit-diagnosis').value = data.Diagnosis;
-            document.querySelector('#edit-prescription').value = data.Prescription;
-            document.querySelector('#edit-remarks').value = data.Remarks;
-            document.querySelector('#edit-doctor-name').value = data.DoctorFullName;
-        }
-        catch(error) {
-            alert('not work');
-        }    
+    
     });
 })
 
@@ -146,7 +232,7 @@ editConsultationForm.addEventListener("submit", async (e) => {
     for (let [key, value] of formData.entries()) {
     console.log(key, value);
 
-    location.reload();
+    loadTable();
 }   
 
     const response = await fetch('./edit_consultation.php', {
@@ -237,13 +323,10 @@ editConsultationForm.addEventListener('input', (e) => {
     }, 500);
 });
 
-
-deleteConsultationButton.forEach((deleteConsultationButton)=>{
-    deleteConsultationButton.addEventListener("click", ()=> {
-        openModal(deletionModal);
-        viewConsultationModal.style.display = 'none';
-    })
-});
+function deleteConsultation(id) {
+    openModal(deletionModal);
+    confirmDeletionButton.dataset.id = id;
+}
 
 
 
@@ -389,7 +472,7 @@ isCurrentDateTimeCheckbox.addEventListener("change", ()=> {
     }
 })
 
-filterConsultationForm.addEventListener('input', (() => {
+filterConsultationForm.addEventListener('input', ((e) => {
     let timeoutId;
     const startDateInput = document.querySelector('#filter-start-date');
     const endDateInput = document.querySelector('#filter-end-date');
@@ -397,6 +480,7 @@ filterConsultationForm.addEventListener('input', (() => {
     startDateInput.setAttribute('max', new Date().toISOString().slice(0, 10));
     endDateInput.setAttribute('max', new Date().toISOString().slice(0, 10));
     return (e) => {
+        e.preventDefault();
         clearTimeout(timeoutId);
         const field = e.target;
         timeoutId = setTimeout(() => {
@@ -413,32 +497,24 @@ filterConsultationForm.addEventListener('input', (() => {
                     disableButton(document.querySelector('.action.filter'), false);
                 }
             }
-
-            else if (field.name === "PatientName") {
-                if (!field.checkValidity()) {
-                    document.querySelector('#filter-patient-error-message').textContent = 'Please enter a valid name.';
-                    document.querySelector('#filter-patient-error-message').style.display = 'block';
-                    disableButton(document.querySelector('.action.filter'));
-                } else {
-                    document.querySelector('#filter-patient-error-message').style.display = 'none';
-                    disableButton(document.querySelector('.action.filter'), false);
-                }
-            }
-
-            else if (field.name === "DoctorName") {
-                if (!field.checkValidity()) {
-                    document.querySelector('#filter-doctor-error-message').textContent = 'Please enter a valid name.';
-                    document.querySelector('#filter-doctor-error-message').style.display = 'block';
-                    disableButton(document.querySelector('.action.filter'));
-                } else {
-                    document.querySelector('#filter-doctor-error-message').style.display = 'none';
-                    disableButton(document.querySelector('.action.filter'), false);
-                }
-            }
-
         }, 500);
     };
 })());
+
+filterConsultationForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const startDateInput = document.querySelector('#filter-start-date');
+    const endDateInput = document.querySelector('#filter-end-date');
+    const diagnosisInput = document.querySelector('#filter-diagnosis');
+    const prescriptionInput = document.querySelector('#filter-prescription');
+    startingDateFilter = startDateInput.value;
+    endingDateFilter = endDateInput.value;
+    diagnosisFilter = diagnosisInput.value;
+    prescriptionFilter = prescriptionInput.value;
+    loadTable();
+    filterConsultationModal.style.display = 'none';
+    document.body.classList.remove("body-no-scroll");
+})
 
 addPatientInput.addEventListener('input', async (e) => {
     const query = addPatientInput.value.trim();
