@@ -12,6 +12,7 @@ const editPatientForm = document.getElementById('edit-patient-form');
 const addPatientButton = document.querySelector('#add-patient-btn');
 const addPatientModal = document.querySelector('#add-patient-modal');
 const addPatientForm = document.querySelector("#add-patient-form");
+const addPatientConfirmModal = document.querySelector('#add-patient-confirm-modal');
 
 const filterPatientModal = document.querySelector('#filter-patient-modal');
 const filterPatientButton = document.querySelector('#filter-patient-btn');
@@ -167,7 +168,9 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     formObject[key] = value;
   });
   console.log("Form Data as Object:", formObject);
-  addPatientForm.reset();
+    addPatientModal.style.display = 'none';
+    addPatientConfirmModal.style.display = 'flex';
+    addPatientForm.reset();
 });});
 
 document.querySelectorAll('#filter-patient-btn').forEach(btn => {

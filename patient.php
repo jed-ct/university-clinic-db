@@ -11,6 +11,20 @@ include("database.php");
     <script src="https://kit.fontawesome.com/ea8c838e77.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    
+<!--CONFIRMED ADD MODAL-->
+ <div id="add-patient-confirm-modal" class="modal">
+    <div class="modal-contentP">
+        <div class="close-btn-div">
+            <div>Edit Success</div>
+            <button class="close-btn-patient"><img class='btn-img' src="./img/close.svg"></button>
+        </div>
+
+        <div class="modal-message">
+            <h2 class="edit-patient-reminder">Patient Successfully Added!</h2>
+        </div>
+    </div>
+    </div>
 
 <!-- ADD MODAL -->
 <div id="add-patient-modal" class="modal">
