@@ -14,7 +14,7 @@ body {
     display: flex;
     flex-direction: column;
     margin: 0;
-    
+
 }
 .body-no-scroll {
     overflow: hidden;
@@ -107,7 +107,8 @@ body {
     padding: 30px;
 }
 #consultation-searchbox {
-    padding: 6px 14px 6px 38px;
+    padding: 2px 14px 2px 38px;
+    font-size: 1rem;
     font-weight: 400;
     height: 38px;
     line-height: 1.5;
@@ -118,7 +119,7 @@ body {
     border-radius: 8px;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;    
     background-image: url(./img/search.svg);
-    background-position: 8px 8px; 
+    background-position: 8px 6px; 
     background-repeat: no-repeat;   
 }
 

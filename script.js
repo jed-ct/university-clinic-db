@@ -25,34 +25,48 @@ const editPrescriptionInput = document.querySelector('#edit-prescription');
 const editDoctorInput = document.querySelector('#edit-doctor-name');
 const filterDiagnosisInput = document.querySelector('#filter-diagnosis');
 const filterPrescriptionInput = document.querySelector('#filter-prescription');
+const consultationSearchBox = document.querySelector('#consultation-searchbox');
 
+consultationSearchBox.addEventListener('input', async ()=> {
+    const query = consultationSearchBox.value;
+    try {
+        const response = await fetch(`consultation-table.php?query=${query}`);
+        const tableData = await response.text();
+        document.querySelector('#consultations-table-body').innerHTML = tableData;
+        console.log(tableData);
+    }
+    catch(error) {
+        console.log(error);
+    }
+})
 
-
+async function viewConsultation(id) {
+    console.log(document.querySelector('#view-patient-id'));
+    openModal(viewConsultationModal);
+    try {
+        const response = await fetch(`get_consultation.php?id=${id}`);
+        const data = await response.json();
+        console.log(data);
+        document.querySelector('#view-consultation-date').textContent = data.ConsultDate;
+        document.querySelector('#view-consultation-time').textContent = data.ConsultTime;
+        document.querySelector('#view-patient-name').innerHTML = `
+            ${data.PatientFullName} <span class="view-id" id="view-patient-id"></span>
+        `;
+        document.querySelector('#view-diagnosis').textContent = data.Diagnosis;
+        document.querySelector('#view-prescription').textContent = data.Prescription;
+        document.querySelector('#view-remarks').textContent = data.Remarks;
+        document.querySelector('#view-doctor-name').innerHTML = `
+            ${data.DoctorFullName} <span class="view-id" id="view-doctor-id"></span>
+        `;
+        document.querySelector('#view-patient-id').textContent = `(${data.PatientID})`;
+        document.querySelector('#view-doctor-id').textContent = `(${data.DoctorID})`;
+    } catch(error) {
+        console.log(error);
+    }
+}
 viewButton.forEach((viewButton)=> {
     viewButton.addEventListener("click", async ()=> {
-        console.log(document.querySelector('#view-patient-id'));
-        openModal(viewConsultationModal);
-        const id = viewButton.dataset.id;
-        try {
-            const response = await fetch(`get_consultation.php?id=${id}`);
-            const data = await response.json();
-            console.log(data);
-            document.querySelector('#view-consultation-date').textContent = data.ConsultDate;
-            document.querySelector('#view-consultation-time').textContent = data.ConsultTime;
-            document.querySelector('#view-patient-name').innerHTML = `
-                ${data.PatientFullName} <span class="view-id" id="view-patient-id"></span>
-            `;
-            document.querySelector('#view-diagnosis').textContent = data.Diagnosis;
-            document.querySelector('#view-prescription').textContent = data.Prescription;
-            document.querySelector('#view-remarks').textContent = data.Remarks;
-            document.querySelector('#view-doctor-name').innerHTML = `
-                ${data.DoctorFullName} <span class="view-id" id="view-doctor-id"></span>
-            `;
-            document.querySelector('#view-patient-id').textContent = `(${data.PatientID})`;
-            document.querySelector('#view-doctor-id').textContent = `(${data.DoctorID})`;
-        } catch(error) {
-            console.log(error);
-        }
+
     });
 });
 
