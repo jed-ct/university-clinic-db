@@ -163,13 +163,14 @@ editConsultationForm.addEventListener("submit", async (e) => {
     }
 });
 
-let timeoutId;
+let hasPatientInputError = false;
+let hasDoctorInputError = false;
 editConsultationForm.addEventListener('input', (e) => {
+    let timeoutId;
     clearTimeout(timeoutId);
     const patientError = document.querySelector('#edit-patient-error-message');
     const editButton = document.querySelector('#confirm-edit-btn');
     const doctorError = document.querySelector('#edit-doctor-error-message');
-    let hasInputError = false;
     timeoutId = setTimeout(async () => {
         const field = e.target;
 
@@ -193,13 +194,14 @@ editConsultationForm.addEventListener('input', (e) => {
             if (!field.checkValidity()) {
                 patientError.textContent = 'Please enter a valid name.';
                 patientError.style.display = 'block';
-                hasInputError = true; 
+                hasPatientInputError = true;
             } else if (autosuggestions.length === 0) {
                 patientError.textContent = 'Patient not found in database.';
                 patientError.style.display = 'block';
-                hasInputError = true; 
+                hasPatientInputError = true;
             } else {
                 patientError.style.display = 'none';
+                hasPatientInputError = false;
             }
         }
 
@@ -215,17 +217,18 @@ editConsultationForm.addEventListener('input', (e) => {
             if (!field.checkValidity()) {
                 doctorError.textContent = 'Please enter a valid name.';
                 doctorError.style.display = 'block';
-                hasInputError = true; 
+                hasDoctorInputError = true;
             } else if (autosuggestions.length === 0) {
                 doctorError.textContent = 'Doctor not found in database.';
                 doctorError.style.display = 'block';
-                hasInputError = true;           
+                hasDoctorInputError = true;          
             }
             else {
                 doctorError.style.display = 'none';
+                hasDoctorInputError = false;
             }
         }
-        if (hasInputError) {
+        if (hasDoctorInputError || hasPatientInputError) {
             disableButton(editButton);
         }
         else {
@@ -308,7 +311,8 @@ if (!isCurrentDateTimeCheckbox.checked) {
 addConsultationForm.addEventListener('input', (() => {
     const addButton = document.querySelector('.action.add');
     let timeoutId;
-    let hasInputError = false;
+    let hasPatientInputError = false;
+    let hasDoctorInputError = false;
     return (e) => {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(async () => {
@@ -328,14 +332,15 @@ addConsultationForm.addEventListener('input', (() => {
                 if (!field.checkValidity()) {
                     document.querySelector('#add-patient-error-message').textContent = 'Please enter a valid name.';
                     document.querySelector('#add-patient-error-message').style.display = 'block';
-                    hasInputError = true;
+                    hasPatientInputError = true;
                 } 
                 else if (autosuggestions.length === 0) {
                     document.querySelector('#add-patient-error-message').textContent = 'Patient not found in database.';
                     document.querySelector('#add-patient-error-message').style.display = 'block';
-                    hasInputError = true;                
+                    hasPatientInputError = true;            
                 } else {
                     document.querySelector('#add-patient-error-message').style.display = 'none';
+                    hasPatientInputError = false;
 
                 }
             }
@@ -351,18 +356,18 @@ addConsultationForm.addEventListener('input', (() => {
                 if (!field.checkValidity()) {
                     document.querySelector('#add-doctor-error-message').textContent = 'Please enter a valid name.';
                     document.querySelector('#add-doctor-error-message').style.display = 'block';
-                    hasInputError = true;
+                    hasDoctorInputError = true;
                 } else if (autosuggestions.length === 0) {
                     document.querySelector('#add-doctor-error-message').textContent = 'Doctor not found in database.';
                     document.querySelector('#add-doctor-error-message').style.display = 'block';
-                    hasInputError = true;                   
+                    hasDoctorInputError = true;                   
                 }
                 else {
                     document.querySelector('#add-doctor-error-message').style.display = 'none';
-
+                    hasDoctorInputError = false;
                 }
             }
-            if (hasInputError) {
+            if (hasDoctorInputError || hasPatientInputError) {
                 disableButton(addButton);
             }
             else {
