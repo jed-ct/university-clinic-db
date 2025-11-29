@@ -107,10 +107,10 @@ error_reporting(E_ALL);
             <!--CONTACT-->
                <fieldset class='contactno-fieldset'>
                     <div class="forms-input">
-                        <label for="add-contact">Contact Number *</label>
+                        <label for="edit-contact">Contact Number *</label>
                         <div style="flex">
                         <input type="text" value="+639" readonly id="contactprefix">
-                        <input type="tel" id="partcontact" name="PartContactNo" placeholder="123456789" pattern="[0-9]{9}" maxlength="9" title="Input must contain numbers only." required>
+                        <input type="tel" id="edit-partcontact" name="PartContactNo" placeholder="123456789" pattern="[0-9]{9}" maxlength="9" title="Input must contain numbers only." required>
                         </div>
                         <input type="hidden" name="ContactNo" id="edit-contact">
                         <span class='error-message' id='edit-contact-error-message'>Yipeee</span>
@@ -120,7 +120,7 @@ error_reporting(E_ALL);
             </div>
 
         <div class='consultation-modal-actions'>
-            <button type="submit" class='action save-edits' data-id='<?php echo $patientID; ?>'>Save</button>
+            <button class='action save-edits' data-id='<?php echo $patientID; ?>'>Save</button>
         </div>
     </div>
     </div>

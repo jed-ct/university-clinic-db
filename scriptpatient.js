@@ -226,10 +226,10 @@ editPatientButton.addEventListener("click", async () => {
 
         if (fullContact && fullContact.startsWith('+639') && fullContact.length >= 13) {
             const partContactNo = fullContact.slice(-9); 
-            document.querySelector('#partcontact').value = partContactNo;
+            document.querySelector('#edit-partcontact').value = partContactNo;
             document.querySelector('#edit-contact').value = fullContact;
         } else {
-            document.querySelector('#partcontact').value = '';
+            document.querySelector('#edit-partcontact').value = '';
             document.querySelector('#edit-contact').value = '';
             console.warn("Patient contact number is missing or invalid format.");
         }
@@ -239,13 +239,13 @@ editPatientButton.addEventListener("click", async () => {
     }
 });
 
-saveEditsButton.addEventListener('submit', function(e) {
+saveEditsButton.addEventListener('click', function(e) {
     e.preventDefault(); 
     const patientID = this.dataset.id;
     const tableRows = document.querySelectorAll("#patient-information-table tr");
     
     // Contact splicing
-    const partContactInput = document.querySelector('#partcontact'); 
+    const partContactInput = document.querySelector('#edit-partcontact'); 
     const partContact = partContactInput.value.trim();
     const prefix = document.querySelector('#contactprefix').value.trim();
     
