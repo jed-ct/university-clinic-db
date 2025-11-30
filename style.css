@@ -582,7 +582,6 @@ body {
     align-items: center;
     gap: 5px;
 }
-
 .patient.action {
     padding: 10px;
     text-decoration: none;
@@ -925,6 +924,11 @@ input:invalid {
 
 #add-consultation-form fieldset {
     display: flex;
+}
+
+.view-data {
+    max-width: 300px;
+    overflow: auto;
 }
 
 .autosuggest-box {
