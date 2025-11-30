@@ -21,6 +21,75 @@ body {
 }
 
 
+/* login */
+.tba-login-body {
+    background: #eef1f7;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-modal-container {
+    display: flex;
+    min-height: 80vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.tba-login-container {
+    width: 330px;
+    background: white;
+    padding: 30px 25px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tba-login-title {
+    margin: 0 0 20px;
+    font-size: 23px;
+    font-weight: bold;
+    color: var(--color-primary);
+    text-align: center;
+}
+
+.tba-login-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #c5c5c5;
+    border-radius: 8px;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.tba-login-button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.tba-login-button:hover {
+    background-color: var(--color-primary-darker);
+}
+
+.tba-login-error {
+    color: #d63031;
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+
 /* HEADER */
 .header {
     display: flex;
