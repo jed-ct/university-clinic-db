@@ -49,11 +49,16 @@ body {
 }
 
 .tba-login-title {
-    margin: 0 0 20px;
+    margin-bottom: 10px;
     font-size: 23px;
     font-weight: bold;
     color: var(--color-primary);
     text-align: center;
+}
+
+.tba-login-subtitle {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
 }
 
 .tba-login-input {

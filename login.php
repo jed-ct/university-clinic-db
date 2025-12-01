@@ -1,4 +1,24 @@
 <!DOCTYPE html>
+
+<!-- pano iset up 
+
+1. gawa kau bagong table sa db eto query
+
+CREATE TABLE users (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Username VARCHAR(50) NOT NULL UNIQUE,
+    Password VARCHAR(255) NOT NULL
+);
+
+2. insert nyo values na to
+
+INSERT INTO users (Username, Password)
+VALUES ('admin', '$2y$10$ebXyffilcteRMcWL9cbH/.7rEz00PbdsW6DW/7jToAbSMTgNLUpEW');
+
+3. bale eto credentials niya
+username: admin
+password: admin123 -->
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -24,8 +44,8 @@
 
 <div class='login-modal-container'>
     <div class="tba-login-container">
-        <h2 class="tba-login-title">TBA Clinic Login</h2>
-
+        <div class="tba-login-title">Welcome to TBA Clinic!</div>
+        <div class='tba-login-subtitle'>Please enter your credentials below</div>
         <form action="login_process.php" method="POST" class="tba-login-form">
             <input 
                 type="text" 
