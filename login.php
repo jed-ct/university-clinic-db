@@ -40,7 +40,6 @@ password: admin123 -->
         </a>
         <ul class="links">
             <li><a href="./homepage-user.php">Home</a></li>
-            <li><a href="#footer">Contact</a></li>
         </ul>
         <button id="mobile-menu-btn"><img class="header-img" src="./img/menu.svg"></button>
 </div>
