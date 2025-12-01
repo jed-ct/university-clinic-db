@@ -57,6 +57,10 @@
     <input type="text" id="searchBox" placeholder="Start typing...">
     <div class="suggestions" id="suggestionsBox"></div>
   </div>
+  <div>
+    <?php $pass = password_hash("admin123", PASSWORD_DEFAULT);
+echo $pass;?>
+  </div>
 
   <script>
     const suggestions = [

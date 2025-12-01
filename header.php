@@ -12,6 +12,7 @@ echo '<div class="header">
             <li><a href="./patient.php">Patients</a></li>
             <li><a href="./staff.php">Staff</a></li>
             <li><a href="#footer">Contact</a></li>
+            <li><a href="logout.php" class="logout-btn" style="font-weight: 500">Logout <i class="fa-solid fa-arrow-right-from-bracket"></i></a></li>
         </ul>
         <button id="mobile-menu-btn"><img class="header-img" src="./img/menu.svg"></button>
     </div>'
