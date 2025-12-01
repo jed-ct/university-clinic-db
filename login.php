@@ -15,6 +15,9 @@ CREATE TABLE users (
 INSERT INTO users (Username, Password)
 VALUES ('admin', '$2y$10$ebXyffilcteRMcWL9cbH/.7rEz00PbdsW6DW/7jToAbSMTgNLUpEW');
 
+ung mga weird symbols is hash code ng password para secure siya
+
+
 3. bale eto credentials niya
 username: admin
 password: admin123 -->
