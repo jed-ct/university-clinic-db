@@ -53,7 +53,8 @@ password: admin123 -->
                 type="text" 
                 name="username" 
                 class="tba-login-input" 
-                placeholder="Username" 
+                placeholder="Username"
+                maxlength="64" 
                 required>
             
             <input 
@@ -61,6 +62,7 @@ password: admin123 -->
                 name="password" 
                 class="tba-login-input" 
                 placeholder="Password" 
+                maxlength="64" 
                 required>
 
             <button type="submit" class="tba-login-button">Log In</button>
