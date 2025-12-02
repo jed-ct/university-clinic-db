@@ -438,6 +438,12 @@ document.querySelectorAll('#edit-patient-form').forEach(form => {
 
         const data = await response.json();
 
+        const editPatientDupe = document.querySelector('#edit-dupe-error-message');
+        if (editPatientDupe) {
+            editPatientDupe.style.display = 'none';
+            editPatientDupe.textContent = 'Duplicate';
+        }
+
         if (data.success) {
             // Name
             const newFirstName = formData.get('PFirstName');
@@ -466,8 +472,20 @@ document.querySelectorAll('#edit-patient-form').forEach(form => {
             editPatientModal.style.display = 'none';
             editPatientConfirmModal.style.display = 'flex';
             editPatientForm.reset();
-        } else {
-            alert(`Update failed: ${data.message}`);
+        } 
+        else {
+            if (data.message && data.message.startsWith('Error: A patient with this Name, Sex, Birthday, and Contact Number already exists.')) {
+                if (editPatientDupe) {
+                    editPatientDupe.textContent = 'A duplicate patient record was found.';
+                    editPatientDupe.style.display = 'block';
+                } else {
+                    alert(data.message); 
+                }
+                editPatientModal.style.display = 'flex'; 
+
+            } else {
+                alert(`Update failed: ${data.message}`);
+            }
         }
     } catch(err) {
         console.error(err);
