@@ -373,6 +373,37 @@ if(editPatientForm){
 document.querySelectorAll('#edit-patient-form').forEach(form => {
     form.addEventListener("submit", async (e) => {
     e.preventDefault();
+        const firstname = document.querySelector('#edit-p-firstname').value.trim();
+    if (!firstname) {
+        document.querySelector('#edit-fname-error-message').textContent = 'Required.';
+        document.querySelector('#edit-fname-error-message').style.display = 'block';
+        document.querySelector('#edit-p-firstname').focus();
+        return;
+    }
+
+    const middleinit = document.querySelector('#edit-p-middleinit').value.trim();
+
+    const lastname= document.querySelector('#edit-p-lastname').value.trim();
+    if (!lastname) {
+        document.querySelector('#edit-lname-error-message').textContent = 'Required.';
+        document.querySelector('#edit-lname-error-message').style.display = 'block';
+        document.querySelector('#edit-p-lastname').focus();
+        return;
+    }
+
+    const sex = document.querySelector('#edit-sex').value.trim();
+    if (!sex) {
+        document.querySelector('#edit-sex-error-message').textContent = 'Required.';
+        document.querySelector('#edit-sex-error-message').style.display = 'block';
+        return;
+    }
+
+    const bday = document.querySelector('#edit-bday').value.trim();
+    if (!bday) {
+        document.querySelector('#edit-bdayerror-message').textContent = 'Required.';
+        document.querySelector('#edit-bdayerror-message').style.display = 'block'; 
+        return;
+    }
 
     const patientID = saveEditsButton.dataset.id;
     const tableRows = document.querySelectorAll("#patient-information-table tr");
@@ -446,6 +477,61 @@ document.querySelectorAll('#edit-patient-form').forEach(form => {
     });
 });
 }
+
+document.querySelectorAll('#edit-patient-form').forEach(form => {
+    const editButton = document.querySelector('.action.save-edits'); 
+    let timeoutId; 
+
+    const debouncedInputHandler = (e) => {
+        
+        clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(async () => {
+
+            const field = e.target;
+            
+            if (field.name === 'PFirstName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#edit-fname-error-message').textContent = 'Names cannot contain symbols.';
+                    document.querySelector('#edit-fname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#edit-fname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PLastName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#edit-lname-error-message').textContent = 'Names cannot contain symbols.';
+                    document.querySelector('#edit-lname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#edit-lname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PMiddleInit') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#edit-mname-error-message').textContent = 'Initials cannot contain symbols.';
+                    document.querySelector('#edit-mname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#edit-mname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PartContactNo'){
+                if (!field.checkValidity()){
+                    document.querySelector('#edit-contact-error-message').textContent = 'Input must be 9 digits.';
+                    document.querySelector('#edit-contact-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#edit-contact-error-message').style.display = 'none';
+                }
+            }
+            
+
+        }, 500);
+    };
+    form.addEventListener("input", debouncedInputHandler);
+
+});
 
 if(filterPatientForm){
 document.querySelector('#filter-patient-form').addEventListener('submit', function(e) {

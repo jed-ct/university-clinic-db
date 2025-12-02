@@ -881,6 +881,10 @@ a.consultation-table-patients{
     border-color: #c7c7c7; 
 }
 
+#edit-patient-modal input:invalid {
+    border-color: #c7c7c7; 
+}
+
 #contactprefix {
     width: 50px; 
     border-right: none;
