@@ -39,7 +39,7 @@ include("database.php");
                 <fieldset class='p-name-fieldset'>                   
                     <div class="forms-input">
                         <label for="add-p-firstname">First Name *</label>
-                        <input type="text" name="PFirstName" id="add-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" title="Name must contain only letters and periods." maxlength="64" required>
+                        <input type="text" name="PFirstName" id="add-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" title="Name must contain only letters and periods." maxlength="64">
                         <span class='error-message' id='add-fname-error-message'>Yipeee</span>
                     </div>     
                     <div class="forms-input">
@@ -49,7 +49,7 @@ include("database.php");
                     </div> 
                     <div class="forms-input">
                         <label for="add-p-lastname">Last Name *</label>
-                        <input type="text" name="PLastName" id="add-p-lastname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64" title="Name must contain only letters and periods." required>
+                        <input type="text" name="PLastName" id="add-p-lastname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64" title="Name must contain only letters and periods.">
                         <span class='error-message' id='add-lname-error-message'>Yipeee</span>
                     </div> 
                 </fieldset>
@@ -58,12 +58,12 @@ include("database.php");
                 <fieldset class='sex-fieldset'>
                     <div class="forms-input">
                         <label for="add-sex">Sex *</label>
-                        <select name="Sex" id="add-sex" required>
+                        <select name="Sex" id="add-sex">
                             <option value="" selected disabled> </option>
                             <option value="F">Female</option>
                             <option value="M">Male</option>
-                            <option value="O">Other</option>
                         </select>
+                    <span class='error-message' id='add-sex-error-message'>Yipeee</span>
                     </div>     
                 </fieldset>
 
@@ -71,7 +71,7 @@ include("database.php");
                 <fieldset class='bday-fieldset'>
                     <div class="forms-input">
                         <label for="add-bday">Birthday *</label>
-                        <input name="Birthday" id="add-bday" type="date" min="1900-01-01" max="<?php echo date("Y-m-d"); ?>" required>
+                        <input name="Birthday" id="add-bday" type="date" min="1900-01-01" max="<?php echo date("Y-m-d"); ?>">
                         <span class='error-message' id='add-bdayerror-message'>Yipeee</span>
                     </div>     
                 </fieldset>
@@ -82,7 +82,7 @@ include("database.php");
                         <label for="add-contact">Contact Number *</label>
                         <div style="flex">
                         <input type="text" value="+639" readonly id="contactprefix">
-                        <input type="tel" id="partcontact" name="PartContactNo" placeholder="123456789" pattern="[0-9]{9}" maxlength="9" title="Input must contain numbers only." required>
+                        <input type="tel" id="partcontact" name="PartContactNo" placeholder="123456789" pattern="[0-9]{9}" maxlength="9">
                         </div>
                         <input type="hidden" name="ContactNo" id="add-contact">
                         <span class='error-message' id='add-contact-error-message'>Yipeee</span>
@@ -150,12 +150,6 @@ include("database.php");
                         </div>
                     </div>
                     <span class='error-message' id='filter-bday-error-message'></span>
-                </fieldset>
-                <fieldset class='sex-fieldset'>
-                    <div class="forms-input">
-                        <label for="filter-contact">Contact Number</label>
-                        <input type="number" name="ContactNo" id="filter-contact" maxlength="64">
-                    </div>
                 </fieldset>
             </form>      
         </div>

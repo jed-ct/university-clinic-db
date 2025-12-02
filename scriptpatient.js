@@ -145,7 +145,7 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
 
     const sex = document.querySelector('#add-sex').value.trim();
     if (!sex) {
-        document.querySelector('#add-sex-error-message').textContent = 'Please select a sex.';
+        document.querySelector('#add-sex-error-message').textContent = 'Required.';
         document.querySelector('#add-sex-error-message').style.display = 'block';
         return;
     }
@@ -153,7 +153,7 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     const bday = document.querySelector('#add-bday').value.trim();
     if (!bday) {
         document.querySelector('#add-bdayerror-message').textContent = 'Required.';
-        document.querySelector('#add-bday').style.display = 'block';
+        document.querySelector('#add-bdayerror-message').style.display = 'block'; 
         return;
     }
 
@@ -162,11 +162,10 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     const fullContactHidden = document.querySelector('#add-contact');
 
     if (!partContact || partContact.length !== 9 || !/^\d{9}$/.test(partContact)) {
-        document.querySelector('#add-contact-error-message').textContent = 'Contact Number must be the required 9 digits.';
+        document.querySelector('#add-contact-error-message').textContent = 'Input must be 9 digits.';
         document.querySelector('#add-contact-error-message').style.display = 'block';
         const errorMsgDiv = document.querySelector('#add-contact-error-message');
         errorMsgDiv.style.display = 'block';
-        partContact.focus();
         return;
     }
 
@@ -222,6 +221,61 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     addPatientConfirmModal.style.display = 'flex';
     addPatientForm.reset();
 });});
+
+document.querySelectorAll('#add-patient-form').forEach(form => {
+    const addButton = document.querySelector('.action.add'); 
+    let timeoutId; 
+
+    const debouncedInputHandler = (e) => {
+        
+        clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(async () => {
+
+            const field = e.target;
+            
+            if (field.name === 'PFirstName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#add-fname-error-message').textContent = 'Names cannot contain symbols.';
+                    document.querySelector('#add-fname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#add-fname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PLastName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#add-lname-error-message').textContent = 'Names cannot contain symbols.';
+                    document.querySelector('#add-lname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#add-lname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PMiddleInit') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#add-mname-error-message').textContent = 'Initials cannot contain symbols.';
+                    document.querySelector('#add-mname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#add-mname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PartContactNo'){
+                if (!field.checkValidity()){
+                    document.querySelector('#add-contact-error-message').textContent = 'Input must be 9 digits.';
+                    document.querySelector('#add-contact-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#add-contact-error-message').style.display = 'none';
+                }
+            }
+            
+
+        }, 500);
+    };
+    form.addEventListener("input", debouncedInputHandler);
+
+});
 
 if(filterPatientButton){
 document.querySelectorAll('#filter-patient-btn').forEach(btn => {
