@@ -1199,7 +1199,6 @@ body {
 .pagination { display: flex; justify-content: center; margin-top: 20px; gap: 5px; }
 .pagination a, .pagination div { padding: 8px 12px; border: 1px solid #ddd; color: var(--color-primary); text-decoration: none; border-radius: 4px; background: white; }
 .pagination a:hover { background-color: var(--color-primary); color: white; }
-#footer { background-color: var(--color-primary-darker); color: white; text-align: center; padding: 15px 0; margin-top: auto; }
 
 @media (max-width: 768px) {
     .staff-table-container { flex-direction: column; align-items: stretch; gap: 15px; }
