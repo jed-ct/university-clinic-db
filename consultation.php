@@ -369,11 +369,11 @@ include("database.php");
     
 </div>    
 <div class="pagination">
-    <button class="prev" data-page=''> &lt; </button>
+    <button class="prev" data-page=''> <i class="fa-solid fa-angle-left"></i> </button>
     <div>
         Page <span id='current-page'>1</span> of <span id='max-page'>2</span>
     </div>
-    <button class="next" data-page=''> &gt; </button>
+    <button class="next" data-page=''> <i class="fa-solid fa-angle-right"></i> </button>
 </div>
 
 </div>
