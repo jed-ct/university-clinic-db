@@ -32,7 +32,7 @@
         
         mysqli_stmt_close($check_stmt);
 
-        $sql = "INSERT INTO PATIENT (PatientFirstName, PatientLastName, PatientMiddleInit, PatientSex, PatientBirthday, PatientContactNo) VALUES(?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO PATIENT (PatientFirstName, PatientLastName, PatientMiddleInit, PatientSex, PatientBirthday, PatientContactNo, PatientIsActive) VALUES(?, ?, ?, ?, ?, ?, 1)";
         
         $stmt = mysqli_prepare($conn, $sql);
         mysqli_stmt_bind_param($stmt, "ssssss", $firstname, $lastname, $middleinit, $sex, $birthday, $contactno);
