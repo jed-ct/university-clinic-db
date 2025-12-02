@@ -12,6 +12,8 @@ const addPatientButton = document.querySelector('#add-patient-btn');
 const addPatientModal = document.querySelector('#add-patient-modal');
 const addPatientForm = document.querySelector("#add-patient-form");
 
+const addDoctorButton = document.querySelector('#add-doctor-btn');
+
 document.querySelectorAll('#add-patient-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         addPatientModal.style.display = 'flex';
@@ -103,6 +105,12 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     addPatientConfirmModal.style.display = 'flex';
     addPatientForm.reset();
 });});
+
+addDoctorButton.addEventListener("click", ()=> {
+    sessionStorage.setItem("goToAddDoctor", "true");
+    window.location.href = "staff.php";
+})
+
 
 
 addConsultationButton.addEventListener("click", () => {

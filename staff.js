@@ -14,6 +14,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const editForm = document.getElementById('editStaffForm');
     const sortHeaders = document.querySelectorAll('th.sortable');
 
+    window.addEventListener("load", () => {
+        if (sessionStorage.getItem("goToAddDoctor") === "true") {
+            sessionStorage.removeItem("goToAddDoctor");
+            document.querySelector('#add-doctor-modal-btn').click();
+        }
+    });
+
     // 2. MODAL UTILS
     function showModal(modal) { if (modal) { modal.removeAttribute('hidden'); modal.style.display = 'flex'; } }
     function hideModal(modal) { if (modal) { modal.style.display = 'none'; modal.setAttribute('hidden', ''); } }

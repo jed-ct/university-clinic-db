@@ -192,7 +192,7 @@
         <div class="section-title">Quick Actions</div>
         <div class="action-buttons">
             <button class="action-btn" id='add-consultation-btn'><i class="fa-solid fa-book-medical"></i> Add Consultation</button>
-            <button class="action-btn"><i class="fa-solid fa-user-doctor"></i> Add Doctor</button>
+            <button class="action-btn" id='add-doctor-btn'><i class="fa-solid fa-user-doctor"></i> Add Doctor</button>
             <button class="action-btn" id='add-patient-btn'><i class="fa-solid fa-user"></i> Add Patient</button>
         </div>
     </div>

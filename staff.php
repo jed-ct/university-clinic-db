@@ -353,8 +353,8 @@ if($specialties_result) {
         
         <th style="width: 20%;">Specialties</th>
         
-        <th class="sortable" data-sort="<?php echo $emailSort; ?>" style="width: 25%; cursor: pointer;">
-            Email <i class="fa-solid <?php echo $emailIcon; ?>"></i>
+        <th data-sort="<?php echo $emailSort; ?>" style="width: 25%; cursor: pointer;">
+            Email
         </th>
         
         <th style="width: 15%;">Contact</th>
