@@ -276,7 +276,7 @@ include("database.php");
                         <label for="edit-diagnosis">Diagnosis *</label>
                         <input type="text" name="Diagnosis" id="edit-diagnosis" maxlength="64">
                         <span class='error-message' id='edit-diagnosis-error-message'>Yipeee</span>
-                        <div id="edit-prescription-autosuggest" class="autosuggest-box"></div>
+                        <div id="edit-diagnosis-autosuggest" class="autosuggest-box"></div>
                     </div>
 
                     <div class="forms-input">
@@ -362,7 +362,12 @@ include("database.php");
     </thead>
     <tbody id='consultations-table-body'>
     </tbody>
-</table>    
+</table>
+<div id="no-table-data-container">
+    <div>No results found :(</div>
+    <button onclick="location.reload();" class="consultations action"><i class="fa-solid fa-filter-circle-xmark"></i> Reset filters</button>
+    
+</div>    
 <div class="pagination">
     <button class="prev" data-page=''> &lt; </button>
     <div>

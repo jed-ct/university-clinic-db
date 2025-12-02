@@ -44,6 +44,14 @@ async function loadTable() {
     let result = await response.json();
     prevButton.dataset.page = currentPage - 1;
     nextButton.dataset.page = currentPage + 1;
+    if (result.totalRows <= 0) {
+        document.querySelector('#no-table-data-container').style.display = "flex";
+        document.querySelector('#consultations-table').style.display = 'none';
+    }
+    else {
+        document.querySelector('#no-table-data-container').style.display = "none";
+        document.querySelector('#consultations-table').style.display = 'inline-block';
+    }
 
     if (result.totalRows <= 10) {
         document.querySelector('.pagination').style.display = 'none';
