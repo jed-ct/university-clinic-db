@@ -52,14 +52,16 @@ if (count($where_clauses) > 0) {
 }
 
 // 4. Sorting
+// 4. Sorting
 $order_sql = "ORDER BY D.DoctorID DESC"; // Default
 switch ($sort_by) {
-    case 'name_asc': $order_sql = "ORDER BY D.DocLastName ASC"; break;
-    case 'name_desc': $order_sql = "ORDER BY D.DocLastName DESC"; break;
-    case 'newest':    $order_sql = "ORDER BY D.DoctorID DESC"; break;
-    case 'oldest':    $order_sql = "ORDER BY D.DoctorID ASC"; break;
+    case 'name_asc':   $order_sql = "ORDER BY D.DocFirstName ASC, D.DocLastName ASC"; break;
+    case 'name_desc':  $order_sql = "ORDER BY D.DocFirstName DESC, D.DocLastName DESC"; break;
+    case 'email_asc':  $order_sql = "ORDER BY D.DocEmail ASC"; break;
+    case 'email_desc': $order_sql = "ORDER BY D.DocEmail DESC"; break;
+    case 'newest':     $order_sql = "ORDER BY D.DoctorID DESC"; break;
+    case 'oldest':     $order_sql = "ORDER BY D.DoctorID ASC"; break;
 }
-
 // --- QUERIES ---
 $count_sql = "SELECT COUNT(*) FROM DOCTOR D $where_sql";
 $count_stmt = $conn->prepare($count_sql);
@@ -315,9 +317,12 @@ if($specialties_result) {
 
                 <select id="sort-by" style="display:none;">
                     <option value="newest" <?php echo ($sort_by == 'newest') ? 'selected' : ''; ?>>Newest</option>
-                    <option value="name_asc" <?php echo ($sort_by == 'name_asc') ? 'selected' : ''; ?>>Name A-Z</option>
+                    <option value="oldest" <?php echo ($sort_by == 'oldest') ? 'selected' : ''; ?>>Oldest</option>
+                    <option value="name_asc" <?php echo ($sort_by == 'name_asc') ? 'selected' : ''; ?>>Name (A-Z)</option>
+                    <option value="name_desc" <?php echo ($sort_by == 'name_desc') ? 'selected' : ''; ?>>Name (Z-A)</option>
+                    <option value="email_asc" <?php echo ($sort_by == 'email_asc') ? 'selected' : ''; ?>>Email (A-Z)</option>
+                    <option value="email_desc" <?php echo ($sort_by == 'email_desc') ? 'selected' : ''; ?>>Email (Z-A)</option>
                 </select>
-
                 <div class="search-wrapper">
                     <div class="filter-group" style="width: 100%; align-items: flex-end;">
                         <input type="text" id="doctor-search-input" placeholder="Search doctor name..." value="<?php echo htmlspecialchars($search_term); ?>">
@@ -326,15 +331,36 @@ if($specialties_result) {
             </div>
 
             <table class="consultations-table" style=" width: 100%;">
-                <thead>
-                    <tr>
-                        <th class="sortable" data-sort="name_asc" style="width: 25%;">Name <i class="fa-solid fa-sort"></i></th>
-                        <th style="width: 20%;">Specialties</th>
-                        <th class="sortable" data-sort="email_asc" style="width: 25%;">Email <i class="fa-solid fa-sort"></i></th>
-                        <th style="width: 15%;">Contact</th>
-                        <th style="width: 15%;">Actions</th>
-                    </tr>
-                </thead>
+<thead>
+    <tr>
+        <?php 
+            // Calculate next sort state for Name
+            $nameSort = ($sort_by === 'name_asc') ? 'name_desc' : 'name_asc';
+            $nameIcon = 'fa-sort';
+            if($sort_by === 'name_asc') $nameIcon = 'fa-sort-up';
+            if($sort_by === 'name_desc') $nameIcon = 'fa-sort-down';
+
+            // Calculate next sort state for Email
+            $emailSort = ($sort_by === 'email_asc') ? 'email_desc' : 'email_asc';
+            $emailIcon = 'fa-sort';
+            if($sort_by === 'email_asc') $emailIcon = 'fa-sort-up';
+            if($sort_by === 'email_desc') $emailIcon = 'fa-sort-down';
+        ?>
+
+        <th class="sortable" data-sort="<?php echo $nameSort; ?>" style="width: 25%; cursor: pointer;">
+            Name <i class="fa-solid <?php echo $nameIcon; ?>"></i>
+        </th>
+        
+        <th style="width: 20%;">Specialties</th>
+        
+        <th class="sortable" data-sort="<?php echo $emailSort; ?>" style="width: 25%; cursor: pointer;">
+            Email <i class="fa-solid <?php echo $emailIcon; ?>"></i>
+        </th>
+        
+        <th style="width: 15%;">Contact</th>
+        <th style="width: 15%;">Actions</th>
+    </tr>
+</thead>
 <tbody>
     <?php 
     $row_count = 0; 

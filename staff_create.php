@@ -1,6 +1,10 @@
 <?php
 include 'database.php';
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $first = trim($_POST['firstname']);
     $last = trim($_POST['lastname']);
