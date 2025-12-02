@@ -153,7 +153,7 @@ include("database.php");
                     <div class="forms-input">
                         <label for="filter-diagnosis">Diagnosis</label>
                         <input type="text" name="Diagnosis" id="filter-diagnosis" maxlength="64">
-                        <span class='error-message' id='filter-diagnosis-error-message'></span>
+                        <span class='error-message' style="display: flex;" id='filter-diagnosis-error-message'></span>
                         <div id="filter-diagnosis-autosuggest" class="autosuggest-box"></div>
                     </div>
 
