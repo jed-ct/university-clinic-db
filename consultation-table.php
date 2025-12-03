@@ -27,7 +27,7 @@ $sql = "SELECT CONSULTATION.ConsultationID, CONSULTATION.ConsultDateTime, PATIEN
         DOCTOR.DocFirstName, ' ',
         IFNULL(CONCAT(DOCTOR.DocMiddleInit, '. '), ''),
         DOCTOR.DocLastName
-    ) AS DoctorFullName,
+    ) AS DoctorFullName, DOCTOR.IsActive,
     CONSULTATION.Diagnosis, CONSULTATION.Prescription
     FROM PATIENT
     INNER JOIN CONSULTATION ON PATIENT.PatientID = CONSULTATION.PatientID
@@ -80,15 +80,17 @@ $result = $conn->query($sql);
 while ($row = $result->fetch_assoc()) {
 
     $patientCell = $row["PatientIsActive"] 
-    ? "<a class='consultation-table-patients' href='./get_patient.php?id=" . $row["PatientID"] . "'>" . $row["PatientFullName"] . "</a>"
+    ? "<a class='active-patient' href='./get_patient.php?id=" . $row["PatientID"] . "'>" . $row["PatientFullName"] . "</a>"
     : "<span class='inactive-patient'>" . $row["PatientFullName"] . "</span>";
-
+    $doctorCell = $row["IsActive"] 
+    ? "<span class='active-doctor'>" . $row["DoctorFullName"] . "</span>"
+    : "<span class='inactive-doctor'>" . $row["DoctorFullName"] . "</span>";
     $tableData .= "<tr>
                 <td data-label='Date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>
                 <td data-label='Time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
                 <td data-label='Patient'>" . $patientCell . "</td>
                 <td data-label='Diagnosis'>" . $row["Diagnosis"] . "</td>
-                <td data-label='Doctor'> " . $row["DoctorFullName"] . "</td>
+                <td data-label='Doctor'> " . $doctorCell . "</td>
                 <td style='width:1%; white-space:nowrap;'>
                     <button class='action view' onclick=viewConsultation(" . $row["ConsultationID"] . ")><img src='./img/view.svg' class='action-icon'></button>
                     <button class='action edit'  onclick=editConsultation(" . $row["ConsultationID"] . ") data-id='" . $row["ConsultationID"]  . "'><img src='./img/edit.svg' class='action-icon'></button>

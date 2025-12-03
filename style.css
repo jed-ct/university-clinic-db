@@ -393,12 +393,16 @@ a {
     color: #fff; 
 }
 
-a.consultation-table-patients{
+a.active-patient, a.active-doctor{
     text-decoration: none;
     color:#212529
 }
 
-.inactive-patient{
+a.active-patient:hover {
+    color: var(--color-accent);
+}
+
+.inactive-patient, .inactive-doctor{
     font-style: italic;
     color:#555;
 }
