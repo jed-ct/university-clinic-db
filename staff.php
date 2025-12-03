@@ -349,7 +349,7 @@ if($specialties_result) {
                 </div>
             </div>
 
-<table class="consultations-table" style="width: 1250px;">
+<table class="consultations-table" style="width: 1250px; table-layout: fixed;">
 <thead>
     <tr>
         <?php 
@@ -366,18 +366,18 @@ if($specialties_result) {
             if($sort_by === 'email_desc') $emailIcon = 'fa-sort-down';
         ?>
 
-        <th class="sortable" data-sort="<?php echo $nameSort; ?>" style="cursor: pointer;">
+        <th class="sortable" data-sort="<?php echo $nameSort; ?>" style="cursor: pointer; width: 25%">
             Name <i class="fa-solid <?php echo $nameIcon; ?>"></i>
         </th>
         
-        <th>Specialties</th>
+        <th style='width: 25%'>Specialties</th>
         
-        <th data-sort="<?php echo $emailSort; ?>">
+        <th style='width: 22%' data-sort="<?php echo $emailSort; ?>">
             Email
         </th>
         
         <th>Contact</th>
-        <th style='width: 12%'></th>
+        <th style='width: 13%'></th>
     </tr>
 </thead>
 <tbody>

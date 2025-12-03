@@ -88,7 +88,7 @@ while ($row = $result->fetch_assoc()) {
                 <td data-label='Time'>" . date("g:i A", strtotime($row["ConsultDateTime"])) . "</td>
                 <td data-label='Patient'>" . $patientCell . "</td>
                 <td data-label='Diagnosis'>" . $row["Diagnosis"] . "</td>
-                <td data-label='Doctor'>" . $row["DoctorFullName"] . "</td>
+                <td data-label='Doctor'> " . $row["DoctorFullName"] . "</td>
                 <td style='width:1%; white-space:nowrap;'>
                     <button class='action view' onclick=viewConsultation(" . $row["ConsultationID"] . ")><img src='./img/view.svg' class='action-icon'></button>
                     <button class='action edit'  onclick=editConsultation(" . $row["ConsultationID"] . ") data-id='" . $row["ConsultationID"]  . "'><img src='./img/edit.svg' class='action-icon'></button>
