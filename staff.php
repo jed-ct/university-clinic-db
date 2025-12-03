@@ -513,7 +513,7 @@ if($specialties_result) {
                 <div class="staff-profile-card">
                     <div class="profile-header">
                         <div class="profile-avatar"><i class="fa-solid fa-user-doctor"></i></div>
-                        <div class="profile-title">
+                        <div class="profile-title"  style='overflow: auto;'>
                             <h2 id="view-name">Doctor Name</h2>
                             <span class="badge" id="view-specialty">Specialty</span>
                         </div>

@@ -228,7 +228,7 @@ if (!isCurrentDateTimeCheckbox.checked) {
 })
 
 addConsultationForm.addEventListener('input', (() => {
-    const addButton = document.querySelector('.action.add');
+    const addButton = document.querySelector('#add-consultation');
     let timeoutId;
     let hasPatientInputError = false;
     let hasDoctorInputError = false;

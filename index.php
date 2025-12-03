@@ -170,7 +170,7 @@ if($specialties_result) {
         </div>
 
         <div class='consultation-modal-actions'>
-            <button class='action add' type='submit' form='add-consultation-form'>Add</button>
+            <button class='action add' id='add-consultation' type='submit' form='add-consultation-form'>Add</button>
         </div>
     </div>
 </div>
