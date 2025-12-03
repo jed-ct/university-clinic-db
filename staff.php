@@ -254,6 +254,42 @@ if($specialties_result) {
         min-height: 100vh; /* Ensures it covers full screen height */
         box-sizing: border-box; /* Includes padding in height calculation */
     }
+
+    .main-content-container {
+        display: flex !important;
+        align-items: flex-start !important; 
+        min-height: 100vh; 
+        box-sizing: border-box; 
+        /* --- ADDITIONS FOR CENTERING --- */
+        justify-content: center; /* Center content horizontally */
+        width: 100%; /* Ensure it spans full width */
+    }
+
+    .main-content {
+        /* Set a max width for the content area to prevent it from stretching too wide */
+        max-width: 1250px; 
+        width: 95%; /* Use a percentage width for responsiveness */
+        margin-left: auto; /* Center the block horizontally */
+        margin-right: auto; /* Center the block horizontally */
+        padding: 20px 0; /* Add vertical padding */
+    }
+
+    /* Adjusting the table container if necessary, but .main-content should handle it */
+    .patient-table-container {
+        /* This container seems to hold the H2 header. Ensure it respects the width of .main-content */
+        width: 100%; 
+    }
+
+    /* Ensure the table itself can be centered if it's smaller than its container */
+    .consultations-table {
+        /* ... existing styles like table-layout: fixed; ... */
+        margin-left: auto; /* Center the table if it doesn't take 100% of the container */
+        margin-right: auto;
+    }
+    
+    /* ... other styles ... */
+
+    
     
     body {
         display: flex;
@@ -330,7 +366,7 @@ if($specialties_result) {
                 </div>
             </div>
 
-            <table class="consultations-table" style=" width: 100%;">
+<table class="consultations-table" style="max-width: 1250px; table-layout: fixed;">
 <thead>
     <tr>
         <?php 
@@ -347,18 +383,18 @@ if($specialties_result) {
             if($sort_by === 'email_desc') $emailIcon = 'fa-sort-down';
         ?>
 
-        <th class="sortable" data-sort="<?php echo $nameSort; ?>" style="width: 25%; cursor: pointer;">
+        <th class="sortable" data-sort="<?php echo $nameSort; ?>" style="cursor: pointer;">
             Name <i class="fa-solid <?php echo $nameIcon; ?>"></i>
         </th>
         
         <th style="width: 20%;">Specialties</th>
         
-        <th data-sort="<?php echo $emailSort; ?>" style="width: 25%; cursor: pointer;">
+        <th data-sort="<?php echo $emailSort; ?>">
             Email
         </th>
         
-        <th style="width: 15%;">Contact</th>
-        <th style="width: 15%;">Actions</th>
+        <th>Contact</th>
+        <th>Actions</th>
     </tr>
 </thead>
 <tbody>
