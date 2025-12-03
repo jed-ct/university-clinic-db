@@ -106,6 +106,64 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     addPatientForm.reset();
 });});
 
+document.querySelectorAll('#add-patient-form').forEach(form => {
+    let timeoutId; 
+
+    const debouncedInputHandler = (e) => {
+        
+        clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(async () => {
+
+            const field = e.target;
+            
+            if (field.name === 'PFirstName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#add-fname-error-message').textContent = 'Names cannot contain symbols.';
+                    document.querySelector('#add-fname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#add-fname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PLastName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#add-lname-error-message').textContent = 'Names cannot contain symbols.';
+                    document.querySelector('#add-lname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#add-lname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PMiddleInit') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#add-mname-error-message').textContent = 'Initials cannot contain symbols.';
+                    document.querySelector('#add-mname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#add-mname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PartContactNo'){
+                if (!field.checkValidity()){
+                    document.querySelector('#add-contact-error-message').textContent = 'Input must be 9 digits.';
+                    document.querySelector('#add-contact-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#add-contact-error-message').style.display = 'none';
+                }
+            }
+            
+
+        }, 500);
+    };
+    form.addEventListener("input", debouncedInputHandler);
+
+});
+
+
+
+
+
 addDoctorButton.addEventListener("click", ()=> {
     sessionStorage.setItem("goToAddDoctor", "true");
     window.location.href = "staff.php";
@@ -189,11 +247,11 @@ if (!isCurrentDateTimeCheckbox.checked) {
     getDatabaseStatistics();
 })
 
+let hasPatientInputError = false;
+let hasDoctorInputError = false;
 addConsultationForm.addEventListener('input', (() => {
     const addButton = document.querySelector('.action.add');
     let timeoutId;
-    let hasPatientInputError = false;
-    let hasDoctorInputError = false;
     return (e) => {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(async () => {

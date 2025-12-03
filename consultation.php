@@ -349,7 +349,7 @@ include("authentication.php");
         <button class="consultations action" id='add-consultation-btn'><i class="fa-solid fa-plus"></i> <span>Add new consultation</span></button>
     </div>
 
-<table id='consultations-table' class='consultations-table'>
+<table id='consultations-table' class='consultations-table' style='border-radius: 8px'>
     <thead>
         <tr>
             <th data-col="ConsultDateTime" class="sortable active desc">Date</th>
