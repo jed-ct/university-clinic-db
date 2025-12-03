@@ -13,13 +13,47 @@ const addPatientModal = document.querySelector('#add-patient-modal');
 const addPatientForm = document.querySelector("#add-patient-form");
 
 const addDoctorButton = document.querySelector('#add-doctor-btn');
+const addDoctorModal = document.querySelector('#addStaffModal');
+const addDoctorForm = document.querySelector('#addStaffForm');
+
+function validateForm(event) {
+        const form = event.target;
+        const firstName = form.querySelector('input[name="firstname"]').value.trim();
+        const lastName = form.querySelector('input[name="lastname"]').value.trim();
+        const middleInit = form.querySelector('input[name="middleinit"]').value.trim();
+        const contact = form.querySelector('input[name="contact"]').value.trim();
+        const email = form.querySelector('input[name="email"]').value.trim();
+
+        const nameRegex = /^[A-Za-z\s]+$/;
+        
+        // Name Validation
+        if (!nameRegex.test(firstName)) { alert("Error: First Name must contain letters only."); event.preventDefault(); return; }
+        if (!nameRegex.test(lastName)) { alert("Error: Last Name must contain letters only."); event.preventDefault(); return; }
+        if (middleInit.length > 0 && !/^[A-Za-z]$/.test(middleInit)) { alert("Error: Middle Initial must be a single letter."); event.preventDefault(); return; }
+        
+        // --- UPDATED CONTACT VALIDATION ---
+        if (contact.length > 0) {
+            // Regex: Starts with 09 (11 digits total) OR starts with +63 (13 chars total)
+            const phPhoneRegex = /^(09\d{9}|\+63\d{10})$/;
+            
+            if (!phPhoneRegex.test(contact)) { 
+                alert("Error: Invalid Contact Number.\nAllowed formats:\n- 09xxxxxxxxx (11 digits)\n- +63xxxxxxxxx (13 characters)"); 
+                event.preventDefault(); 
+                return; 
+            }
+        }
+        // ----------------------------------
+
+        // Email Validation
+        if (email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert("Error: Invalid email address."); event.preventDefault(); return; }
+    }
 
 document.querySelectorAll('#add-patient-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         addPatientModal.style.display = 'flex';
     });
 });
-
+ 
 document.querySelectorAll('#add-patient-form').forEach(form => {
     form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -104,70 +138,18 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     addPatientModal.style.display = 'none';
     addPatientConfirmModal.style.display = 'flex';
     addPatientForm.reset();
-});});
+});
+});
 
-document.querySelectorAll('#add-patient-form').forEach(form => {
-    let timeoutId; 
-
-    const debouncedInputHandler = (e) => {
-        
-        clearTimeout(timeoutId);
-
-        timeoutId = setTimeout(async () => {
-
-            const field = e.target;
-            
-            if (field.name === 'PFirstName') {
-                if (!field.checkValidity()) {
-                    document.querySelector('#add-fname-error-message').textContent = 'Names cannot contain symbols.';
-                    document.querySelector('#add-fname-error-message').style.display = 'block';
-                } else {
-                    document.querySelector('#add-fname-error-message').style.display = 'none';
-                }
-            }
-
-            if (field.name === 'PLastName') {
-                if (!field.checkValidity()) {
-                    document.querySelector('#add-lname-error-message').textContent = 'Names cannot contain symbols.';
-                    document.querySelector('#add-lname-error-message').style.display = 'block';
-                } else {
-                    document.querySelector('#add-lname-error-message').style.display = 'none';
-                }
-            }
-
-            if (field.name === 'PMiddleInit') {
-                if (!field.checkValidity()) {
-                    document.querySelector('#add-mname-error-message').textContent = 'Initials cannot contain symbols.';
-                    document.querySelector('#add-mname-error-message').style.display = 'block';
-                } else {
-                    document.querySelector('#add-mname-error-message').style.display = 'none';
-                }
-            }
-
-            if (field.name === 'PartContactNo'){
-                if (!field.checkValidity()){
-                    document.querySelector('#add-contact-error-message').textContent = 'Input must be 9 digits.';
-                    document.querySelector('#add-contact-error-message').style.display = 'block';
-                } else {
-                    document.querySelector('#add-contact-error-message').style.display = 'none';
-                }
-            }
-            
-
-        }, 500);
-    };
-    form.addEventListener("input", debouncedInputHandler);
+addDoctorForm.addEventListener("submit", async (e) => {
 
 });
 
+if (addDoctorForm) addDoctorForm.addEventListener('submit', validateForm);
 
-
-
-
-// addDoctorButton.addEventListener("click", ()=> {
-//     sessionStorage.setItem("goToAddDoctor", "true");
-//     window.location.href = "staff.php";
-// })
+addDoctorButton.addEventListener("click", ()=> {
+    addStaffModal.style.display = 'flex';
+})
 
 addConsultationButton.addEventListener("click", () => {
     openModal(addConsultationModal);
@@ -245,11 +227,11 @@ if (!isCurrentDateTimeCheckbox.checked) {
     getDatabaseStatistics();
 })
 
-let hasPatientInputError = false;
-let hasDoctorInputError = false;
 addConsultationForm.addEventListener('input', (() => {
     const addButton = document.querySelector('#add-consultation');
     let timeoutId;
+    let hasPatientInputError = false;
+    let hasDoctorInputError = false;
     return (e) => {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(async () => {
@@ -421,12 +403,11 @@ addDoctorInput.addEventListener('input', async (e)=> {
     }
 });
 
-
-
 modalCloseButton.forEach((btn) => {
     btn.addEventListener("click", ()=> {
         addConsultationModal.style.display = 'none';
         addPatientModal.style.display = 'none';
+        addDoctorModal.style.display = 'none';
         document.body.classList.remove("body-no-scroll");
     })
 });

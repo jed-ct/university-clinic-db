@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $contact = trim($_POST['contact']);
     $sex = $_POST['sex']; // NEW FIELD
     $dob = !empty($_POST['dob']) ? date('Y-m-d', strtotime($_POST['dob'])) : NULL;
+    $primary_specialty_id = !empty($specialty_ids) ? (int)$specialty_ids[0] : NULL;
 
     // 1. DUPLICATE CHECK
     $check_sql = "SELECT DoctorID, IsActive FROM DOCTOR WHERE (DocFirstName = ? AND DocLastName = ?) OR (DocEmail = ? AND DocEmail != '')";
@@ -30,12 +31,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $check_stmt->close();
 
     // 2. INSERT DOCTOR
-    $sql = "INSERT INTO DOCTOR (DocFirstName, DocLastName, DocMiddleInit, DocEmail, DocAddress, DocContactNo, DocSex, DocDOB, IsActive) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)";
+     $sql = "INSERT INTO DOCTOR (DocFirstName, DocLastName, DocMiddleInit, DocEmail, DocAddress, DocContactNo, DocSex, DocDOB, SpecialtyID, IsActive) 
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1)";
 
     $stmt = $conn->prepare($sql);
     // Added 's' for sex string
-    $stmt->bind_param("ssssssss", $first, $last, $middle, $email, $address, $contact, $sex, $dob);
+     $stmt->bind_param("ssssssssi", $first, $last, $middle, $email, $address, $contact, $sex, $dob, $primary_specialty_id);
+
 
     if ($stmt->execute()) {
         $new_doc_id = $conn->insert_id;
