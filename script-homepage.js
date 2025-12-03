@@ -130,7 +130,7 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
         alert("Error: " + text);
     }
     
-  const formObject = {};
+  const formObject = {};    
   formData.forEach((value, key) => {
     formObject[key] = value;
   });
@@ -138,6 +138,7 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     addPatientModal.style.display = 'none';
     addPatientConfirmModal.style.display = 'flex';
     addPatientForm.reset();
+    getDatabaseStatistics();
 });
 });
 
@@ -225,6 +226,7 @@ if (!isCurrentDateTimeCheckbox.checked) {
         alert("Error: " + text);
     }
     getDatabaseStatistics();
+
 })
 
 addConsultationForm.addEventListener('input', (() => {

@@ -59,7 +59,6 @@ if($specialties_result) {
                             <option value="" selected disabled> </option>
                             <option value="F">Female</option>
                             <option value="M">Male</option>
-                            <option value="O">Other</option>
                         </select>
                     </div>     
                 </fieldset>
@@ -183,7 +182,7 @@ if($specialties_result) {
             <button class="close-btn"><img class='btn-img' src="./img/close.svg"></button>
         </div>
             <div class="modal-message">
-                <form action="staff_create.php" method="POST" id="addStaffForm">
+                <form action="staff_index_create.php" method="POST" id="addStaffForm">
                     <div style="display:flex; gap:10px; margin-bottom:10px;">
                         <div class="forms-input" style="flex:1;"><label>First Name</label><input type="text" name="firstname" maxlength="50" required></div>
                         <div class="forms-input" style="flex:1;"><label>Last Name</label><input type="text" name="lastname" maxlength="50" required></div>
