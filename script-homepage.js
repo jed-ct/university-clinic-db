@@ -13,14 +13,13 @@ const addPatientModal = document.querySelector('#add-patient-modal');
 const addPatientForm = document.querySelector("#add-patient-form");
 
 const addDoctorButton = document.querySelector('#add-doctor-btn');
-const addDoctorModal = document.querySelector('#addStaffModal');
 
 document.querySelectorAll('#add-patient-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         addPatientModal.style.display = 'flex';
     });
 });
- 
+
 document.querySelectorAll('#add-patient-form').forEach(form => {
     form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -105,12 +104,14 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     addPatientModal.style.display = 'none';
     addPatientConfirmModal.style.display = 'flex';
     addPatientForm.reset();
-});
-});
+});});
 
 addDoctorButton.addEventListener("click", ()=> {
-    addStaffModal.style.display = 'flex';
+    sessionStorage.setItem("goToAddDoctor", "true");
+    window.location.href = "staff.php";
 })
+
+
 
 addConsultationButton.addEventListener("click", () => {
     openModal(addConsultationModal);
@@ -364,11 +365,12 @@ addDoctorInput.addEventListener('input', async (e)=> {
     }
 });
 
+
+
 modalCloseButton.forEach((btn) => {
     btn.addEventListener("click", ()=> {
         addConsultationModal.style.display = 'none';
         addPatientModal.style.display = 'none';
-        addDoctorModal.style.display = 'none';
         document.body.classList.remove("body-no-scroll");
     })
 });
