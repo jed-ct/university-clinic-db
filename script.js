@@ -481,6 +481,7 @@ isCurrentDateTimeCheckbox.addEventListener("change", ()=> {
 
 let hasDiagnosisInputError = false;
 let hasPrescriptionInputError = false;
+let hasDateError = false;
 filterConsultationForm.addEventListener('input', ((e) => {
     let timeoutId;
     const startDateInput = document.querySelector('#filter-start-date');
@@ -499,11 +500,11 @@ filterConsultationForm.addEventListener('input', ((e) => {
                 const endDate = new Date(endDateInput.value);
                 if (endDate < startDate) {
                     document.querySelector('#filter-date-error-message').textContent = "End date must not be earlier than starting date";
-                    disableButton(document.querySelector('.action.filter'));
                     document.querySelector('#filter-date-error-message').style.display = "block";
+                    hasDateError = true;
                 } else {
                     document.querySelector('#filter-date-error-message').style.display = "none";
-                    disableButton(document.querySelector('.action.filter'), false);
+                    hasDateError = false;
                 }
             }
 
@@ -543,7 +544,7 @@ filterConsultationForm.addEventListener('input', ((e) => {
                     hasPrescriptionInputError = false;
                 }                
             }
-            if (hasDiagnosisInputError || hasPrescriptionInputError) {
+            if (hasDiagnosisInputError || hasPrescriptionInputError || hasDateError) {
                 disableButton(document.querySelector('.action.filter'));
             }
             else {
