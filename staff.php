@@ -349,7 +349,7 @@ if($specialties_result) {
                 </div>
             </div>
 
-<table class="consultations-table" style="width: 1250px; table-layout: fixed;">
+<table class="consultations-table" style="width: 1250px;">
 <thead>
     <tr>
         <?php 
@@ -370,14 +370,14 @@ if($specialties_result) {
             Name <i class="fa-solid <?php echo $nameIcon; ?>"></i>
         </th>
         
-        <th style="width: 20%;">Specialties</th>
+        <th>Specialties</th>
         
         <th data-sort="<?php echo $emailSort; ?>">
             Email
         </th>
         
         <th>Contact</th>
-        <th>Actions</th>
+        <th style='width: 12%'></th>
     </tr>
 </thead>
 <tbody>
@@ -412,7 +412,7 @@ if($specialties_result) {
                             data-contact="<?php echo htmlspecialchars($contact); ?>"
                             data-dob="<?php echo htmlspecialchars($dob); ?>"
                             data-sex="<?php echo htmlspecialchars($sex); ?>">
-                            View
+                            <img src='./img/view.svg' class='action-icon'>
                         </button>
                         <button class="action edit edit-btn" 
                             data-id="<?php echo $row['DoctorID']; ?>"
@@ -425,9 +425,9 @@ if($specialties_result) {
                             data-contact="<?php echo htmlspecialchars($contact); ?>"
                             data-dob="<?php echo htmlspecialchars($dob); ?>"
                             data-sex="<?php echo htmlspecialchars($sex); ?>">
-                            Edit
+                            <img src='./img/edit.svg' class='action-icon'>
                         </button>
-                        <a href="staff_delete.php?id=<?php echo $row['DoctorID']; ?>" class="action delete" onclick="return confirm('Are you sure?')">Delete</a>
+                        <a href="staff_delete.php?id=<?php echo $row['DoctorID']; ?>" class="action delete" onclick="return confirm('Are you sure?')"><img src='./img/delete.svg' class='action-icon'></a>
                     <?php endif; ?>
                 </td>
             </tr>

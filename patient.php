@@ -82,7 +82,7 @@ include('authentication.php');
                 <fieldset class='contactno-fieldset'>
                     <div class="forms-input">
                         <label for="add-contact">Contact Number *</label>
-                        <div style="flex">
+                        <div style="display: flex">
                         <input type="text" value="+639" readonly id="contactprefix">
                         <input type="tel" id="partcontact" name="PartContactNo" placeholder="123456789" pattern="[0-9]{9}" maxlength="9">
                         </div>

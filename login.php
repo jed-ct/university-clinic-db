@@ -55,6 +55,7 @@ password: admin123 -->
                 class="tba-login-input" 
                 placeholder="Username"
                 maxlength="64" 
+                autocomplete="off"
                 required>
             
             <input 
@@ -63,6 +64,7 @@ password: admin123 -->
                 class="tba-login-input" 
                 placeholder="Password" 
                 maxlength="64" 
+                autocomplete="off"
                 required>
 
             <button type="submit" class="tba-login-button">Log In</button>
