@@ -39,7 +39,7 @@ include("database.php");
                 <fieldset class='p-name-fieldset'>                   
                     <div class="forms-input">
                         <label for="add-p-firstname">First Name *</label>
-                        <input type="text" name="PFirstName" id="add-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" title="Name must contain only letters and periods." maxlength="64">
+                        <input type="text" name="PFirstName" id="add-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" title="Name must contain only letters and periods." maxlength="32">
                         <span class='error-message' id='add-fname-error-message'>Yipeee</span>
                     </div>     
                     <div class="forms-input">
@@ -49,7 +49,7 @@ include("database.php");
                     </div> 
                     <div class="forms-input">
                         <label for="add-p-lastname">Last Name *</label>
-                        <input type="text" name="PLastName" id="add-p-lastname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64" title="Name must contain only letters and periods.">
+                        <input type="text" name="PLastName" id="add-p-lastname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="32" title="Name must contain only letters and periods.">
                         <span class='error-message' id='add-lname-error-message'>Yipeee</span>
                     </div> 
                 </fieldset>
