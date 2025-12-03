@@ -239,13 +239,18 @@ a {
     background: var(--color-primary-darker);
 }
 
-
-
-
-
-
-
-
+.checkbox-container {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: 10px;
+    max-height: 150px;
+    overflow-y: auto;
+    background: #fff;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+}
 
 .consultation-search {
     display: flex;
@@ -317,13 +322,12 @@ a {
     border-collapse: collapse;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     border-radius: 8px;
+    overflow: hidden;
     margin: 20px 20px 0 20px;
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: #fff;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-
-
 }
 
 .consultations-table thead {
@@ -336,10 +340,6 @@ a {
 .consultations-table td {
     padding: 12px 16px;
     text-align: left;
-    max-width: 200px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .consultations-table tbody tr:nth-child(odd) {
