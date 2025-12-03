@@ -381,7 +381,13 @@ include("authentication.php");
 </div>
 
 <?php include('footer.php') ?>
-
+<script>
+    function viewDoctor(id) {
+        sessionStorage.setItem("viewDoctor", "true");
+        sessionStorage.setItem("doctorID", id);
+        window.location.href = "staff.php";
+    }
+</script>
 <script src="./script.js"></script>
 
 </body>

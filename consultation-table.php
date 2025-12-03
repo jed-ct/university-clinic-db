@@ -83,7 +83,7 @@ while ($row = $result->fetch_assoc()) {
     ? "<a class='active-patient' href='./get_patient.php?id=" . $row["PatientID"] . "'>" . $row["PatientFullName"] . "</a>"
     : "<span class='inactive-patient'>" . $row["PatientFullName"] . "</span>";
     $doctorCell = $row["IsActive"] 
-    ? "<span class='active-doctor'>" . $row["DoctorFullName"] . "</span>"
+    ? "<a class='active-doctor' href='#'>" . $row["DoctorFullName"] . "</a>"
     : "<span class='inactive-doctor'>" . $row["DoctorFullName"] . "</span>";
     $tableData .= "<tr>
                 <td data-label='Date'>" . date("M j, Y", strtotime($row["ConsultDateTime"])) . "</td>

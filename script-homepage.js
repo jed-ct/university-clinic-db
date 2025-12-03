@@ -263,6 +263,40 @@ addConsultationForm.addEventListener('input', (() => {
 
                 }
             }
+            if (field.name === "Diagnosis") {
+                let autosuggestions = [];
+                try {
+                    const response = await fetch(`./autosuggestions/autosuggest-diagnosis.php?diagnosis=${encodeURIComponent(field.value)}`);
+                    autosuggestions = await response.json();
+                } catch (err) {
+                    console.error('Autosuggest fetch failed', err);
+                }
+                if (autosuggestions.length === 0) {
+                    document.querySelector('#add-diagnosis-error-message').innerHTML = 'Diagnosis not found. <br> This consultation will add it to the database.';
+                    document.querySelector('#add-diagnosis-error-message').style.color = "#ba9725";
+                    document.querySelector('#add-diagnosis-error-message').style.display = 'block';      
+                } else {
+                    document.querySelector('#add-diagnosis-error-message').style.display = 'none';
+
+                }                
+            }
+            if (field.name === "Prescription") {
+                let autosuggestions = [];
+                try {
+                    const response = await fetch(`./autosuggestions/autosuggest-prescription.php?prescription=${encodeURIComponent(field.value)}`);
+                    autosuggestions = await response.json();
+                } catch (err) {
+                    console.error('Autosuggest fetch failed', err);
+                }
+                if (autosuggestions.length === 0) {
+                    document.querySelector('#add-prescription-error-message').innerHTML = 'Prescription not found. <br> This consultation will add it to the database.';
+                    document.querySelector('#add-prescription-error-message').style.color = "#ba9725";
+                    document.querySelector('#add-prescription-error-message').style.display = 'block';      
+                } else {
+                    document.querySelector('#add-prescription-error-message').style.display = 'none';
+
+                }                
+            }
             if (field.name === 'DoctorName') {
                 let autosuggestions = [];
 
