@@ -1,16 +1,9 @@
 <?php 
     include("database.php");
-<<<<<<< HEAD
     ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+    ini_set('display_startup_errors', 1);
+    error_reporting(E_ALL);
 
-=======
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-    
->>>>>>> phase-2-draft
     if(isset($_POST["PFirstName"], $_POST["PLastName"], $_POST["Sex"], $_POST["Birthday"], $_POST["ContactNo"])) {
         $firstname = $_POST["PFirstName"];
         $lastname = $_POST["PLastName"];
