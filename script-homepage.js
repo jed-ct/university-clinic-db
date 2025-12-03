@@ -164,12 +164,10 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
 
 
 
-addDoctorButton.addEventListener("click", ()=> {
-    sessionStorage.setItem("goToAddDoctor", "true");
-    window.location.href = "staff.php";
-})
-
-
+// addDoctorButton.addEventListener("click", ()=> {
+//     sessionStorage.setItem("goToAddDoctor", "true");
+//     window.location.href = "staff.php";
+// })
 
 addConsultationButton.addEventListener("click", () => {
     openModal(addConsultationModal);
@@ -250,7 +248,7 @@ if (!isCurrentDateTimeCheckbox.checked) {
 let hasPatientInputError = false;
 let hasDoctorInputError = false;
 addConsultationForm.addEventListener('input', (() => {
-    const addButton = document.querySelector('.action.add');
+    const addButton = document.querySelector('#add-consultation');
     let timeoutId;
     return (e) => {
         clearTimeout(timeoutId);
