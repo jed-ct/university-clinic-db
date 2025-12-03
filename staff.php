@@ -251,9 +251,9 @@ if($specialties_result) {
 
     .main-content-container {
         display: flex !important;
-        align-items: flex-start !important; /* Aligns content to top */
-        min-height: 100vh; /* Ensures it covers full screen height */
-        box-sizing: border-box; /* Includes padding in height calculation */
+        align-items: flex-start !important; 
+        min-height: 100vh;
+        box-sizing: border-box;
     }
 
     .main-content-container {
@@ -261,35 +261,27 @@ if($specialties_result) {
         align-items: flex-start !important; 
         min-height: 100vh; 
         box-sizing: border-box; 
-        /* --- ADDITIONS FOR CENTERING --- */
-        justify-content: center; /* Center content horizontally */
-        width: 100%; /* Ensure it spans full width */
+        justify-content: center;
+        width: 100%;
     }
 
     .main-content {
-        /* Set a max width for the content area to prevent it from stretching too wide */
         max-width: 1250px; 
-        width: 95%; /* Use a percentage width for responsiveness */
-        margin-left: auto; /* Center the block horizontally */
-        margin-right: auto; /* Center the block horizontally */
-        padding: 20px 0; /* Add vertical padding */
+        width: 95%; 
+        margin-left: auto; 
+        margin-right: auto; 
+        padding: 20px 0;
     }
 
-    /* Adjusting the table container if necessary, but .main-content should handle it */
     .patient-table-container {
-        /* This container seems to hold the H2 header. Ensure it respects the width of .main-content */
         width: 100%; 
     }
 
-    /* Ensure the table itself can be centered if it's smaller than its container */
     .consultations-table {
-        /* ... existing styles like table-layout: fixed; ... */
-        margin-left: auto; /* Center the table if it doesn't take 100% of the container */
+        margin-left: auto; 
         margin-right: auto;
     }
     
-    /* ... other styles ... */
-
     
     
     body {
@@ -299,7 +291,7 @@ if($specialties_result) {
     }
     
     #footer {
-        margin-top: auto; /* Pushes footer to bottom if content is short */
+        margin-top: auto; 
     }
     </style>
 </head>
@@ -357,7 +349,7 @@ if($specialties_result) {
                 </div>
             </div>
 
-<table class="consultations-table" style="max-width: 1250px; table-layout: fixed;">
+<table class="consultations-table" style="width: 1250px; table-layout: fixed;">
 <thead>
     <tr>
         <?php 
