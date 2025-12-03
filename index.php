@@ -13,7 +13,88 @@
 <body>
 
 <?php include('header.php') ?>
+<?php 
+$specialties_result = $conn->query("SELECT * FROM SPECIALTY ORDER BY SpecialtyName ASC");
+$specialties = [];
+if($specialties_result) {
+    while($row = $specialties_result->fetch_assoc()) {
+        $specialties[] = $row;
+    }
+}
+?>
 
+<!--ADD PATIENT-->
+<div id="add-patient-modal" class="modal">
+    <div class="modal-content">
+        <div class="close-btn-div">
+            <div>Add new patient</div>
+            <button class="close-btn" id="close-add-modal"><img class='btn-img' src="./img/close.svg"></button>
+        </div>
+        <div class="modal-message">
+            <form id='add-patient-form' method='POST'>
+                <!-- NAME -->
+                <fieldset class='p-name-fieldset'>                   
+                    <div class="forms-input">
+                        <label for="add-p-firstname">First Name *</label>
+                        <input type="text" name="PFirstName" id="add-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" title="Name must contain only letters and periods." maxlength="64" required>
+                        <span class='error-message' id='add-fname-error-message'>Yipeee</span>
+                    </div>     
+                    <div class="forms-input">
+                        <label for="add-p-middleinit">Middle Initial</label>
+                        <input type="text" name="PMiddleInit" id="add-p-middleinit" pattern="^[A-Za-z]+$" maxlength="2" title="Initials must only be letters.">
+                        <span class='error-message' id='add-mname-error-message'>Yipeee</span>
+                    </div> 
+                    <div class="forms-input">
+                        <label for="add-p-lastname">Last Name *</label>
+                        <input type="text" name="PLastName" id="add-p-lastname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" maxlength="64" title="Name must contain only letters and periods." required>
+                        <span class='error-message' id='add-lname-error-message'>Yipeee</span>
+                    </div> 
+                </fieldset>
+
+                <!-- SEX -->
+                <fieldset class='sex-fieldset'>
+                    <div class="forms-input">
+                        <label for="add-sex">Sex *</label>
+                        <select name="Sex" id="add-sex" required>
+                            <option value="" selected disabled> </option>
+                            <option value="F">Female</option>
+                            <option value="M">Male</option>
+                            <option value="O">Other</option>
+                        </select>
+                    </div>     
+                </fieldset>
+
+                <!-- BIRTHDAY -->
+                <fieldset class='bday-fieldset'>
+                    <div class="forms-input">
+                        <label for="add-bday">Birthday *</label>
+                        <input name="Birthday" id="add-bday" type="date" min="1900-01-01" max="<?php echo date("Y-m-d"); ?>" required>
+                        <span class='error-message' id='add-bdayerror-message'>Yipeee</span>
+                    </div>     
+                </fieldset>
+                
+                <!-- CONTACT -->
+                <fieldset class='contactno-fieldset'>
+                    <div class="forms-input">
+                        <label for="add-contact">Contact Number *</label>
+                        <div style="display:flex">
+                        <input type="text" value="+639" readonly id="contactprefix">
+                        <input type="tel" id="partcontact" name="PartContactNo" placeholder="123456789" pattern="[0-9]{9}" maxlength="9" title="Input must contain numbers only." required>
+                        </div>
+                        <input type="hidden" name="ContactNo" id="add-contact">
+                        <span class='error-message' id='add-contact-error-message'>Yipeee</span>
+                    </div>     
+                </fieldset>
+            </form>
+        </div>
+
+        <div class='consultation-modal-actions'>
+            <button class='action add' type='submit' form='add-patient-form'>Add</button>
+        </div>
+    </div>
+</div>
+
+<!--ADD CONSULT-->
 <div id="add-consultation-modal" class="modal">
     <div class="modal-content">
         <div class="close-btn-div">
@@ -94,8 +175,50 @@
     </div>
 </div>
 
+<!--ADD STAFF MODAL-->
+<div id="addStaffModal" class="modal" hidden>
+        <div class="modal-content"> 
+            <div class="close-btn-div">
+            <div>Add new doctor</div>
+            <button class="close-btn"><img class='btn-img' src="./img/close.svg"></button>
+        </div>
+            <div class="modal-message">
+                <form action="staff_create.php" method="POST" id="addStaffForm">
+                    <div style="display:flex; gap:10px; margin-bottom:10px;">
+                        <div class="forms-input" style="flex:1;"><label>First Name</label><input type="text" name="firstname" maxlength="50" required></div>
+                        <div class="forms-input" style="flex:1;"><label>Last Name</label><input type="text" name="lastname" maxlength="50" required></div>
+                        <div class="forms-input" style="width:50px;"><label>M.I.</label><input type="text" name="middleinit" maxlength="1" size="3"></div>
+                    </div>
+                    <div class="forms-input">
+                        <label>Specialties</label>
+                        <div class="checkbox-container">
+                            <?php foreach($specialties as $spec): ?>
+                                <label class="checkbox-item"><input type="checkbox" name="specialtyids[]" value="<?php echo $spec['SpecialtyID']; ?>"> <?php echo htmlspecialchars($spec['SpecialtyName']); ?></label>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <div class="forms-input"><label>Email</label><input type="email" name="email" maxlength="100"></div>
+                    <div class="forms-input"><label>Address</label><input type="text" name="address" maxlength="200"></div>
+                    <div style="display:flex; gap:10px; margin-top:10px;">
+                        <div class="forms-input" style="flex:1;"><label>Contact No.</label><input type="text" name="contact" maxlength="13"></div>
+                        <div class="forms-input" style="flex:1;">
+                            <label>Sex</label>
+                            <select name="sex" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+                                <option value="">Select</option><option value="Male">Male</option><option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="forms-input" style="flex:1;"><label>DOB</label><input type="date" name="dob"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="consultation-modal-actions">
+                        <button type="submit" class="action" form="addStaffForm">Add</button>
+                </div>
+        </div>
+    </div>
 
 
+<!--SITE DEETS-->
 <div class="about-container">
     <div class="section-title">About the Clinic</div>
     <div class="description">
@@ -120,8 +243,8 @@
         <div class="section-title">Quick Actions</div>
         <div class="action-buttons">
             <button class="action-btn" id='add-consultation-btn'><i class="fa-solid fa-book-medical"></i> Add Consultation</button>
-            <button class="action-btn"><i class="fa-solid fa-user-doctor"></i> Add Doctor</button>
-            <button class="action-btn"><i class="fa-solid fa-user"></i> Add Patient</button>
+            <button class="action-btn" id='add-doctor-btn'><i class="fa-solid fa-user-doctor"></i> Add Doctor</button>
+            <button class="action-btn" id='add-patient-btn'><i class="fa-solid fa-user"></i> Add Patient</button>
         </div>
     </div>
 </div>
