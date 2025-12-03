@@ -17,6 +17,7 @@ const addPatientConfirmModal = document.querySelector('#add-patient-confirm-moda
 const filterPatientModal = document.querySelector('#filter-patient-modal');
 const filterPatientButton = document.querySelector('#filter-patient-btn');
 const filterPatientForm = document.querySelector('#filter-patient-form');
+const confirmFilterButton = document.querySelector('.action.filter-reset')
 
 const modals = document.querySelectorAll('.modal');
 
@@ -36,19 +37,33 @@ searchBoxes.forEach((searchBox, index) => {
 
     searchBox.addEventListener("keyup", debounce(() => {
         const query = searchBox.value.trim();
+        const filterInput = getFilter();
+        
+        let url = "livesearch_patient.php";
+        const queryInput = [];
+
+       const shouldSearch = query.length > 0 || filterInput;
 
         if (query.length > 0) {
+            queryInput.push("q=" + encodeURIComponent(query));
             resultsDiv.style.display = 'block'; 
         } else {
-            resultsDiv.style.display = 'none'; 
+            resultsDiv.style.display = 'none';
         }
 
-        if (!query) {
+        if (filterInput) {
+            queryInput.push(filterInput);
+        }
+        
+        if (queryInput.length === 0) {
             resultsDiv.innerHTML = "";
+            resultsDiv.style.display = 'none'; 
             return;
         }
 
-        fetch("livesearch_patient.php?q=" + encodeURIComponent(query))
+        url += "?" + queryInput.join("&"); 
+
+        fetch(url) 
             .then(res => res.text())
             .then(data => {
                 resultsDiv.innerHTML = data;
@@ -69,14 +84,33 @@ function closeModals() {
     });
 }
 
-function debounce(func, wait = 300) {
-    let timeout;
-    return function(...args) {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => func.apply(this, args), wait);
-    };
-}
+function getFilter() {
+    const formData = new FormData(filterPatientForm);
+    const input = {};
+    
+    const sex = formData.get('Sex');
+    if (sex) {
+        input.sex = sex;
+    }
 
+    const startDate = formData.get('StartDate');
+    if (startDate) {
+        input.startBday = startDate;
+    }
+    
+    const endDate = formData.get('EndDate');
+    if (endDate) {
+        input.endBday = endDate;
+    }
+    
+    const contact = formData.get('ContactNo');
+    if (contact && contact.trim().length > 0) {
+        input.contact = contact.trim();
+    }
+    
+    return new URLSearchParams(input).toString();
+}
+ 
 document.querySelectorAll('.close-btn-patient').forEach(btn => {
     btn.addEventListener('click', closeModals);
 });
@@ -111,7 +145,7 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
 
     const sex = document.querySelector('#add-sex').value.trim();
     if (!sex) {
-        document.querySelector('#add-sex-error-message').textContent = 'Please select a sex.';
+        document.querySelector('#add-sex-error-message').textContent = 'Required.';
         document.querySelector('#add-sex-error-message').style.display = 'block';
         return;
     }
@@ -119,8 +153,7 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     const bday = document.querySelector('#add-bday').value.trim();
     if (!bday) {
         document.querySelector('#add-bdayerror-message').textContent = 'Required.';
-        document.querySelector('#add-bdayerror-message').focus();
-        document.querySelector('#add-bday').style.display = 'block';
+        document.querySelector('#add-bdayerror-message').style.display = 'block'; 
         return;
     }
 
@@ -129,12 +162,10 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     const fullContactHidden = document.querySelector('#add-contact');
 
     if (!partContact || partContact.length !== 9 || !/^\d{9}$/.test(partContact)) {
-        document.querySelector('#add-contact-error-message').textContent = 'Contact Number must be the required 9 digits.';
+        document.querySelector('#add-contact-error-message').textContent = 'Input must be 9 digits.';
         document.querySelector('#add-contact-error-message').style.display = 'block';
         const errorMsgDiv = document.querySelector('#add-contact-error-message');
         errorMsgDiv.style.display = 'block';
-        
-        partContactInput.focus();
         return;
     }
 
@@ -157,12 +188,30 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     const text = (await response.text()).trim();
     console.log('PHP response:', text);
 
-    if (text === "New record created successfully") {
-        addPatientModal.style.display = 'none';
-    } else {
-        alert("Error: " + text);
-    }
-    
+    const patientDupe = document.querySelector('#dupe-patient-error-message'); 
+    patientDupe.style.display = 'none'; 
+    patientDupe.textContent = '';
+
+        if (text === "New record created successfully") {
+            addPatientModal.style.display = 'none';
+            addPatientConfirmModal.style.display = 'flex';
+            addPatientForm.reset();
+
+        } else if (text.startsWith("Error:")) {
+            patientDupe.textContent = text.replace("Error:", "").trim();
+            patientDupe.style.display = 'block';
+            addPatientModal.style.display = 'flex';
+            
+            document.querySelector('#add-lname-error-message').style.display = 'none';
+            document.querySelector('#add-sex-error-message').style.display = 'none';
+            document.querySelector('#add-bdayerror-message').style.display = 'none';
+            document.querySelector('#add-contact-error-message').style.display = 'none';
+            
+        } else {
+            // Unknown error
+            alert("An unexpected error occurred: " + text);
+        }
+
   const formObject = {};
   formData.forEach((value, key) => {
     formObject[key] = value;
@@ -173,45 +222,100 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
     addPatientForm.reset();
 });});
 
+document.querySelectorAll('#add-patient-form').forEach(form => {
+    const addButton = document.querySelector('.action.add'); 
+    let timeoutId; 
+
+    const debouncedInputHandler = (e) => {
+        
+        clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(async () => {
+
+            const field = e.target;
+            
+            if (field.name === 'PFirstName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#add-fname-error-message').textContent = 'Names cannot contain symbols.';
+                    document.querySelector('#add-fname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#add-fname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PLastName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#add-lname-error-message').textContent = 'Names cannot contain symbols.';
+                    document.querySelector('#add-lname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#add-lname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PMiddleInit') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#add-mname-error-message').textContent = 'Initials cannot contain symbols.';
+                    document.querySelector('#add-mname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#add-mname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PartContactNo'){
+                if (!field.checkValidity()){
+                    document.querySelector('#add-contact-error-message').textContent = 'Input must be 9 digits.';
+                    document.querySelector('#add-contact-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#add-contact-error-message').style.display = 'none';
+                }
+            }
+            
+
+        }, 500);
+    };
+    form.addEventListener("input", debouncedInputHandler);
+
+});
+
+if(filterPatientButton){
 document.querySelectorAll('#filter-patient-btn').forEach(btn => {
     btn.addEventListener('click', () => {
        filterPatientModal.style.display = 'flex';
     });
 });
+}
 
-document.querySelectorAll('#filter-patient-form').forEach(form => {
-    form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const formData = new FormData(filterPatientForm);
-
-    const response = await fetch('filter_patient.php', {
-        method: 'POST',
-        body: formData
+if (deletePatientButton) {
+    deletePatientButton.addEventListener("click", () => {
+        if (deletePatientModal) {
+            deletePatientModal.style.display = 'flex';
+        } else {
+            console.error("Delete modal not found.");
+        }
     });
+} else {
+    console.log("Delete button not found.");
+}
 
-    const data = await response.json();
+if (confirmDeletionButton) {
+    confirmDeletionButton.addEventListener("click", async () => {
+        if (!deletePatientButton) {
+             console.error("Cannot confirm deletion: Delete button data-id is missing.");
+             return;
+        }
+        
+        const id = deletePatientButton.dataset.id;
+        const response = await fetch(`delete_patient.php?id=${id}`);
+        const text = await response.text();
+        if (text.includes("success")) {   
+            window.location.href = "patient.php"; 
+        } else {
+            alert("Failed to delete patient.");
+        }
+    });
+}
 
-    displayFilteredPatients(data);
-});
-});
-
-deletePatientButton.addEventListener("click", ()=> {
-    deletePatientModal.style.display = 'flex';
-});
-
-confirmDeletionButton.addEventListener("click", async ()=> {
-    const id = deletePatientButton.dataset.id;
-    const response = await fetch(`delete_patient.php?id=${id}`);
-    const text = await response.text();
-    if (text.includes("success")) {   
-        window.location.href = "patient.php"; 
-    } else {
-        alert("Failed to delete patient.");
-    }
-});
-
-editPatientButton.addEventListener("click", async () => {
+if (editPatientButton) {editPatientButton.addEventListener("click", async () => {
     editPatientModal.style.display = 'flex';
     const id = editPatientButton.dataset.id; 
 
@@ -243,67 +347,7 @@ editPatientButton.addEventListener("click", async () => {
         console.error(error);
     }
 });
-
-/*saveEditsButton.addEventListener('click', function(e) {
-    e.preventDefault(); 
-    const patientID = this.dataset.id;
-    const tableRows = document.querySelectorAll("#patient-information-table tr");
-    
-    // Contact splicing
-    const partContactInput = document.querySelector('#edit-partcontact'); 
-    const partContact = partContactInput.value.trim();
-    const prefix = document.querySelector('#contactprefix').value.trim();
-    
-    const formData = new FormData(editPatientForm);
-    formData.append('PatientID', patientID); 
-
-    let finalFullContact = '';
-    
-    if (partContact.length === 9) {
-        finalFullContact = prefix + partContact; 
-        formData.set('ContactNo', finalFullContact); 
-        document.querySelector('#edit-contact').value = finalFullContact; 
-    } 
-  
-    fetch('update_patient.php', {
-        method: 'POST',
-        body: formData 
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.success) {
-
-            // Name
-            const firstName = formData.get('PFirstName') || tableRows[1].children[1].innerText.split(' ')[0];
-            const middleInit = formData.get('PMiddleInit') || tableRows[1].children[1].innerText.split(' ')[1] || '';
-            const lastName = formData.get('PLastName') || tableRows[1].children[1].innerText.split(' ')[2] || '';
-            tableRows[1].children[1].innerText = `${firstName} ${middleInit ? middleInit + '.' : ''} ${lastName}`.trim();
-
-            // Sex
-            if (formData.get('Sex')) tableRows[2].children[1].innerText = formData.get('Sex');
-
-            // Birthday
-            if (formData.get('Birthday')) tableRows[3].children[1].innerText = formData.get('Birthday');
-
-            // Contact Number
-            const newContactValue = finalFullContact || formData.get('ContactNo'); 
-            if (newContactValue) {
-                tableRows[4].children[1].innerText = newContactValue;
-            }
-
-            editPatientModal.style.display = 'none';
-            editPatientConfirmModal.style.display = 'flex';
-            editPatientForm.reset();
-        } else {
-            alert(data.message);
-        }
-    })
-    .catch(err => {
-        console.error(err);
-        alert('An error occurred while updating patient info.');
-    });
-});
-*/
+}
 
 // FOr trimming name inputs sa edit
 const editFirstNameInput = document.querySelector('#edit-p-firstname');
@@ -325,9 +369,41 @@ if (editLastNameInput) {
     });
 }
 
+if(editPatientForm){
 document.querySelectorAll('#edit-patient-form').forEach(form => {
     form.addEventListener("submit", async (e) => {
     e.preventDefault();
+        const firstname = document.querySelector('#edit-p-firstname').value.trim();
+    if (!firstname) {
+        document.querySelector('#edit-fname-error-message').textContent = 'Required.';
+        document.querySelector('#edit-fname-error-message').style.display = 'block';
+        document.querySelector('#edit-p-firstname').focus();
+        return;
+    }
+
+    const middleinit = document.querySelector('#edit-p-middleinit').value.trim();
+
+    const lastname= document.querySelector('#edit-p-lastname').value.trim();
+    if (!lastname) {
+        document.querySelector('#edit-lname-error-message').textContent = 'Required.';
+        document.querySelector('#edit-lname-error-message').style.display = 'block';
+        document.querySelector('#edit-p-lastname').focus();
+        return;
+    }
+
+    const sex = document.querySelector('#edit-sex').value.trim();
+    if (!sex) {
+        document.querySelector('#edit-sex-error-message').textContent = 'Required.';
+        document.querySelector('#edit-sex-error-message').style.display = 'block';
+        return;
+    }
+
+    const bday = document.querySelector('#edit-bday').value.trim();
+    if (!bday) {
+        document.querySelector('#edit-bdayerror-message').textContent = 'Required.';
+        document.querySelector('#edit-bdayerror-message').style.display = 'block'; 
+        return;
+    }
 
     const patientID = saveEditsButton.dataset.id;
     const tableRows = document.querySelectorAll("#patient-information-table tr");
@@ -362,6 +438,12 @@ document.querySelectorAll('#edit-patient-form').forEach(form => {
 
         const data = await response.json();
 
+        const editPatientDupe = document.querySelector('#edit-dupe-error-message');
+        if (editPatientDupe) {
+            editPatientDupe.style.display = 'none';
+            editPatientDupe.textContent = 'Duplicate';
+        }
+
         if (data.success) {
             // Name
             const newFirstName = formData.get('PFirstName');
@@ -390,8 +472,20 @@ document.querySelectorAll('#edit-patient-form').forEach(form => {
             editPatientModal.style.display = 'none';
             editPatientConfirmModal.style.display = 'flex';
             editPatientForm.reset();
-        } else {
-            alert(`Update failed: ${data.message}`);
+        } 
+        else {
+            if (data.message && data.message.startsWith('Error: A patient with this Name, Sex, Birthday, and Contact Number already exists.')) {
+                if (editPatientDupe) {
+                    editPatientDupe.textContent = 'A duplicate patient record was found.';
+                    editPatientDupe.style.display = 'block';
+                } else {
+                    alert(data.message); 
+                }
+                editPatientModal.style.display = 'flex'; 
+
+            } else {
+                alert(`Update failed: ${data.message}`);
+            }
         }
     } catch(err) {
         console.error(err);
@@ -400,5 +494,82 @@ document.querySelectorAll('#edit-patient-form').forEach(form => {
 
     });
 });
+}
 
+document.querySelectorAll('#edit-patient-form').forEach(form => {
+    const editButton = document.querySelector('.action.save-edits'); 
+    let timeoutId; 
 
+    const debouncedInputHandler = (e) => {
+        
+        clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(async () => {
+
+            const field = e.target;
+            
+            if (field.name === 'PFirstName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#edit-fname-error-message').textContent = 'Names cannot contain symbols.';
+                    document.querySelector('#edit-fname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#edit-fname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PLastName') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#edit-lname-error-message').textContent = 'Names cannot contain symbols.';
+                    document.querySelector('#edit-lname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#edit-lname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PMiddleInit') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#edit-mname-error-message').textContent = 'Initials cannot contain symbols.';
+                    document.querySelector('#edit-mname-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#edit-mname-error-message').style.display = 'none';
+                }
+            }
+
+            if (field.name === 'PartContactNo'){
+                if (!field.checkValidity()){
+                    document.querySelector('#edit-contact-error-message').textContent = 'Input must be 9 digits.';
+                    document.querySelector('#edit-contact-error-message').style.display = 'block';
+                } else {
+                    document.querySelector('#edit-contact-error-message').style.display = 'none';
+                }
+            }
+            
+
+        }, 500);
+    };
+    form.addEventListener("input", debouncedInputHandler);
+
+});
+
+if(filterPatientForm){
+document.querySelector('#filter-patient-form').addEventListener('submit', function(e) {
+    e.preventDefault(); 
+    closeModals();
+    const currentSearchBox = searchBoxes[0];
+    if (currentSearchBox) {
+        currentSearchBox.dispatchEvent(new Event('keyup'));
+    }
+});
+}
+
+if(confirmFilterButton){
+document.querySelector('.action.filter-reset').addEventListener('click', function(e) {
+    e.preventDefault(); 
+    filterPatientForm.reset();
+    closeModals();
+    const currentSearchBox = searchBoxes[0];
+    if (currentSearchBox) {
+        currentSearchBox.dispatchEvent(new Event('keyup'));
+    }
+});
+}

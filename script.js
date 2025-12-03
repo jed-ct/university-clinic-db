@@ -44,6 +44,14 @@ async function loadTable() {
     let result = await response.json();
     prevButton.dataset.page = currentPage - 1;
     nextButton.dataset.page = currentPage + 1;
+    if (result.totalRows <= 0) {
+        document.querySelector('#no-table-data-container').style.display = "flex";
+        document.querySelector('#consultations-table').style.display = 'none';
+    }
+    else {
+        document.querySelector('#no-table-data-container').style.display = "none";
+        document.querySelector('#consultations-table').style.display = 'inline-block';
+    }
 
     if (result.totalRows <= 10) {
         document.querySelector('.pagination').style.display = 'none';
@@ -471,6 +479,8 @@ isCurrentDateTimeCheckbox.addEventListener("change", ()=> {
     }
 })
 
+let hasDiagnosisInputError = false;
+let hasPrescriptionInputError = false;
 filterConsultationForm.addEventListener('input', ((e) => {
     let timeoutId;
     const startDateInput = document.querySelector('#filter-start-date');
@@ -482,7 +492,7 @@ filterConsultationForm.addEventListener('input', ((e) => {
         e.preventDefault();
         clearTimeout(timeoutId);
         const field = e.target;
-        timeoutId = setTimeout(() => {
+        timeoutId = setTimeout(async () => {
             //Validation for dates
             if (startDateInput.value && endDateInput.value) {
                 const startDate = new Date(startDateInput.value);
@@ -496,6 +506,51 @@ filterConsultationForm.addEventListener('input', ((e) => {
                     disableButton(document.querySelector('.action.filter'), false);
                 }
             }
+
+            if (field.name === 'Diagnosis') {
+                let autosuggestions = [];
+                try {
+                    const response = await fetch(`./autosuggestions/autosuggest-diagnosis.php?diagnosis=${encodeURIComponent(field.value)}`);
+                    autosuggestions = await response.json();
+                    console.log(autosuggestions);
+                } catch (err) {
+                    console.error('Autosuggest fetch failed', err);
+                }
+                if (autosuggestions.length === 0) {
+                    document.querySelector('#filter-diagnosis-error-message').textContent = 'Diagnosis not found in database.';
+                    document.querySelector('#filter-diagnosis-error-message').style.display = 'block';
+                    hasDiagnosisInputError = true;
+                } else {
+                    document.querySelector('#filter-diagnosis-error-message').style.display = 'none';
+                    hasDiagnosisInputError = false;
+                }                
+            }
+            else if (field.name === 'Prescription') {
+                let autosuggestions = [];
+                try {
+                    const response = await fetch(`./autosuggestions/autosuggest-prescription.php?prescription=${encodeURIComponent(field.value)}`);
+                    autosuggestions = await response.json();
+                    console.log(autosuggestions);
+                } catch (err) {
+                    console.error('Autosuggest fetch failed', err);
+                }
+                if (autosuggestions.length === 0) {
+                    document.querySelector('#filter-prescription-error-message').textContent = 'Prescription not found in database.';
+                    document.querySelector('#filter-prescription-error-message').style.display = 'block';
+                    hasPrescriptionInputError = true;
+                } else {
+                    document.querySelector('#filter-prescription-error-message').style.display = 'none';
+                    hasPrescriptionInputError = false;
+                }                
+            }
+            if (hasDiagnosisInputError || hasPrescriptionInputError) {
+                disableButton(document.querySelector('.action.filter'));
+            }
+            else {
+                disableButton(document.querySelector('.action.filter'), false);
+            }
+
+
         }, 500);
     };
 })());

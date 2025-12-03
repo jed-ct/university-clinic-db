@@ -20,6 +20,9 @@ body {
     overflow: hidden;
 }
 
+a {
+    color: var(--color-accent);
+}
 
 /* login */
 .tba-login-body {
@@ -297,6 +300,14 @@ body {
     border-radius: 10px;
 }
 
+#no-table-data-container {
+    display: none;
+    font-size: 1.5rem;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+}
+
 .consultations.action:hover {
     background-color: var(--color-primary);
 }
@@ -373,7 +384,15 @@ body {
     color: #fff; 
 }
 
+a.consultation-table-patients{
+    text-decoration: none;
+    color:#212529
+}
 
+.inactive-patient{
+    font-style: italic;
+    color:#555;
+}
 
 .pagination {
     display: flex;
@@ -385,9 +404,9 @@ body {
 }
 
 .pagination button {
-    padding: 8px 14px;
+    padding: 10px 14px;
     border: 1px solid #ccc;
-    color: #333;
+    color: var(--color-accent);
     background-color: white;
     text-decoration: none;
     border-radius: 4px;
@@ -421,7 +440,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 #patient-searchbox {
     width: min(800px, 70vw);
@@ -559,13 +579,6 @@ body {
     align-items: center;
 }
 
-.patient-actions {
-    width:50%;
-    gap: 5px;
-    margin: 10px 30px 10px 0px;
-
-}
-
 .ellips-truncate {
     white-space: nowrap;
     overflow: hidden;
@@ -582,10 +595,13 @@ body {
 }
 
 .patient-actions {
-    width: 90%;
+
     display: flex;
+    justify-content:space-between;
     align-items: center;
     gap: 5px;
+    margin: 10px 10px 10px 0px;
+    margin-right: -5px;
 }
 .patient.action {
     padding: 10px;
@@ -949,6 +965,10 @@ body {
     border-color: #c7c7c7; 
 }
 
+#edit-patient-modal input:invalid {
+    border-color: #c7c7c7; 
+}
+
 #contactprefix {
     width: 50px; 
     border-right: none;
@@ -1125,7 +1145,7 @@ textarea:required:invalid {
 
 /* --- 1. FORCE HIDE MODALS ON LOAD --- */
 #addStaffModal, #viewStaffModal, #editStaffModal {
-    display: none; /* Relies on inline style primarily, but this reinforces it */
+    display: none; 
     position: fixed;
     z-index: 1050;
     left: 0;
@@ -1257,7 +1277,6 @@ body {
 .pagination { display: flex; justify-content: center; margin-top: 20px; gap: 5px; }
 .pagination a, .pagination div { padding: 8px 12px; border: 1px solid #ddd; color: var(--color-primary); text-decoration: none; border-radius: 4px; background: white; }
 .pagination a:hover { background-color: var(--color-primary); color: white; }
-#footer { background-color: var(--color-primary-darker); color: white; text-align: center; padding: 15px 0; margin-top: auto; }
 
 @media (max-width: 768px) {
     .staff-table-container { flex-direction: column; align-items: stretch; gap: 15px; }

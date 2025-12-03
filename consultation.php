@@ -155,7 +155,7 @@ include("authentication.php");
                     <div class="forms-input">
                         <label for="filter-diagnosis">Diagnosis</label>
                         <input type="text" name="Diagnosis" id="filter-diagnosis" maxlength="64">
-                        <span class='error-message' id='filter-diagnosis-error-message'></span>
+                        <span class='error-message' style="display: flex;" id='filter-diagnosis-error-message'></span>
                         <div id="filter-diagnosis-autosuggest" class="autosuggest-box"></div>
                     </div>
 
@@ -278,7 +278,7 @@ include("authentication.php");
                         <label for="edit-diagnosis">Diagnosis *</label>
                         <input type="text" name="Diagnosis" id="edit-diagnosis" maxlength="64">
                         <span class='error-message' id='edit-diagnosis-error-message'>Yipeee</span>
-                        <div id="edit-prescription-autosuggest" class="autosuggest-box"></div>
+                        <div id="edit-diagnosis-autosuggest" class="autosuggest-box"></div>
                     </div>
 
                     <div class="forms-input">
@@ -364,13 +364,18 @@ include("authentication.php");
     </thead>
     <tbody id='consultations-table-body'>
     </tbody>
-</table>    
+</table>
+<div id="no-table-data-container">
+    <div>No results found :(</div>
+    <button onclick="location.reload();" class="consultations action"><i class="fa-solid fa-filter-circle-xmark"></i> Reset filters</button>
+    
+</div>    
 <div class="pagination">
-    <button class="prev" data-page=''> &lt; </button>
+    <button class="prev" data-page=''> <i class="fa-solid fa-angle-left"></i> </button>
     <div>
         Page <span id='current-page'>1</span> of <span id='max-page'>2</span>
     </div>
-    <button class="next" data-page=''> &gt; </button>
+    <button class="next" data-page=''> <i class="fa-solid fa-angle-right"></i> </button>
 </div>
 
 </div>

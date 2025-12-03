@@ -14,6 +14,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const editForm = document.getElementById('editStaffForm');
     const sortHeaders = document.querySelectorAll('th.sortable');
 
+    window.addEventListener("load", () => {
+        if (sessionStorage.getItem("goToAddDoctor") === "true") {
+            sessionStorage.removeItem("goToAddDoctor");
+            document.querySelector('#add-doctor-modal-btn').click();
+        }
+    });
+
     // 2. MODAL UTILS
     function showModal(modal) { if (modal) { modal.removeAttribute('hidden'); modal.style.display = 'flex'; } }
     function hideModal(modal) { if (modal) { modal.style.display = 'none'; modal.setAttribute('hidden', ''); } }
@@ -28,10 +35,26 @@ document.addEventListener('DOMContentLoaded', function() {
         const email = form.querySelector('input[name="email"]').value.trim();
 
         const nameRegex = /^[A-Za-z\s]+$/;
+        
+        // Name Validation
         if (!nameRegex.test(firstName)) { alert("Error: First Name must contain letters only."); event.preventDefault(); return; }
         if (!nameRegex.test(lastName)) { alert("Error: Last Name must contain letters only."); event.preventDefault(); return; }
         if (middleInit.length > 0 && !/^[A-Za-z]$/.test(middleInit)) { alert("Error: Middle Initial must be a single letter."); event.preventDefault(); return; }
-        if (contact.length > 0 && (!/^[0-9]+$/.test(contact) || contact.length !== 11)) { alert("Error: Contact Number must be 11 digits."); event.preventDefault(); return; }
+        
+        // --- UPDATED CONTACT VALIDATION ---
+        if (contact.length > 0) {
+            // Regex: Starts with 09 (11 digits total) OR starts with +63 (13 chars total)
+            const phPhoneRegex = /^(09\d{9}|\+63\d{10})$/;
+            
+            if (!phPhoneRegex.test(contact)) { 
+                alert("Error: Invalid Contact Number.\nAllowed formats:\n- 09xxxxxxxxx (11 digits)\n- +63xxxxxxxxx (13 characters)"); 
+                event.preventDefault(); 
+                return; 
+            }
+        }
+        // ----------------------------------
+
+        // Email Validation
         if (email.length > 0 && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert("Error: Invalid email address."); event.preventDefault(); return; }
     }
 
@@ -98,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(e) {
         if (e.target.closest('.close-modal-btn')) {
             hideModal(addModal); hideModal(viewModal); hideModal(editModal);
-            if (addModal.style.display === 'none') { const form = document.getElementById('addStaffForm'); if(form) form.reset(); }
+            if (addModal.stylmaxe.display === 'none') { const form = document.getElementById('addStaffForm'); if(form) form.reset(); }
         }
         if (e.target === addModal) hideModal(addModal);
         if (e.target === viewModal) hideModal(viewModal);

@@ -30,7 +30,6 @@ error_reporting(E_ALL);
 
         <div class='consultation-modal-actions'>
             <button class='action confirm-delete-patient' >Delete Patient</button>
-            <button class='action close-btn-patient'>Nevermind</button>
         </div>
 
     </div>
@@ -49,7 +48,7 @@ error_reporting(E_ALL);
                     ) or die(mysqli_error($conn));
 ?>
 <!--EDIT MODAL-->
-    <div id="edit-patient-modal" class="modal">
+<div id="edit-patient-modal" class="modal">
     <div class="modal-contentP">
 
         <div class="close-btn-div">
@@ -65,20 +64,20 @@ error_reporting(E_ALL);
                 <fieldset class='p-name-fieldset'>                   
                     <div class="forms-input">
                         <label for="edit-p-firstname">First Name</label>
-                        <input type="text" name="PFirstName" id="edit-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" title="Name must contain only letters and periods." maxlength="64" required>
-                        <span class='error-message' id='edit-name-error-message'>Yipeee</span>
+                        <input type="text" name="PFirstName" id="edit-p-firstname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" title="Name must contain only letters and periods." maxlength="64">
+                        <span class='error-message' id='edit-fname-error-message'>Yipeee</span>
                     </div>     
 
                     <div class="forms-input">
                         <label for="edit-p-middleinit">Middle Initial</label>
                         <input type="text" name="PMiddleInit" id="edit-p-middleinit" pattern="^[A-Za-z]+$" maxlength="2" title="Initials must only be letters.">
-                        <span class='error-message' id='edit-name-error-message'>Yipeee</span>
+                        <span class='error-message' id='edit-mname-error-message'>Yipeee</span>
                     </div> 
 
                     <div class="forms-input">
                         <label for="edit-p-lastname">Last Name</label>
-                        <input type="text" name="PLastName" id="edit-p-lastname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" title="Name must contain only letters and periods." maxlength="64" required>
-                        <span class='error-message' id='edit-name-error-message'>Yipeee</span>
+                        <input type="text" name="PLastName" id="edit-p-lastname" pattern="^[A-Za-z.]+([ .][A-Za-z.]+)*$" title="Name must contain only letters and periods." maxlength="64">
+                        <span class='error-message' id='edit-lname-error-message'>Yipeee</span>
                     </div> 
                 </fieldset>
 
@@ -86,12 +85,13 @@ error_reporting(E_ALL);
                 <fieldset class='sex-fieldset'>
                     <div class="forms-input">
                         <label for="edit-sex">Sex *</label>
-                        <select name="Sex" id="edit-sex" required>
+                        <select name="Sex" id="edit-sex">
                             <option value="" selected disabled> </option>
                             <option value="F">Female</option>
                             <option value="M">Male</option>
                             <option value="O">Other</option>
                         </select>
+                        <span class='error-message' id='edit-sex-error-message'>Yipeee</span>
                     </div>     
                 </fieldset>
 
@@ -110,12 +110,13 @@ error_reporting(E_ALL);
                         <label for="edit-contact">Contact Number *</label>
                         <div style="flex">
                         <input type="text" value="+639" readonly id="contactprefix">
-                        <input type="tel" id="edit-partcontact" name="PartContactNo" placeholder="123456789" pattern="[0-9]{9}" maxlength="9" title="Input must contain 9 digit numbers." required>
+                        <input required type="tel" id="edit-partcontact" name="PartContactNo" placeholder="123456789" pattern="[0-9]{9}" maxlength="9" title="Input must contain 9 digit numbers.">
                         </div>
                         <input type="hidden" name="ContactNo" id="edit-contact">
                         <span class='error-message' id='edit-contact-error-message'>Yipeee</span>
                     </div>     
                 </fieldset>
+                <span class='error-message' id='edit-dupe-error-message'>Yipeee</span>
             </form>
             </div>
 
