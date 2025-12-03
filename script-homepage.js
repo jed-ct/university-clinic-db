@@ -142,6 +142,78 @@ document.querySelectorAll('#add-patient-form').forEach(form => {
 });
 });
 
+let hasFNError = false;
+let hasMIError = false;
+let hasLNError = false;
+let hasCNError = false;
+document.querySelectorAll('#add-patient-form').forEach(form => {
+    let timeoutId; 
+
+    const debouncedInputHandler = (e) => {
+        
+        clearTimeout(timeoutId);
+
+        timeoutId = setTimeout(async () => {
+
+            const field = e.target;
+            
+            if (field.name === 'PFirstName') {
+                if (!field.checkValidity() && field.value) {
+                    document.querySelector('#add-fname-error-message').textContent = 'Names cannot contain symbols.';
+                    document.querySelector('#add-fname-error-message').style.display = 'block';
+                    hasFNError = true;
+                } else {
+                    document.querySelector('#add-fname-error-message').style.display = 'none';
+                    hasFNError = false;
+                }
+            }
+
+            if (field.name === 'PLastName') {
+                if (!field.checkValidity() && field.value) {
+                    document.querySelector('#add-lname-error-message').textContent = 'Names cannot contain symbols.';
+                    document.querySelector('#add-lname-error-message').style.display = 'block';
+                    hasLNError = true;
+                } else {
+                    document.querySelector('#add-lname-error-message').style.display = 'none';
+                    hasLNError = false;
+                }
+            }
+
+            if (field.name === 'PMiddleInit') {
+                if (!field.checkValidity()) {
+                    document.querySelector('#add-mname-error-message').textContent = 'Initials cannot contain symbols.';
+                    document.querySelector('#add-mname-error-message').style.display = 'block';
+                    hasMIError = true;
+                } else {
+                    document.querySelector('#add-mname-error-message').style.display = 'none';
+                    hasMIError = false;
+                }
+            }
+
+            if (field.name === 'PartContactNo'){
+                if (!field.checkValidity()){
+                    document.querySelector('#add-contact-error-message').textContent = 'Input must be 9 digits.';
+                    document.querySelector('#add-contact-error-message').style.display = 'block';
+                    hasCNError = true;  
+                } else {
+                    document.querySelector('#add-contact-error-message').style.display = 'none';
+                    hasCNError = false; 
+                }
+            }
+            if (hasFNError || hasMIError || hasLNError || hasCNError) {
+                disableButton(document.querySelector('#add-patient-modal .action.add'));
+            }
+            else {
+                disableButton(document.querySelector('#add-patient-modal .action.add'), false);
+            }
+
+        }, 500);
+    };
+    form.addEventListener("input", debouncedInputHandler);
+
+});
+
+
 addDoctorForm.addEventListener("submit", async (e) => {
 
 });
